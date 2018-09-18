@@ -261,35 +261,44 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         switch (v.getId())
         {
             case R.id.textViewZero:
-                zeroButtonOperation();
+                //zeroButtonOperation();
+                test(0);
                 break;
 
             case R.id.textViewOne:
-                oneButtonOperation();
+                //oneButtonOperation();
+                test(1);
                 break;
 
             case R.id.textViewTwo:
-                twoButtonOperation();
+                //twoButtonOperation();
+                test(2);
                 break;
 
             case R.id.textViewThree:
-                threeButtonOperation();
+                //threeButtonOperation();
+                test(3);
                 break;
 
             case R.id.textViewFour:
-                fourButtonOperation();
+                //fourButtonOperation();
+                test(4);
                 break;
 
             case R.id.textViewFive:
-                fiveButtonOperation();
+                //fiveButtonOperation();
+
+                test(5);
                 break;
 
             case R.id.textViewSix:
-                sixButtonOperation();
+                //sixButtonOperation();
+                test(6);
                 break;
 
             case R.id.textViewSeven:
-                sevenButtonOperation();
+                //sevenButtonOperation();
+                test(7);
                 break;
 
             case R.id.textViewW:
@@ -5820,9 +5829,10 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "0");
             reusableFunctionBowler();
 
+            //zeroToSevenRunsServerCall();
             radioButtonFirstPlayer.setChecked(true);
             radioButtonSecondPlayer.setChecked(false);
-            zeroToSevenRunsServerCall();
+
         }
 
         else {
@@ -5871,10 +5881,11 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "0");
             reusableFunctionBowler();
 
+            //zeroToSevenRunsServerCall();
             radioButtonFirstPlayer.setChecked(false);
             radioButtonSecondPlayer.setChecked(true);
 
-            zeroToSevenRunsServerCall();
+
         }
 
     }
@@ -5926,11 +5937,14 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "1");
             reusableFunctionBowler();
 
+            //zeroToSevenRunsServerCall();
+
             radioButtonFirstPlayer.setChecked(false);
             radioButtonSecondPlayer.setChecked(true);
 
-            zeroToSevenRunsServerCall();
         }
+
+
 
         else {
 
@@ -5976,10 +5990,12 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
             textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "1");
             reusableFunctionBowler();
+
+            //zeroToSevenRunsServerCall();
             radioButtonFirstPlayer.setChecked(true);
             radioButtonSecondPlayer.setChecked(false);
 
-            zeroToSevenRunsServerCall();
+
         }
 
     }
@@ -6031,11 +6047,11 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
             textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "2");
             reusableFunctionBowler();
-
+            //zeroToSevenRunsServerCall();
             radioButtonFirstPlayer.setChecked(true);
             radioButtonSecondPlayer.setChecked(false);
 
-            zeroToSevenRunsServerCall();
+
         }
 
         else {
@@ -6081,10 +6097,11 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
             textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "2");
             reusableFunctionBowler();
+            //zeroToSevenRunsServerCall();
             radioButtonFirstPlayer.setChecked(false);
             radioButtonSecondPlayer.setChecked(true);
 
-            zeroToSevenRunsServerCall();
+
         }
 
 
@@ -6136,10 +6153,11 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
             textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "3");
             reusableFunctionBowler();
+            //zeroToSevenRunsServerCall();
             radioButtonFirstPlayer.setChecked(false);
             radioButtonSecondPlayer.setChecked(true);
 
-            zeroToSevenRunsServerCall();
+
         }
 
         else {
@@ -6185,10 +6203,11 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
             textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "3");
             reusableFunctionBowler();
+            //zeroToSevenRunsServerCall();
             radioButtonFirstPlayer.setChecked(true);
             radioButtonSecondPlayer.setChecked(false);
 
-            zeroToSevenRunsServerCall();
+
         }
 
     }
@@ -6238,10 +6257,11 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
             textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "4");
             reusableFunctionBowler();
+            //zeroToSevenRunsServerCall();
             radioButtonFirstPlayer.setChecked(true);
             radioButtonSecondPlayer.setChecked(false);
 
-            zeroToSevenRunsServerCall();
+
         }
 
         else {
@@ -6287,10 +6307,11 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
             textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "4");
             reusableFunctionBowler();
+            //zeroToSevenRunsServerCall();
             radioButtonFirstPlayer.setChecked(false);
             radioButtonSecondPlayer.setChecked(true);
 
-            zeroToSevenRunsServerCall();
+
         }
 
     }
@@ -6341,10 +6362,11 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
             textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "5");
             reusableFunctionBowler();
+            //zeroToSevenRunsServerCall();
             radioButtonFirstPlayer.setChecked(false);
             radioButtonSecondPlayer.setChecked(true);
 
-            zeroToSevenRunsServerCall();
+
         }
 
         else {
@@ -6390,10 +6412,11 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
             textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "5");
             reusableFunctionBowler();
+            //zeroToSevenRunsServerCall();
             radioButtonFirstPlayer.setChecked(true);
             radioButtonSecondPlayer.setChecked(false);
 
-            zeroToSevenRunsServerCall();
+
         }
 
     }
@@ -6443,10 +6466,12 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
             textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "6");
             reusableFunctionBowler();
+
+            //zeroToSevenRunsServerCall();
             radioButtonFirstPlayer.setChecked(true);
             radioButtonSecondPlayer.setChecked(false);
 
-            zeroToSevenRunsServerCall();
+
         }
 
         else {
@@ -6492,10 +6517,11 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
             textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "6");
             reusableFunctionBowler();
+            //zeroToSevenRunsServerCall();
             radioButtonFirstPlayer.setChecked(false);
             radioButtonSecondPlayer.setChecked(true);
 
-            zeroToSevenRunsServerCall();
+
         }
 
     }
@@ -6546,10 +6572,11 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
             textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "7");
             reusableFunctionBowler();
+            //zeroToSevenRunsServerCall();
             radioButtonFirstPlayer.setChecked(false);
             radioButtonSecondPlayer.setChecked(true);
 
-            zeroToSevenRunsServerCall();
+
         }
 
         else {
@@ -6595,10 +6622,12 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
             textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "7");
             reusableFunctionBowler();
+            //zeroToSevenRunsServerCall();
+
             radioButtonFirstPlayer.setChecked(true);
             radioButtonSecondPlayer.setChecked(false);
 
-            zeroToSevenRunsServerCall();
+
         }
 
     }
@@ -9993,21 +10022,127 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
     }
 
 
-    void zeroToSevenRunsServerCall()
+    void zeroToSevenRunsServerCall(final int i)
     {
+        //zeroButtonOperation();
 
-        stringTeamRuns = textViewPlayingTeamRun.getText().toString();
-        stringTeamOvers = textViewPlayingTeamOvers.getText().toString();
-        stringFirstPlayerRuns = textViewFirstPlayerRun.getText().toString();
-        stringBowlerBalls = textViewBowlerBall.getText().toString();
-        stringBowlerRuns = textViewBowlerRun.getText().toString();
-        stringFirstPlayerBalls = textViewFirstPlayerBall.getText().toString();
-
-
-        stringSecondPlayerRuns = textViewSecondPlayerRun.getText().toString();
-        stringSecondPlayerBalls = textViewSecondPlayerBall.getText().toString();
 //        String strBowlerId =
 //        String strBowlerId =
+
+        if (radioButtonFirstPlayer.isChecked())
+        {
+            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+
+            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+
+            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + i));
+
+            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+
+            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+
+            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversDouble + 0.1));
+            reusableFunctionPlayer();
+
+            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
+
+            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
+
+            textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + i));
+            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
+
+            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
+
+            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
+
+
+            stringBowlerRun = textViewBowlerRun.getText().toString();
+
+            bowlerRun = Integer.parseInt(stringBowlerRun);
+
+            textViewBowlerRun.setText(String.valueOf(bowlerRun + i));
+
+
+            stringBowlerBall = textViewBowlerBall.getText().toString();
+
+            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+
+            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + i);
+            reusableFunctionBowler();
+
+            //zeroToSevenRunsServerCall();
+//            radioButtonFirstPlayer.setChecked(true);
+//            radioButtonSecondPlayer.setChecked(false);
+
+        }
+
+        else {
+
+            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+
+            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+
+            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + i));
+
+            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+
+            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+
+            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
+
+            reusableFunctionPlayer();
+
+            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
+
+            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
+
+            textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + i));
+
+
+            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
+
+            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
+
+            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
+
+
+            stringBowlerRun = textViewBowlerRun.getText().toString();
+
+            bowlerRun = Integer.parseInt(stringBowlerRun);
+
+            textViewBowlerRun.setText(String.valueOf(bowlerRun + i));
+
+
+            stringBowlerBall = textViewBowlerBall.getText().toString();
+
+            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+
+            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + i);
+            reusableFunctionBowler();
+
+            //zeroToSevenRunsServerCall();
+            //radioButtonFirstPlayer.setChecked(false);
+            //radioButtonSecondPlayer.setChecked(true);
+
+
+//            stringTeamRuns = textViewPlayingTeamRun.getText().toString();
+//            stringTeamOvers = textViewPlayingTeamOvers.getText().toString();
+//            stringFirstPlayerRuns = textViewFirstPlayerRun.getText().toString();
+//            stringBowlerBalls = textViewBowlerBall.getText().toString();
+//            stringBowlerRuns = textViewBowlerRun.getText().toString();
+//            stringFirstPlayerBalls = textViewFirstPlayerBall.getText().toString();
+//
+//
+//            stringSecondPlayerRuns = textViewSecondPlayerRun.getText().toString();
+//            stringSecondPlayerBalls = textViewSecondPlayerBall.getText().toString();
+
+
+        }
+
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.RUN_DETAILS_URL,
                 new Response.Listener<String>() {
@@ -10016,6 +10151,40 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         try {
                             JSONObject jsonObject = new JSONObject(response);
+
+                            if (jsonObject.getString("success").equals("1"))
+                            {
+                                if (i%2==0)
+                                {
+                                    if (radioButtonFirstPlayer.isChecked())
+                                    {
+                                        radioButtonFirstPlayer.setChecked(true);
+                                        radioButtonSecondPlayer.setChecked(false);
+
+                                    }
+                                    else
+                                    {
+                                        radioButtonFirstPlayer.setChecked(false);
+                                        radioButtonSecondPlayer.setChecked(true);
+                                    }
+                                }
+
+                                else {
+
+                                    if (radioButtonFirstPlayer.isChecked())
+                                    {
+                                        radioButtonFirstPlayer.setChecked(false);
+                                        radioButtonSecondPlayer.setChecked(true);
+
+                                    }
+                                    else
+                                    {
+                                        radioButtonFirstPlayer.setChecked(true);
+                                        radioButtonSecondPlayer.setChecked(false);
+                                    }
+                                }
+
+                            }
 
 
                         } catch (JSONException e) {
@@ -10040,12 +10209,12 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                 if (radioButtonFirstPlayer.isChecked())
                 {
-                    params.put("total_runs",stringTeamRuns);
-                    params.put("total_overs",stringTeamOvers);
-                    params.put("player_run",stringFirstPlayerRuns);
-                    params.put("player_ball",stringFirstPlayerBalls);
-                    params.put("bowler_ball",stringBowlerBalls);
-                    params.put("bowler_runs",stringBowlerRuns);
+                    params.put("total_runs",String.valueOf(playingTeamRum + i));
+                    params.put("total_overs",new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
+                    params.put("player_run",String.valueOf(firstPlayerRun + i));
+                    params.put("player_ball",String.valueOf(firstPlayerBall + 1));
+                    params.put("bowler_ball",new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+                    params.put("bowler_runs",String.valueOf(bowlerRun + i));
                     params.put("match_key",stringMatchKey);
                     params.put("player_id",stringFristPlayerId);
                     params.put("bowler_id",stringBowlerId);
@@ -10057,12 +10226,12 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                 if (radioButtonSecondPlayer.isChecked())
                 {
-                    params.put("total_runs",stringTeamRuns);
-                    params.put("total_overs",stringTeamOvers);
-                    params.put("player_run",stringSecondPlayerRuns);
-                    params.put("player_ball",stringSecondPlayerBalls);
-                    params.put("bowler_ball",stringBowlerBalls);
-                    params.put("bowler_runs",stringBowlerRuns);
+                    params.put("total_runs",String.valueOf(playingTeamRum + i));
+                    params.put("total_overs",new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
+                    params.put("player_run",String.valueOf(secondPlayerRun + i));
+                    params.put("player_ball",String.valueOf(secondPlayerBall + 1));
+                    params.put("bowler_ball",new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+                    params.put("bowler_runs",String.valueOf(bowlerRun + i));
                     params.put("match_key",stringMatchKey);
                     params.put("player_id",stringSecondPlayerId);
                     params.put("bowler_id",stringBowlerId);
@@ -10138,6 +10307,11 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
     }
 
 
+    void test(int i)
+    {
+
+        zeroToSevenRunsServerCall(i);
+    }
 }
 
 
