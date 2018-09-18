@@ -10024,11 +10024,6 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
     void zeroToSevenRunsServerCall(final int i)
     {
-        //zeroButtonOperation();
-
-//        String strBowlerId =
-//        String strBowlerId =
-
         if (radioButtonFirstPlayer.isChecked())
         {
             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
@@ -10041,7 +10036,8 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
             playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversDouble + 0.1));
+            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
+
             reusableFunctionPlayer();
 
             stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
@@ -10070,11 +10066,8 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
             textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + i);
-            reusableFunctionBowler();
 
-            //zeroToSevenRunsServerCall();
-//            radioButtonFirstPlayer.setChecked(true);
-//            radioButtonSecondPlayer.setChecked(false);
+            reusableFunctionBowler();
 
         }
 
@@ -10122,24 +10115,8 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
             textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + i);
+
             reusableFunctionBowler();
-
-            //zeroToSevenRunsServerCall();
-            //radioButtonFirstPlayer.setChecked(false);
-            //radioButtonSecondPlayer.setChecked(true);
-
-
-//            stringTeamRuns = textViewPlayingTeamRun.getText().toString();
-//            stringTeamOvers = textViewPlayingTeamOvers.getText().toString();
-//            stringFirstPlayerRuns = textViewFirstPlayerRun.getText().toString();
-//            stringBowlerBalls = textViewBowlerBall.getText().toString();
-//            stringBowlerRuns = textViewBowlerRun.getText().toString();
-//            stringFirstPlayerBalls = textViewFirstPlayerBall.getText().toString();
-//
-//
-//            stringSecondPlayerRuns = textViewSecondPlayerRun.getText().toString();
-//            stringSecondPlayerBalls = textViewSecondPlayerBall.getText().toString();
-
 
         }
 
@@ -10218,7 +10195,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     params.put("match_key",stringMatchKey);
                     params.put("player_id",stringFristPlayerId);
                     params.put("bowler_id",stringBowlerId);
-                    params.put("ball_type","0");
+                    params.put("ball_type",String.valueOf(i));
                     params.put("extra_run","0");
                     params.put("wicket_type","0");
                     params.put("total_wickets","0");
@@ -10235,7 +10212,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     params.put("match_key",stringMatchKey);
                     params.put("player_id",stringSecondPlayerId);
                     params.put("bowler_id",stringBowlerId);
-                    params.put("ball_type","0");
+                    params.put("ball_type",String.valueOf(i));
                     params.put("extra_run","0");
                     params.put("wicket_type","0");
                     params.put("total_wickets","0");
