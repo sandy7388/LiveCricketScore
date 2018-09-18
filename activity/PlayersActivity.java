@@ -206,7 +206,7 @@ public class PlayersActivity extends AppCompatActivity implements AdapterView.On
                                 if (stringSpinnerPlayerNameStrk.equals(stringPlayerName)) {
                                     stringSpinnerPlayerIdStrk = stringPlayerId;
 
-                                    System.out.println("stringSpinnerPlayerIdStrk" + stringSpinnerPlayerIdStrk);
+                                    //System.out.println("stringSpinnerPlayerIdStrk" + stringSpinnerPlayerIdStrk);
                                 }
 
                             }
@@ -242,7 +242,7 @@ public class PlayersActivity extends AppCompatActivity implements AdapterView.On
                             if (stringSpinnerPlayerNameNStrk.equals(stringPlayerName)) {
                                 stringSpinnerPlayerIdNStrk = stringPlayerId;
 
-                                System.out.println("stringSpinnerPlayerIdNStrk" + stringSpinnerPlayerIdNStrk);
+                                ///System.out.println("stringSpinnerPlayerIdNStrk" + stringSpinnerPlayerIdNStrk);
                             }
                         }
                     }
@@ -278,7 +278,7 @@ public class PlayersActivity extends AppCompatActivity implements AdapterView.On
                             if (stringSpinnerPlayerNameBwlr.equals(stringPlayerName)) {
                                 stringSpinnerPlayerIdBwlr = stringPlayerId;
 
-                                System.out.println("stringSpinnerPlayerIdBwlr" + stringSpinnerPlayerIdBwlr);
+                                //System.out.println("stringSpinnerPlayerIdBwlr" + stringSpinnerPlayerIdBwlr);
                             }
                         }
                     }

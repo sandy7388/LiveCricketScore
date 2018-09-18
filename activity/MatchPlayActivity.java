@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -6705,19 +6706,95 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         final View dialogView = inflater.inflate(R.layout.layout_bowler_select, null);
         dialogBuilder.setView(dialogView);
         dialogBuilder.setCancelable(false);
-
+        //final Spinner spinner;
         //spinnerNewBowler = new ArrayList<>();
         spinner = dialogView.findViewById(R.id.spinnerNewBowler);
 
         Button buttonSelect = dialogView.findViewById(R.id.buttonNewBowlerSelect);
 
         Button buttonReset = dialogView.findViewById(R.id.buttonNewBowlerReset);
-        spinner.setOnItemSelectedListener(this);
+
+
         //spinnerNewBowler.add(stringNewBowlerName);
         //spinner.setAdapter(new ArrayAdapter<String>(MatchPlayActivity.this, R.layout.spinner_layout, spinnerNewBowler));
         buttonSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        Spinner spinner = (Spinner) parent;
+
+                        switch (view.getId())
+                        {
+                            case R.id.spinnerNewBowler:
+
+                                stringBowlerName1 = spinner.getAdapter().getItem(position).toString();
+
+                                try {
+                                    //JSONObject jsonObject = new JSONObject(response);
+
+                                    if (jsonObject.getString("success").equals("1"))
+                                    {
+                                        JSONArray jsonArray = jsonObject.getJSONArray("player_list");
+
+                                        for (int i=0;i<jsonArray.length();i++)
+                                        {
+                                            JSONObject object = jsonArray.getJSONObject(i);
+
+                                            stringNewTeamName = object.getString("team_name");
+
+                                            stringSpaceRemove = stringBowlingTeam.replaceAll(" ", "");
+
+                                            System.out.println(stringSpaceRemove);
+
+                                            Log.d("TeamName111",stringNewTeamName);
+
+                                            Log.d("TeamName222",stringSpaceRemove);
+
+
+                                            if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                                JSONArray array = object.getJSONArray("players");
+
+                                                for (int j = 0; j < array.length(); j++) {
+                                                    JSONObject obj = array.getJSONObject(j);
+
+                                                    stringNewBowlerName = obj.getString("fullname");
+                                                    stringNewBowlerId = obj.getString("player_id");
+
+                                                    //spinnerNewBowler.add(stringNewBowlerName);
+
+                                                    if (stringBowlerName1.equals(stringNewBowlerName)) {
+                                                        stringBowlerId1 = stringNewBowlerId;
+                                                        //textViewBowlerName.setText(stringBowlerName1);
+                                                        System.out.println("stringSpinnerPlayerIdStrk" + stringBowlerId1);
+                                                    }
+
+                                                }
+
+                                                //spinner.setAdapter(new ArrayAdapter<String>(MatchPlayActivity.this, R.layout.spinner_layout, spinnerNewBowler));
+
+                                            }
+                                        }
+                                    }
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                break;
+
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
 
                 String str = spinner.getSelectedItem().toString();
 
@@ -6923,63 +7000,63 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
         switch (view.getId())
         {
-            case R.id.spinnerNewBowler:
-
-                stringBowlerName1 = spinner.getAdapter().getItem(position).toString();
-
-                try {
-                    //JSONObject jsonObject = new JSONObject(response);
-
-                    if (jsonObject.getString("success").equals("1"))
-                    {
-                        JSONArray jsonArray = jsonObject.getJSONArray("player_list");
-
-                        for (int i=0;i<jsonArray.length();i++)
-                        {
-                            JSONObject object = jsonArray.getJSONObject(i);
-
-                            stringNewTeamName = object.getString("team_name");
-
-                            stringSpaceRemove = stringBowlingTeam.replaceAll(" ", "");
-
-                            System.out.println(stringSpaceRemove);
-
-                            Log.d("TeamName111",stringNewTeamName);
-
-                            Log.d("TeamName222",stringSpaceRemove);
-
-
-                            if (stringSpaceRemove.equals(stringNewTeamName)) {
-                                JSONArray array = object.getJSONArray("players");
-
-                                for (int j = 0; j < array.length(); j++) {
-                                    JSONObject obj = array.getJSONObject(j);
-
-                                    stringNewBowlerName = obj.getString("fullname");
-                                    stringNewBowlerId = obj.getString("player_id");
-
-                                    //spinnerNewBowler.add(stringNewBowlerName);
-
-                                    if (stringBowlerName1.equals(stringNewBowlerName)) {
-                                        stringBowlerId1 = stringNewBowlerId;
-                                        //textViewBowlerName.setText(stringBowlerName1);
-                                        System.out.println("stringSpinnerPlayerIdStrk" + stringBowlerId1);
-                                    }
-
-                                }
-
-                                //spinner.setAdapter(new ArrayAdapter<String>(MatchPlayActivity.this, R.layout.spinner_layout, spinnerNewBowler));
-
-                            }
-                        }
-                    }
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                break;
+//            case R.id.spinnerNewBowler:
+//
+//                stringBowlerName1 = spinner.getAdapter().getItem(position).toString();
+//
+//                try {
+//                    //JSONObject jsonObject = new JSONObject(response);
+//
+//                    if (jsonObject.getString("success").equals("1"))
+//                    {
+//                        JSONArray jsonArray = jsonObject.getJSONArray("player_list");
+//
+//                        for (int i=0;i<jsonArray.length();i++)
+//                        {
+//                            JSONObject object = jsonArray.getJSONObject(i);
+//
+//                            stringNewTeamName = object.getString("team_name");
+//
+//                            stringSpaceRemove = stringBowlingTeam.replaceAll(" ", "");
+//
+//                            System.out.println(stringSpaceRemove);
+//
+//                            Log.d("TeamName111",stringNewTeamName);
+//
+//                            Log.d("TeamName222",stringSpaceRemove);
+//
+//
+//                            if (stringSpaceRemove.equals(stringNewTeamName)) {
+//                                JSONArray array = object.getJSONArray("players");
+//
+//                                for (int j = 0; j < array.length(); j++) {
+//                                    JSONObject obj = array.getJSONObject(j);
+//
+//                                    stringNewBowlerName = obj.getString("fullname");
+//                                    stringNewBowlerId = obj.getString("player_id");
+//
+//                                    //spinnerNewBowler.add(stringNewBowlerName);
+//
+//                                    if (stringBowlerName1.equals(stringNewBowlerName)) {
+//                                        stringBowlerId1 = stringNewBowlerId;
+//                                        //textViewBowlerName.setText(stringBowlerName1);
+//                                        System.out.println("stringSpinnerPlayerIdStrk" + stringBowlerId1);
+//                                    }
+//
+//                                }
+//
+//                                //spinner.setAdapter(new ArrayAdapter<String>(MatchPlayActivity.this, R.layout.spinner_layout, spinnerNewBowler));
+//
+//                            }
+//                        }
+//                    }
+//
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                break;
 
             case R.id.spinnerNewBatsman:
 
@@ -10194,7 +10271,15 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     params.put("bowler_runs",String.valueOf(bowlerRun + i));
                     params.put("match_key",stringMatchKey);
                     params.put("player_id",stringFristPlayerId);
-                    params.put("bowler_id",stringBowlerId);
+                    if (TextUtils.isEmpty(stringBowlerName1))
+                    {
+                        params.put("bowler_id",stringBowlerId);
+                    }
+
+                    else {
+                        params.put("bowler_id",stringBowlerId1);
+                    }
+
                     params.put("ball_type",String.valueOf(i));
                     params.put("extra_run","0");
                     params.put("wicket_type","0");
@@ -10211,7 +10296,14 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     params.put("bowler_runs",String.valueOf(bowlerRun + i));
                     params.put("match_key",stringMatchKey);
                     params.put("player_id",stringSecondPlayerId);
-                    params.put("bowler_id",stringBowlerId);
+                    if (TextUtils.isEmpty(stringBowlerName1))
+                    {
+                        params.put("bowler_id",stringBowlerId);
+                    }
+
+                    else {
+                        params.put("bowler_id",stringBowlerId1);
+                    }
                     params.put("ball_type",String.valueOf(i));
                     params.put("extra_run","0");
                     params.put("wicket_type","0");
