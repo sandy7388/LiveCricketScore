@@ -59,79 +59,81 @@ import java.util.Map;
 public class MatchPlayActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     // Ball Operation
-    private TextView textViewZero,textViewOne,textViewTwo,textViewThree,textViewFour,textViewFive,
-            textViewSix,textViewSeven,textViewWicket,textViewNoBall,textViewUndo,textViewWide,
-            textViewLegBy,textViewBy,textViewDot;
+    private TextView textViewZero, textViewOne, textViewTwo, textViewThree, textViewFour, textViewFive,
+            textViewSix, textViewSeven, textViewWicket, textViewNoBall, textViewUndo, textViewWide,
+            textViewLegBy, textViewBy, textViewDot;
 
-    ArrayList<String> spinnerNewBowler ;
+    ArrayList<String> spinnerNewBowler;
 
-    ArrayList<String> spinnerNewBatsman ;
+    ArrayList<String> spinnerNewBatsman;
 
-    ArrayList<String> spinnerCatcher ;
+    ArrayList<String> spinnerCatcher;
 
     private Spinner spinner;
 
     private Button yes, no;
 
-    private Spinner spinnerBatsman,spinnerCatcherName;
+    private Spinner spinnerBatsman, spinnerCatcherName;
     // Playing Players
     private RadioGroup radioGroupPlayers;
 
+    private String bBowler;
+
     // Playing Players
-    private RadioButton radioButtonFirstPlayer,radioButtonSecondPlayer;
+    private RadioButton radioButtonFirstPlayer, radioButtonSecondPlayer;
 
     // Pop up option for other than number
-    private PopupMenu popupMenuWide,popupMenuNoBall,popupMenuByes,popupMenuLegBy,
-            popupMenuUndo,popupMenuWicket,popupMenuDot;
+    private PopupMenu popupMenuWide, popupMenuNoBall, popupMenuByes, popupMenuLegBy,
+            popupMenuUndo, popupMenuWicket, popupMenuDot;
 
     // Intent data string
-    private String stringFristPlayerName,stringSecondPlayerName,stringBowlerName,
-            stringFristPlayerId,stringSecondPlayerId,stringBowlerId,
-            stringMatchKey,stringBattingTeam,stringBowlingTeam;
+    private String stringFristPlayerName, stringSecondPlayerName, stringBowlerName,
+            stringFristPlayerId, stringSecondPlayerId, stringBowlerId,
+            stringMatchKey, stringBattingTeam, stringBowlingTeam;
 
     // Players details
-    private TextView textViewPlayingTeamName,textViewPlayingTeamRun,textViewPlayingTeamWicket,
-            textViewPlayingTeamOvers,textViewFirstPlayerRun,textViewFirstPlayerBall,
-            textViewSecondPlayerRun,textViewSecondPlayerBall,textViewBowlerName,textViewBowlerRun,
-            textViewBowlerWicket,textViewBowlerBall,textViewCurrentOver,textViewExtraRun,
-            textViewCurrentRunRate,textViewRequiredRunRate;
+    private TextView textViewPlayingTeamName, textViewPlayingTeamRun, textViewPlayingTeamWicket,
+            textViewPlayingTeamOvers, textViewFirstPlayerRun, textViewFirstPlayerBall,
+            textViewSecondPlayerRun, textViewSecondPlayerBall, textViewBowlerName, textViewBowlerRun,
+            textViewBowlerWicket, textViewBowlerBall, textViewCurrentOver, textViewExtraRun,
+            textViewCurrentRunRate, textViewRequiredRunRate;
 
     // String values for Players details
-    private String stringPlayingTeamRun,stringPlayingTeamWicket,stringPlayingTeamOvers,
-            stringFirstPlayerRun,stringFirstPlayerBall,stringSecondPlayerRun,
-            stringSecondPlayerBall,stringBowlerRun,stringBowlerWicket,
-            stringBowlerBall,stringCurrentOver,stringExtraRun,
-            stringCurrentRunRate,stringRequiredRunRate;
+    private String stringPlayingTeamRun, stringPlayingTeamWicket, stringPlayingTeamOvers,
+            stringFirstPlayerRun, stringFirstPlayerBall, stringSecondPlayerRun,
+            stringSecondPlayerBall, stringBowlerRun, stringBowlerWicket,
+            stringBowlerBall, stringCurrentOver, stringExtraRun,
+            stringCurrentRunRate, stringRequiredRunRate;
 
-    private int playingTeamRum,playingTeamWicket,playingTeamOvers,firstPlayerRun,
-            firstPlayerBall,secondPlayerRun,secondPlayerBall,bowlerRun,bowlerWicket,
-            bowlerBall,currentOver,extraRun,currentRunRate,requiredRunRate,editTextRuns1;
+    private int playingTeamRum, playingTeamWicket, playingTeamOvers, firstPlayerRun,
+            firstPlayerBall, secondPlayerRun, secondPlayerBall, bowlerRun, bowlerWicket,
+            bowlerBall, currentOver, extraRun, currentRunRate, requiredRunRate, editTextRuns1;
 
-    private float playingTeamOversFloat,bowlerOversFloat;
+    private float playingTeamOversFloat, bowlerOversFloat;
 
     CustomDialogClass customDialogClass;
-    
-    private double playingTeamOversDouble,bowlerOversDouble,test;
 
-    private double doubleValue = 0.1 ;
+    private double playingTeamOversDouble, bowlerOversDouble, test;
 
-    private float floatValue = (float) 0.1 ;
+    private double doubleValue = 0.1;
 
-    private int beforeDecimal,afterDecimal,decimalPoint;
+    private float floatValue = (float) 0.1;
+
+    private int beforeDecimal, afterDecimal, decimalPoint;
 
     private LinearLayout layoutToAdd;
 
     private RecyclerView recyclerView;
 
-    Dialog dialog ;
+    Dialog dialog;
 
     private EditText editTextRuns;
 
     private ArrayList<BowlerDetails> bowlerDetailsArrayList;
 
-    private String stringNewBowlerName,stringNewBowlerId,stringSpaceRemove,stringBowlerName1,stringBowlerId1,
-                stringNewTeamName,stringNewBatsmanName,stringNewBatsmanId,stringBatsmanName1,stringBatsmanId1,
-                stringCatcherName,stringCatcherId,stringCatcherName1,stringCatcherId1;
+    private String stringNewBowlerName, stringNewBowlerId, stringSpaceRemove, stringBowlerName1, stringBowlerId1,
+            stringNewTeamName, stringNewBatsmanName, stringNewBatsmanId, stringBatsmanName1, stringBatsmanId1,
+            stringCatcherName, stringCatcherId, stringCatcherName1, stringCatcherId1;
 
     private NewBowlerAdapter newBowlerAdapter;
 
@@ -139,11 +141,11 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
     SpinnerAdapter adapter;
 
-    private JSONObject jsonObject,jsonObjectBatsman;
+    private JSONObject jsonObject, jsonObjectBatsman;
 
-    private String stringTeamRuns,stringTeamOvers,stringFirstPlayerRuns,stringFirstPlayerBalls,
-                    stringSecondPlayerRuns,stringSecondPlayerBalls,stringBowlerBalls,
-                    stringBowlerRuns;
+    private String stringTeamRuns, stringTeamOvers, stringFirstPlayerRuns, stringFirstPlayerBalls,
+            stringSecondPlayerRuns, stringSecondPlayerBalls, stringBowlerBalls,
+            stringBowlerRuns, stringExtraRuns, stringTeamWickets, stringBowlerWickets, stringBallType;
 
 
     @Override
@@ -210,8 +212,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-    void getIntentData()
-    {
+    void getIntentData() {
         Intent intent = this.getIntent();
 
         stringFristPlayerId = intent.getExtras().getString("BATTING_FIRST_ID_KEY");
@@ -225,7 +226,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         stringBowlingTeam = intent.getExtras().getString("BOWLING_KEY");
     }
 
-    void playerDetailsInitialization(){
+    void playerDetailsInitialization() {
 
         textViewPlayingTeamName = findViewById(R.id.textViewPlayingTeam);
         textViewPlayingTeamRun = findViewById(R.id.textViewPlayingTeamRun);
@@ -247,8 +248,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
     }
 
 
-    void intentDataSetter()
-    {
+    void intentDataSetter() {
         textViewPlayingTeamName.setText(stringBattingTeam);
         textViewBowlerName.setText(stringBowlerName);
         radioButtonFirstPlayer.setText(stringFristPlayerName);
@@ -259,8 +259,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
 
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.textViewZero:
                 //zeroButtonOperation();
                 test(0);
@@ -288,7 +287,6 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
             case R.id.textViewFive:
                 //fiveButtonOperation();
-
                 test(5);
                 break;
 
@@ -307,7 +305,8 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                 break;
 
             case R.id.textViewNB:
-                noBallPopUp();
+                //noBallPopUp();
+                extraRuns("NoBall");
                 break;
 
             case R.id.textViewUndo:
@@ -315,15 +314,18 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                 break;
 
             case R.id.textViewWD:
-                wideBallPopUp();
+                //wideBallPopUp();
+                extraRuns("Wide");
                 break;
 
             case R.id.textViewLB:
-                legByPopUp();
+                //legByPopUp();
+                extraRuns("LegByes");
                 break;
 
             case R.id.textViewB:
-                byesPopUp();
+                //byesPopUp();
+                extraRuns("Byes");
                 break;
 
             case R.id.textViewDot:
@@ -335,8 +337,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-    void wideBallPopUp()
-    {
+    void wideBallPopUp() {
         popupMenuWide = new PopupMenu(MatchPlayActivity.this, textViewWide);
 
         popupMenuWide.getMenuInflater().inflate(R.menu.wide_layout, popupMenuWide.getMenu());
@@ -344,918 +345,192 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         popupMenuWide.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                stringBallType = item.getTitle().toString();
+                final String str1 = String.valueOf(stringBallType.charAt(0));
+                String substring = stringBallType.toString().substring(Math.max(stringBallType.length() - 2, 0));
 
-                Toast.makeText(MatchPlayActivity.this,"You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                int numberWide = Integer.parseInt(str1);
+                Log.d("strfdwide", str1 + " " + substring);
 
-                try {
+                if (numberWide % 2 == 0) {
 
-                    if (item.getTitle().equals("0wd"))
-                    {
-                        Toast.makeText(MatchPlayActivity.this,"You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                    if (radioButtonFirstPlayer.isChecked()) {
+                        stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+                        playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
 
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+                        textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberWide + 1));
 
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 1));
+                        stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+                        playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+                        reusableFunctionPlayer();
+                        stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
 
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
+                        firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
 
 
-                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
+                        stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
 
-                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                            //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
+                        firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
 
 
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
+                        stringBowlerRun = textViewBowlerRun.getText().toString();
 
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
+                        bowlerRun = Integer.parseInt(stringBowlerRun);
 
-                            textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "0wd");
-
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 1));
-
-                            reusableFunctionBowler();
-
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-                        }
-
-                        else {
-
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 1));
+                        textViewBowlerRun.setText(String.valueOf(bowlerRun + numberWide + 1));
 
 
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+                        stringBowlerBall = textViewBowlerBall.getText().toString();
 
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+                        bowlerOversFloat = Float.parseFloat(stringBowlerBall);
 
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
+                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "wd");
 
-                            reusableFunctionPlayer();
-                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
+                        stringExtraRun = textViewExtraRun.getText().toString();
 
-                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
+                        extraRun = Integer.parseInt(stringExtraRun);
 
-                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
+                        textViewExtraRun.setText(String.valueOf(extraRun + numberWide + 1));
 
+                        reusableFunctionBowler();
 
-                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
+                    } else {
 
-                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
+                        stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
-                            //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
+                        playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
 
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
+                        textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberWide + 1));
 
 
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
+                        stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+                        playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
+                        reusableFunctionPlayer();
+                        stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "0wd");
-                            stringExtraRun = textViewExtraRun.getText().toString();
+                        secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
 
-                            extraRun = Integer.parseInt(stringExtraRun);
 
-                            textViewExtraRun.setText(String.valueOf(extraRun + 1));
-                            reusableFunctionBowler();
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
-                        }
+                        stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
+
+                        secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
+
+                        stringBowlerRun = textViewBowlerRun.getText().toString();
+
+                        bowlerRun = Integer.parseInt(stringBowlerRun);
+
+                        textViewBowlerRun.setText(String.valueOf(bowlerRun + numberWide + 1));
+
+
+                        stringBowlerBall = textViewBowlerBall.getText().toString();
+
+                        bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "wd");
+                        stringExtraRun = textViewExtraRun.getText().toString();
+
+                        extraRun = Integer.parseInt(stringExtraRun);
+
+                        textViewExtraRun.setText(String.valueOf(extraRun + numberWide + 1));
+                        reusableFunctionBowler();
                     }
 
-                    if (item.getTitle().equals("1wd"))
-                    {
-                        Toast.makeText(MatchPlayActivity.this,"You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                    wideRunsServerCall(numberWide);
+                } else {
 
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+                    if (radioButtonFirstPlayer.isChecked()) {
+                        stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+                        playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
 
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 2));
+                        textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberWide + 1));
 
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+                        stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+                        playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
+                        reusableFunctionPlayer();
+                        stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
 
-                            reusableFunctionPlayer();
-                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
+                        firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
 
 
-                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
+                        stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
 
-                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                            //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
+                        firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
 
 
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
+                        stringBowlerRun = textViewBowlerRun.getText().toString();
 
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
+                        bowlerRun = Integer.parseInt(stringBowlerRun);
 
-                            textViewBowlerRun.setText(String.valueOf(bowlerRun + 2));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "1wd");
-
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 2));
-
-                            reusableFunctionBowler();
-
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
-                        }
-
-                        else {
-
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 2));
+                        textViewBowlerRun.setText(String.valueOf(bowlerRun + numberWide + 1));
 
 
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+                        stringBowlerBall = textViewBowlerBall.getText().toString();
 
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+                        bowlerOversFloat = Float.parseFloat(stringBowlerBall);
 
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
+                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "wd");
 
-                            reusableFunctionPlayer();
-                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
+                        stringExtraRun = textViewExtraRun.getText().toString();
 
-                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
+                        extraRun = Integer.parseInt(stringExtraRun);
 
-                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
+                        textViewExtraRun.setText(String.valueOf(extraRun + numberWide + 1));
 
+                        reusableFunctionBowler();
 
-                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
+                    } else {
 
-                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
+                        stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
-                            //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
+                        playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
 
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            textViewBowlerRun.setText(String.valueOf(bowlerRun + 2));
+                        textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberWide + 1));
 
 
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
+                        stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+                        playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
+                        reusableFunctionPlayer();
+                        stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "1wd");
-                            stringExtraRun = textViewExtraRun.getText().toString();
+                        secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
 
-                            extraRun = Integer.parseInt(stringExtraRun);
 
-                            textViewExtraRun.setText(String.valueOf(extraRun + 2));
-                            reusableFunctionBowler();
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-                        }
+                        stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
+
+                        secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
+
+                        stringBowlerRun = textViewBowlerRun.getText().toString();
+
+                        bowlerRun = Integer.parseInt(stringBowlerRun);
+
+                        textViewBowlerRun.setText(String.valueOf(bowlerRun + numberWide + 1));
+
+
+                        stringBowlerBall = textViewBowlerBall.getText().toString();
+
+                        bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "wd");
+                        stringExtraRun = textViewExtraRun.getText().toString();
+
+                        extraRun = Integer.parseInt(stringExtraRun);
+
+                        textViewExtraRun.setText(String.valueOf(extraRun + numberWide + 1));
+                        reusableFunctionBowler();
+
                     }
 
-                    if (item.getTitle().equals("2wd"))
-                    {
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 3));
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                            //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            textViewBowlerRun.setText(String.valueOf(bowlerRun + 3));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "2wd");
-
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 3));
-
-                            reusableFunctionBowler();
-
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-                        }
-
-                        else {
-
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 3));
-
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                            //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            textViewBowlerRun.setText(String.valueOf(bowlerRun + 3));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "2wd");
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 3));
-                            reusableFunctionBowler();
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
-                        }
-                    }
-
-                    if (item.getTitle().equals("3wd"))
-                    {
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 4));
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                            //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            textViewBowlerRun.setText(String.valueOf(bowlerRun + 4));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "3wd");
-
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 4));
-
-                            reusableFunctionBowler();
-
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
-                        }
-
-                        else {
-
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 4));
-
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                            //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            textViewBowlerRun.setText(String.valueOf(bowlerRun + 4));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "3wd");
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 4));
-                            reusableFunctionBowler();
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-                        }
-                    }
-
-                    if (item.getTitle().equals("4wd"))
-                    {
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 5));
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                            //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            textViewBowlerRun.setText(String.valueOf(bowlerRun + 5));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "4wd");
-
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 5));
-
-                            reusableFunctionBowler();
-
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-                        }
-
-                        else {
-
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 5));
-
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                            //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            textViewBowlerRun.setText(String.valueOf(bowlerRun + 5));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "4b");
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 4));
-                            reusableFunctionBowler();
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
-                        }
-                    }
-
-                    if (item.getTitle().equals("5wd"))
-                    {
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 6));
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                            //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            textViewBowlerRun.setText(String.valueOf(bowlerRun + 6));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "5wd");
-
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 6));
-
-                            reusableFunctionBowler();
-
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
-                        }
-
-                        else {
-
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 6));
-
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                            //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            textViewBowlerRun.setText(String.valueOf(bowlerRun + 6));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "5wd");
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 6));
-                            reusableFunctionBowler();
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-                        }
-                    }
-
-                    if (item.getTitle().equals("6wd"))
-                    {
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 7));
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                            //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            textViewBowlerRun.setText(String.valueOf(bowlerRun + 7));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "6wd");
-
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 7));
-
-                            reusableFunctionBowler();
-
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-                        }
-
-                        else {
-
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 7));
-
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                            //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            textViewBowlerRun.setText(String.valueOf(bowlerRun + 7));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "6wd");
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 6));
-                            reusableFunctionBowler();
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
-                        }
-                    }
-
-                    if (item.getTitle().equals("7wd"))
-                    {
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 8));
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                            //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            textViewBowlerRun.setText(String.valueOf(bowlerRun + 8));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "7wd");
-
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 8));
-
-                            reusableFunctionBowler();
-
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
-                        }
-
-                        else {
-
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 8));
-
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                            //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            textViewBowlerRun.setText(String.valueOf(bowlerRun + 8));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "7wd");
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 8));
-                            reusableFunctionBowler();
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-                        }
-                    }
-
-                    if (item.getTitle().equals("wd + wkt"))
-                    {
-                        Toast.makeText(MatchPlayActivity.this, "wicket", Toast.LENGTH_SHORT).show();
-                    }
-                }catch (Exception e)
-                {
-                    e.printStackTrace();
+                    wideRunsServerCall(numberWide);
                 }
 
                 return true;
@@ -1264,8 +539,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         popupMenuWide.show();
     }
 
-    void byesPopUp()
-    {
+    void byesPopUp() {
         popupMenuByes = new PopupMenu(MatchPlayActivity.this, textViewBy);
 
         popupMenuByes.getMenuInflater().inflate(R.menu.byes_layout, popupMenuByes.getMenu());
@@ -1274,804 +548,207 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                //Toast.makeText(MatchPlayActivity.this,"You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
-                try {
+                stringBallType = item.getTitle().toString();
+                final String str1 = String.valueOf(stringBallType.charAt(0));
+                String substring = stringBallType.toString().substring(Math.max(stringBallType.length() - 1, 0));
+                Log.d("strfdwide", str1 + " " + substring);
+                int numberByes = Integer.parseInt(str1);
+                if (numberByes % 2 == 0) {
+                    if (radioButtonFirstPlayer.isChecked()) {
+                        stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+
+                        playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+
+                        textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberByes + 1));
+
+                        stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+
+                        playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+
+                        textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
+
+                        reusableFunctionPlayer();
+                        stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
+
+                        firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
 
 
-                    if (item.getTitle().equals("1b"))
-                    {
-                        Toast.makeText(MatchPlayActivity.this,"You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                        stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
 
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+                        firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
 
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 1));
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
+                        textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
 
 
-                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
+                        stringBowlerRun = textViewBowlerRun.getText().toString();
 
-                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
+                        bowlerRun = Integer.parseInt(stringBowlerRun);
 
-                            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
+                        stringBowlerBall = textViewBowlerBall.getText().toString();
 
+                        bowlerOversFloat = Float.parseFloat(stringBowlerBall);
 
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
+                        textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
+                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "b");
 
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
+                        stringExtraRun = textViewExtraRun.getText().toString();
 
+                        extraRun = Integer.parseInt(stringExtraRun);
 
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
+                        textViewExtraRun.setText(String.valueOf(extraRun + numberByes + 1));
 
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+                        reusableFunctionBowler();
 
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+                    } else {
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "1b");
+                        stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
-                            stringExtraRun = textViewExtraRun.getText().toString();
+                        playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
 
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 1));
-
-                            reusableFunctionBowler();
-
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
-                        }
-
-                        else {
-
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 1));
+                        textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberByes + 1));
 
 
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+                        stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+                        playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
+                        textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
 
-                            reusableFunctionPlayer();
-                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
+                        reusableFunctionPlayer();
+                        stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
 
-                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
+                        secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
 
 
-                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
+                        stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
 
-                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
+                        secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
 
-                            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
+                        textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
 
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
+                        stringBowlerRun = textViewBowlerRun.getText().toString();
 
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
+                        bowlerRun = Integer.parseInt(stringBowlerRun);
 
 
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
+                        stringBowlerBall = textViewBowlerBall.getText().toString();
 
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+                        bowlerOversFloat = Float.parseFloat(stringBowlerBall);
 
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
+                        textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "1b");
-                            stringExtraRun = textViewExtraRun.getText().toString();
+                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "b");
+                        stringExtraRun = textViewExtraRun.getText().toString();
 
-                            extraRun = Integer.parseInt(stringExtraRun);
+                        extraRun = Integer.parseInt(stringExtraRun);
 
-                            textViewExtraRun.setText(String.valueOf(extraRun + 1));
-                            reusableFunctionBowler();
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-                        }
+                        textViewExtraRun.setText(String.valueOf(extraRun + numberByes + 1));
+                        reusableFunctionBowler();
+
                     }
 
-                    if (item.getTitle().equals("2b"))
-                    {
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+                    wideRunsServerCall(numberByes);
+                } else {
 
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+                    if (radioButtonFirstPlayer.isChecked()) {
+                        stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 2));
+                        playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
 
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+                        textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberByes + 1));
 
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+                        stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
+                        playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            reusableFunctionPlayer();
-                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
+                        textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
 
-                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
+                        reusableFunctionPlayer();
+                        stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
 
-                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
+                        firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
 
 
-                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
+                        stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
 
-                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
+                        firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
 
-                            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
+                        textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
 
 
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
+                        stringBowlerRun = textViewBowlerRun.getText().toString();
 
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+                        bowlerRun = Integer.parseInt(stringBowlerRun);
 
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+                        stringBowlerBall = textViewBowlerBall.getText().toString();
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "2b");
+                        bowlerOversFloat = Float.parseFloat(stringBowlerBall);
 
-                            stringExtraRun = textViewExtraRun.getText().toString();
+                        textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            extraRun = Integer.parseInt(stringExtraRun);
+                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "b");
 
-                            textViewExtraRun.setText(String.valueOf(extraRun + 2));
+                        stringExtraRun = textViewExtraRun.getText().toString();
 
-                            reusableFunctionBowler();
+                        extraRun = Integer.parseInt(stringExtraRun);
 
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-                        }
+                        textViewExtraRun.setText(String.valueOf(extraRun + numberByes + 1));
 
-                        else {
+                        reusableFunctionBowler();
 
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+                    } else {
 
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+                        stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 2));
+                        playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
 
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
+                        textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberByes + 1));
 
 
-                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
+                        stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
+                        playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
+                        textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
 
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
+                        reusableFunctionPlayer();
+                        stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
 
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
+                        secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
 
 
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
+                        stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
 
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+                        secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
 
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
+                        textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "2b");
-                            stringExtraRun = textViewExtraRun.getText().toString();
+                        stringBowlerRun = textViewBowlerRun.getText().toString();
 
-                            extraRun = Integer.parseInt(stringExtraRun);
+                        bowlerRun = Integer.parseInt(stringBowlerRun);
 
-                            textViewExtraRun.setText(String.valueOf(extraRun + 2));
-                            reusableFunctionBowler();
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
-                        }
+
+                        stringBowlerBall = textViewBowlerBall.getText().toString();
+
+                        bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+                        textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
+
+                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "b");
+                        stringExtraRun = textViewExtraRun.getText().toString();
+
+                        extraRun = Integer.parseInt(stringExtraRun);
+
+                        textViewExtraRun.setText(String.valueOf(extraRun + numberByes + 1));
+                        reusableFunctionBowler();
+
                     }
 
-                    if (item.getTitle().equals("3b"))
-                    {
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 3));
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "3b");
-
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 3));
-
-                            reusableFunctionBowler();
-
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
-                        }
-
-                        else {
-
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 3));
-
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "3b");
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 3));
-                            reusableFunctionBowler();
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-                        }
-                    }
-
-                    if (item.getTitle().equals("4b"))
-                    {
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 4));
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "4b");
-
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 4));
-
-                            reusableFunctionBowler();
-
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-                        }
-
-                        else {
-
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 4));
-
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "4b");
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 4));
-                            reusableFunctionBowler();
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
-                        }
-                    }
-
-                    if (item.getTitle().equals("5b"))
-                    {
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 5));
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "5b");
-
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 5));
-
-                            reusableFunctionBowler();
-
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
-                        }
-
-                        else {
-
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 5));
-
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "5b");
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 5));
-                            reusableFunctionBowler();
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-                        }
-                    }
-
-                    if (item.getTitle().equals("6b"))
-                    {
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 6));
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "6b");
-
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 6));
-
-                            reusableFunctionBowler();
-
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-                        }
-
-                        else {
-
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 6));
-
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "6b");
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 6));
-                            reusableFunctionBowler();
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
-                        }
-                    }
-
-                    if (item.getTitle().equals("7b"))
-                    {
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 7));
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "7b");
-
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 7));
-
-                            reusableFunctionBowler();
-
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
-                        }
-
-                        else {
-
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 7));
-
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "7b");
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 7));
-                            reusableFunctionBowler();
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-                        }
-                    }
-
-                    if (item.getTitle().equals("b + wkt"))
-                    {
-                        Toast.makeText(MatchPlayActivity.this, "wicket", Toast.LENGTH_SHORT).show();
-                    }
-                }catch (Exception e)
-                {
-                    e.printStackTrace();
+                    wideRunsServerCall(numberByes);
                 }
+
+
                 return true;
             }
         });
@@ -2079,8 +756,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-    void legByPopUp()
-    {
+    void legByPopUp() {
         popupMenuLegBy = new PopupMenu(MatchPlayActivity.this, textViewLegBy);
 
         popupMenuLegBy.getMenuInflater().inflate(R.menu.leg_by_layout, popupMenuLegBy.getMenu());
@@ -2089,22 +765,19 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                //Toast.makeText(MatchPlayActivity.this,"You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                stringBallType = item.getTitle().toString();
+                final String str1 = String.valueOf(stringBallType.charAt(0));
+                String substring = stringBallType.toString().substring(Math.max(stringBallType.length() - 2, 0));
+                Log.d("strfdwide", str1 + " " + substring);
+                int numberLegByes = Integer.parseInt(str1);
 
-                try {
-
-
-                if (item.getTitle().equals("1lb"))
-                {
-                    Toast.makeText(MatchPlayActivity.this,"You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
-
-                    if (radioButtonFirstPlayer.isChecked())
-                    {
+                if (numberLegByes % 2 == 0) {
+                    if (radioButtonFirstPlayer.isChecked()) {
                         stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
                         playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
 
-                        textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 1));
+                        textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberLegByes + 1));
 
                         stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
@@ -2140,27 +813,24 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                        textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "1lb");
+                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "lb");
 
                         stringExtraRun = textViewExtraRun.getText().toString();
 
                         extraRun = Integer.parseInt(stringExtraRun);
 
-                        textViewExtraRun.setText(String.valueOf(extraRun + 1));
+                        textViewExtraRun.setText(String.valueOf(extraRun + numberLegByes + 1));
 
                         reusableFunctionBowler();
 
-                        radioButtonFirstPlayer.setChecked(false);
-                        radioButtonSecondPlayer.setChecked(true);
-                    }
 
-                    else {
+                    } else {
 
                         stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
                         playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
 
-                        textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 1));
+                        textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberLegByes + 1));
 
 
                         stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
@@ -2196,27 +866,24 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
 
-                        textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "1lb");
+                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "lb");
                         stringExtraRun = textViewExtraRun.getText().toString();
 
                         extraRun = Integer.parseInt(stringExtraRun);
 
-                        textViewExtraRun.setText(String.valueOf(extraRun + 1));
+                        textViewExtraRun.setText(String.valueOf(extraRun + numberLegByes + 1));
                         reusableFunctionBowler();
-                        radioButtonFirstPlayer.setChecked(true);
-                        radioButtonSecondPlayer.setChecked(false);
-                    }
-                }
 
-                if (item.getTitle().equals("2lb"))
-                {
-                    if (radioButtonFirstPlayer.isChecked())
-                    {
+                    }
+
+                    wideRunsServerCall(numberLegByes);
+                } else {
+                    if (radioButtonFirstPlayer.isChecked()) {
                         stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
                         playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
 
-                        textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 2));
+                        textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberLegByes + 1));
 
                         stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
@@ -2252,27 +919,23 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                        textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "2lb");
+                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "lb");
 
                         stringExtraRun = textViewExtraRun.getText().toString();
 
                         extraRun = Integer.parseInt(stringExtraRun);
 
-                        textViewExtraRun.setText(String.valueOf(extraRun + 2));
+                        textViewExtraRun.setText(String.valueOf(extraRun + numberLegByes + 1));
 
                         reusableFunctionBowler();
 
-                        radioButtonFirstPlayer.setChecked(true);
-                        radioButtonSecondPlayer.setChecked(false);
-                    }
-
-                    else {
+                    } else {
 
                         stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
                         playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
 
-                        textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 2));
+                        textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberLegByes + 1));
 
 
                         stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
@@ -2308,586 +971,19 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
 
-                        textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "2lb");
+                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "lb");
                         stringExtraRun = textViewExtraRun.getText().toString();
 
                         extraRun = Integer.parseInt(stringExtraRun);
 
-                        textViewExtraRun.setText(String.valueOf(extraRun + 2));
+                        textViewExtraRun.setText(String.valueOf(extraRun + numberLegByes + 1));
                         reusableFunctionBowler();
-                        radioButtonFirstPlayer.setChecked(false);
-                        radioButtonSecondPlayer.setChecked(true);
                     }
+
+                    wideRunsServerCall(numberLegByes);
                 }
 
-                if (item.getTitle().equals("3lb"))
-                {
-                    if (radioButtonFirstPlayer.isChecked())
-                    {
-                        stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
-                        playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                        textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 3));
-
-                        stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                        playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                        textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                        reusableFunctionPlayer();
-                        stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                        firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                        //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                        stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                        firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                        textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                        stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                        bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                        //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                        stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                        bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                        textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                        textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "3lb");
-
-                        stringExtraRun = textViewExtraRun.getText().toString();
-
-                        extraRun = Integer.parseInt(stringExtraRun);
-
-                        textViewExtraRun.setText(String.valueOf(extraRun + 3));
-
-                        reusableFunctionBowler();
-
-                        radioButtonFirstPlayer.setChecked(false);
-                        radioButtonSecondPlayer.setChecked(true);
-                    }
-
-                    else {
-
-                        stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                        playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                        textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 3));
-
-
-                        stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                        playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                        textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                        reusableFunctionPlayer();
-                        stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                        secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                        //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                        stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                        secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                        textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                        stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                        bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                        //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                        stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                        bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                        textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                        textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "3lb");
-                        stringExtraRun = textViewExtraRun.getText().toString();
-
-                        extraRun = Integer.parseInt(stringExtraRun);
-
-                        textViewExtraRun.setText(String.valueOf(extraRun + 3));
-                        reusableFunctionBowler();
-                        radioButtonFirstPlayer.setChecked(true);
-                        radioButtonSecondPlayer.setChecked(false);
-                    }
-                }
-
-                    if (item.getTitle().equals("4lb"))
-                    {
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 4));
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "4lb");
-
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 4));
-
-                            reusableFunctionBowler();
-
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-                        }
-
-                        else {
-
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 4));
-
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "4lb");
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 4));
-                            reusableFunctionBowler();
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
-                        }
-                    }
-
-                    if (item.getTitle().equals("5lb"))
-                    {
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 5));
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "5lb");
-
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 5));
-
-                            reusableFunctionBowler();
-
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
-                        }
-
-                        else {
-
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 5));
-
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "5lb");
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 5));
-                            reusableFunctionBowler();
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-                        }
-                    }
-
-                    if (item.getTitle().equals("6lb"))
-                    {
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 6));
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "6lb");
-
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 6));
-
-                            reusableFunctionBowler();
-
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-                        }
-
-                        else {
-
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 6));
-
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "6lb");
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 6));
-                            reusableFunctionBowler();
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
-                        }
-                    }
-
-                    if (item.getTitle().equals("7lb"))
-                    {
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 7));
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "7lb");
-
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 7));
-
-                            reusableFunctionBowler();
-
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
-                        }
-
-                        else {
-
-                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 7));
-
-
-                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                            reusableFunctionPlayer();
-                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "7lb");
-                            stringExtraRun = textViewExtraRun.getText().toString();
-
-                            extraRun = Integer.parseInt(stringExtraRun);
-
-                            textViewExtraRun.setText(String.valueOf(extraRun + 7));
-                            reusableFunctionBowler();
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-                        }
-                    }
-
-                    if (item.getTitle().equals("lb + wkt"))
-                    {
-                        Toast.makeText(MatchPlayActivity.this, "wicket", Toast.LENGTH_SHORT).show();
-                    }
-                }catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
                 return true;
             }
         });
@@ -2895,8 +991,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         popupMenuLegBy.show();
     }
 
-    void noBallPopUp()
-    {
+    void noBallPopUp() {
         popupMenuNoBall = new PopupMenu(MatchPlayActivity.this, textViewNoBall);
 
         popupMenuNoBall.getMenuInflater().inflate(R.menu.no_ball_layout, popupMenuNoBall.getMenu());
@@ -2905,12 +1000,15 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                Toast.makeText(MatchPlayActivity.this,"You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                stringBallType = item.getTitle().toString();
+                final String str1 = String.valueOf(stringBallType.charAt(0));
+                String substring = stringBallType.toString().substring(Math.max(stringBallType.length() - 2, 0));
+                Log.d("strfdwide", str1 + " " + substring);
+                final int numberNoBall = Integer.parseInt(str1);
 
-                if (item.getTitle().equals("0nb"))
-                {
-                    if (radioButtonFirstPlayer.isChecked())
-                    {
+
+                if (str1.equals("0")) {
+                    if (radioButtonFirstPlayer.isChecked()) {
                         stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
                         playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
@@ -2951,7 +1049,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                        textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "0nb");
+                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "0nb");
 
                         stringExtraRun = textViewExtraRun.getText().toString();
 
@@ -2960,12 +1058,8 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                         textViewExtraRun.setText(String.valueOf(extraRun + 1));
 
                         reusableFunctionBowler();
-
-                        radioButtonFirstPlayer.setChecked(true);
-                        radioButtonSecondPlayer.setChecked(false);
-                    }
-
-                    else {
+                        wideRunsServerCall(numberNoBall);
+                    } else {
 
                         stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -3007,2609 +1101,740 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
 
-                        textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "0nb");
+                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "0nb");
                         stringExtraRun = textViewExtraRun.getText().toString();
 
                         extraRun = Integer.parseInt(stringExtraRun);
 
                         textViewExtraRun.setText(String.valueOf(extraRun + 1));
                         reusableFunctionBowler();
-                        radioButtonFirstPlayer.setChecked(false);
-                        radioButtonSecondPlayer.setChecked(true);
+
+                        wideRunsServerCall(numberNoBall);
+
                     }
+
+                } else {
+
+                    if (numberNoBall % 2 == 0) {
+
+                        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MatchPlayActivity.this);
+                        LayoutInflater inflater = MatchPlayActivity.this.getLayoutInflater();
+                        final View dialogView = inflater.inflate(R.layout.layout_no_ball, null);
+                        dialogBuilder.setView(dialogView);
+                        dialogBuilder.setCancelable(true);
+
+                        TextView textViewByes = dialogView.findViewById(R.id.textViewByesNoBall);
+
+                        TextView textViewLegByes = dialogView.findViewById(R.id.textViewLegByesNoBall);
+
+                        TextView textViewNone = dialogView.findViewById(R.id.textViewNoneNoBall);
+
+                        textViewByes.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                if (radioButtonFirstPlayer.isChecked()) {
+                                    stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+
+                                    playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+
+                                    textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberNoBall +1));
+
+                                    stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+
+                                    playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+
+                                    //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
+
+                                    reusableFunctionPlayer();
+                                    stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
+
+                                    firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
+
+                                    //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
+
+
+                                    stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
+
+                                    firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
+
+                                    //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
+
+
+                                    stringBowlerRun = textViewBowlerRun.getText().toString();
+
+                                    bowlerRun = Integer.parseInt(stringBowlerRun);
+
+                                    textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
+
+
+                                    stringBowlerBall = textViewBowlerBall.getText().toString();
+
+                                    bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+                                    //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+
+                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " "+ str1 + "nb");
+
+                                    stringExtraRun = textViewExtraRun.getText().toString();
+
+                                    extraRun = Integer.parseInt(stringExtraRun);
+
+                                    textViewExtraRun.setText(String.valueOf(extraRun + numberNoBall + 1));
+
+                                    reusableFunctionBowler();
+
+
+                                } else {
+
+                                    stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+
+                                    playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+
+                                    textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberNoBall + 1));
+
+
+                                    stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+
+                                    playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+
+                                    //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
+
+                                    reusableFunctionPlayer();
+                                    stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
+
+                                    secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
+
+                                    //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
+
+
+                                    stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
+
+                                    secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
+
+                                    //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
+
+                                    stringBowlerRun = textViewBowlerRun.getText().toString();
+
+                                    bowlerRun = Integer.parseInt(stringBowlerRun);
+
+                                    textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
+
+
+                                    stringBowlerBall = textViewBowlerBall.getText().toString();
+
+                                    bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+                                    //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
+
+                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " "+ str1 + "nb");
+                                    stringExtraRun = textViewExtraRun.getText().toString();
+
+                                    extraRun = Integer.parseInt(stringExtraRun);
+
+                                    textViewExtraRun.setText(String.valueOf(extraRun + numberNoBall + 1));
+                                    reusableFunctionBowler();
+
+                                }
+
+                                wideRunsServerCall(numberNoBall);
+
+                                dialog.dismiss();
+                            }
+                        });
+
+
+                        textViewLegByes.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                if (radioButtonFirstPlayer.isChecked()) {
+                                    stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+
+                                    playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+
+                                    textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberNoBall + 1));
+
+                                    stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+
+                                    playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+
+                                    //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
+
+                                    reusableFunctionPlayer();
+                                    stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
+
+                                    firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
+
+                                    //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
+
+
+                                    stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
+
+                                    firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
+
+                                    //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
+
+
+                                    stringBowlerRun = textViewBowlerRun.getText().toString();
+
+                                    bowlerRun = Integer.parseInt(stringBowlerRun);
+
+                                    textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
+
+
+                                    stringBowlerBall = textViewBowlerBall.getText().toString();
+
+                                    bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+                                    //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+
+                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "nb");
+
+                                    stringExtraRun = textViewExtraRun.getText().toString();
+
+                                    extraRun = Integer.parseInt(stringExtraRun);
+
+                                    textViewExtraRun.setText(String.valueOf(extraRun + numberNoBall + 1));
+
+                                    reusableFunctionBowler();
+
+                                } else {
+
+                                    stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+
+                                    playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+
+                                    textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberNoBall + 1));
+
+
+                                    stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+
+                                    playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+
+                                    //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
+
+                                    reusableFunctionPlayer();
+                                    stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
+
+                                    secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
+
+                                    //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
+
+
+                                    stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
+
+                                    secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
+
+                                    //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
+
+                                    stringBowlerRun = textViewBowlerRun.getText().toString();
+
+                                    bowlerRun = Integer.parseInt(stringBowlerRun);
+
+                                    textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
+
+
+                                    stringBowlerBall = textViewBowlerBall.getText().toString();
+
+                                    bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+                                    //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
+
+                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " "+ str1 + "nb");
+                                    stringExtraRun = textViewExtraRun.getText().toString();
+
+                                    extraRun = Integer.parseInt(stringExtraRun);
+
+                                    textViewExtraRun.setText(String.valueOf(extraRun + numberNoBall + 1));
+                                    reusableFunctionBowler();
+
+                                }
+
+                                wideRunsServerCall(numberNoBall);
+                                dialog.dismiss();
+                            }
+                        });
+
+                        textViewNone.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                if (radioButtonFirstPlayer.isChecked()) {
+                                    stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+
+                                    playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+
+                                    textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberNoBall + 1));
+
+                                    stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+
+                                    playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+
+                                    //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
+
+                                    reusableFunctionPlayer();
+                                    stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
+
+                                    firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
+
+                                    textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
+
+
+                                    stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
+
+                                    firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
+
+                                    textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
+
+
+                                    stringBowlerRun = textViewBowlerRun.getText().toString();
+
+                                    bowlerRun = Integer.parseInt(stringBowlerRun);
+
+                                    textViewBowlerRun.setText(String.valueOf(bowlerRun + 2));
+
+
+                                    stringBowlerBall = textViewBowlerBall.getText().toString();
+
+                                    bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+                                    //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+
+                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "nb");
+
+                                    stringExtraRun = textViewExtraRun.getText().toString();
+
+                                    extraRun = Integer.parseInt(stringExtraRun);
+
+                                    textViewExtraRun.setText(String.valueOf(extraRun + 1));
+
+                                    reusableFunctionBowler();
+
+                                } else {
+
+                                    stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+
+                                    playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+
+                                    textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberNoBall + 1));
+
+
+                                    stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+
+                                    playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+
+                                    //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
+
+                                    reusableFunctionPlayer();
+                                    stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
+
+                                    secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
+
+                                    textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
+
+
+                                    stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
+
+                                    secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
+
+                                    textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
+
+                                    stringBowlerRun = textViewBowlerRun.getText().toString();
+
+                                    bowlerRun = Integer.parseInt(stringBowlerRun);
+
+                                    textViewBowlerRun.setText(String.valueOf(bowlerRun + 2));
+
+
+                                    stringBowlerBall = textViewBowlerBall.getText().toString();
+
+                                    bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+                                    //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
+
+                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 +"nb");
+                                    stringExtraRun = textViewExtraRun.getText().toString();
+
+                                    extraRun = Integer.parseInt(stringExtraRun);
+
+                                    textViewExtraRun.setText(String.valueOf(extraRun + 1));
+                                    reusableFunctionBowler();
+
+                                }
+
+                                wideRunsServerCall(numberNoBall);
+                                dialog.dismiss();
+
+                            }
+                        });
+
+                        dialog = dialogBuilder.create();
+                        dialog.show();
+
+
+                    } else {
+
+                        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MatchPlayActivity.this);
+                        LayoutInflater inflater = MatchPlayActivity.this.getLayoutInflater();
+                        final View dialogView = inflater.inflate(R.layout.layout_no_ball, null);
+                        dialogBuilder.setView(dialogView);
+                        dialogBuilder.setCancelable(true);
+
+                        TextView textViewByes = dialogView.findViewById(R.id.textViewByesNoBall);
+
+                        TextView textViewLegByes = dialogView.findViewById(R.id.textViewLegByesNoBall);
+
+                        TextView textViewNone = dialogView.findViewById(R.id.textViewNoneNoBall);
+
+                        textViewByes.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                if (radioButtonFirstPlayer.isChecked()) {
+                                    stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+
+                                    playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+
+                                    textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberNoBall +1));
+
+                                    stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+
+                                    playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+
+                                    //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
+
+                                    reusableFunctionPlayer();
+                                    stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
+
+                                    firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
+
+                                    //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
+
+
+                                    stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
+
+                                    firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
+
+                                    //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
+
+
+                                    stringBowlerRun = textViewBowlerRun.getText().toString();
+
+                                    bowlerRun = Integer.parseInt(stringBowlerRun);
+
+                                    textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
+
+
+                                    stringBowlerBall = textViewBowlerBall.getText().toString();
+
+                                    bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+                                    //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+
+                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " "+ str1 + "nb");
+
+                                    stringExtraRun = textViewExtraRun.getText().toString();
+
+                                    extraRun = Integer.parseInt(stringExtraRun);
+
+                                    textViewExtraRun.setText(String.valueOf(extraRun + numberNoBall + 1));
+
+                                    reusableFunctionBowler();
+
+
+                                } else {
+
+                                    stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+
+                                    playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+
+                                    textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberNoBall + 1));
+
+
+                                    stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+
+                                    playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+
+                                    //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
+
+                                    reusableFunctionPlayer();
+                                    stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
+
+                                    secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
+
+                                    //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
+
+
+                                    stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
+
+                                    secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
+
+                                    //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
+
+                                    stringBowlerRun = textViewBowlerRun.getText().toString();
+
+                                    bowlerRun = Integer.parseInt(stringBowlerRun);
+
+                                    textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
+
+
+                                    stringBowlerBall = textViewBowlerBall.getText().toString();
+
+                                    bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+                                    //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
+
+                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " "+ str1 + "nb");
+                                    stringExtraRun = textViewExtraRun.getText().toString();
+
+                                    extraRun = Integer.parseInt(stringExtraRun);
+
+                                    textViewExtraRun.setText(String.valueOf(extraRun + numberNoBall + 1));
+                                    reusableFunctionBowler();
+
+                                }
+
+                                wideRunsServerCall(numberNoBall);
+
+                                dialog.dismiss();
+                            }
+                        });
+
+
+                        textViewLegByes.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                if (radioButtonFirstPlayer.isChecked()) {
+                                    stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+
+                                    playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+
+                                    textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberNoBall + 1));
+
+                                    stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+
+                                    playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+
+                                    //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
+
+                                    reusableFunctionPlayer();
+                                    stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
+
+                                    firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
+
+                                    //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
+
+
+                                    stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
+
+                                    firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
+
+                                    //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
+
+
+                                    stringBowlerRun = textViewBowlerRun.getText().toString();
+
+                                    bowlerRun = Integer.parseInt(stringBowlerRun);
+
+                                    textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
+
+
+                                    stringBowlerBall = textViewBowlerBall.getText().toString();
+
+                                    bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+                                    //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+
+                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "nb");
+
+                                    stringExtraRun = textViewExtraRun.getText().toString();
+
+                                    extraRun = Integer.parseInt(stringExtraRun);
+
+                                    textViewExtraRun.setText(String.valueOf(extraRun + numberNoBall + 1));
+
+                                    reusableFunctionBowler();
+
+                                } else {
+
+                                    stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+
+                                    playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+
+                                    textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberNoBall + 1));
+
+
+                                    stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+
+                                    playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+
+                                    //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
+
+                                    reusableFunctionPlayer();
+                                    stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
+
+                                    secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
+
+                                    //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
+
+
+                                    stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
+
+                                    secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
+
+                                    //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
+
+                                    stringBowlerRun = textViewBowlerRun.getText().toString();
+
+                                    bowlerRun = Integer.parseInt(stringBowlerRun);
+
+                                    textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
+
+
+                                    stringBowlerBall = textViewBowlerBall.getText().toString();
+
+                                    bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+                                    //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
+
+                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " "+ str1 + "nb");
+                                    stringExtraRun = textViewExtraRun.getText().toString();
+
+                                    extraRun = Integer.parseInt(stringExtraRun);
+
+                                    textViewExtraRun.setText(String.valueOf(extraRun + numberNoBall + 1));
+                                    reusableFunctionBowler();
+
+                                }
+
+                                wideRunsServerCall(numberNoBall);
+                                dialog.dismiss();
+                            }
+                        });
+
+                        textViewNone.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                if (radioButtonFirstPlayer.isChecked()) {
+                                    stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+
+                                    playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+
+                                    textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberNoBall + 1));
+
+                                    stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+
+                                    playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+
+                                    //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
+
+                                    reusableFunctionPlayer();
+                                    stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
+
+                                    firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
+
+                                    textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
+
+
+                                    stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
+
+                                    firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
+
+                                    textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
+
+
+                                    stringBowlerRun = textViewBowlerRun.getText().toString();
+
+                                    bowlerRun = Integer.parseInt(stringBowlerRun);
+
+                                    textViewBowlerRun.setText(String.valueOf(bowlerRun + 2));
+
+
+                                    stringBowlerBall = textViewBowlerBall.getText().toString();
+
+                                    bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+                                    //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+
+                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "nb");
+
+                                    stringExtraRun = textViewExtraRun.getText().toString();
+
+                                    extraRun = Integer.parseInt(stringExtraRun);
+
+                                    textViewExtraRun.setText(String.valueOf(extraRun + 1));
+
+                                    reusableFunctionBowler();
+
+                                } else {
+
+                                    stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+
+                                    playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+
+                                    textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberNoBall + 1));
+
+
+                                    stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+
+                                    playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+
+                                    //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
+
+                                    reusableFunctionPlayer();
+                                    stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
+
+                                    secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
+
+                                    textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
+
+
+                                    stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
+
+                                    secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
+
+                                    textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
+
+                                    stringBowlerRun = textViewBowlerRun.getText().toString();
+
+                                    bowlerRun = Integer.parseInt(stringBowlerRun);
+
+                                    textViewBowlerRun.setText(String.valueOf(bowlerRun + 2));
+
+
+                                    stringBowlerBall = textViewBowlerBall.getText().toString();
+
+                                    bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+                                    //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
+
+                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 +"nb");
+                                    stringExtraRun = textViewExtraRun.getText().toString();
+
+                                    extraRun = Integer.parseInt(stringExtraRun);
+
+                                    textViewExtraRun.setText(String.valueOf(extraRun + 1));
+                                    reusableFunctionBowler();
+
+                                }
+
+                                wideRunsServerCall(numberNoBall);
+                                dialog.dismiss();
+
+                            }
+                        });
+
+                        dialog = dialogBuilder.create();
+                        dialog.show();
+                    }
+
                 }
 
-                if (item.getTitle().equals("1nb"))
-                {
-                    final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MatchPlayActivity.this);
-                    LayoutInflater inflater = MatchPlayActivity.this.getLayoutInflater();
-                    final View dialogView = inflater.inflate(R.layout.layout_no_ball, null);
-                    dialogBuilder.setView(dialogView);
-                    dialogBuilder.setCancelable(true);
 
-                    TextView textViewByes = dialogView.findViewById(R.id.textViewByesNoBall);
-
-                    TextView textViewLegByes = dialogView.findViewById(R.id.textViewLegByesNoBall);
-
-                    TextView textViewNone = dialogView.findViewById(R.id.textViewNoneNoBall);
-
-                    textViewByes.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (radioButtonFirstPlayer.isChecked())
-                            {
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 2));
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                                firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                                //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                                stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                                firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                                //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "1nb");
-
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 2));
-
-                                reusableFunctionBowler();
-
-                                radioButtonFirstPlayer.setChecked(false);
-                                radioButtonSecondPlayer.setChecked(true);
-                            }
-
-                            else {
-
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 2));
-
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                                secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                                //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                                stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                                secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                                //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "1nb");
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 2));
-                                reusableFunctionBowler();
-                                radioButtonFirstPlayer.setChecked(true);
-                                radioButtonSecondPlayer.setChecked(false);
-                            }
-
-                            dialog.dismiss();
-                        }
-                    });
-
-
-
-                    textViewLegByes.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (radioButtonFirstPlayer.isChecked())
-                            {
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 2));
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                                firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                                //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                                stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                                firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                                //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "1nb");
-
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 2));
-
-                                reusableFunctionBowler();
-
-                                radioButtonFirstPlayer.setChecked(false);
-                                radioButtonSecondPlayer.setChecked(true);
-                            }
-
-                            else {
-
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 2));
-
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                                secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                                //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                                stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                                secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                                //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "1nb");
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 2));
-                                reusableFunctionBowler();
-                                radioButtonFirstPlayer.setChecked(true);
-                                radioButtonSecondPlayer.setChecked(false);
-                            }
-                            dialog.dismiss();
-                        }
-                    });
-
-                    textViewNone.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (radioButtonFirstPlayer.isChecked())
-                            {
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 2));
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                                firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                                textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                                stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                                firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                                textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 2));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "1nb");
-
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 1));
-
-                                reusableFunctionBowler();
-
-                                radioButtonFirstPlayer.setChecked(false);
-                                radioButtonSecondPlayer.setChecked(true);
-                            }
-
-                            else {
-
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 2));
-
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                                secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                                textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                                stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                                secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                                textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 2));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "1nb");
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 1));
-                                reusableFunctionBowler();
-                                radioButtonFirstPlayer.setChecked(true);
-                                radioButtonSecondPlayer.setChecked(false);
-                            }
-                            dialog.dismiss();
-
-                        }
-                    });
-
-                    dialog = dialogBuilder.create();
-                    dialog.show();
-                }
-                if (item.getTitle().equals("2nb"))
-                {
-                    final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MatchPlayActivity.this);
-                    LayoutInflater inflater = MatchPlayActivity.this.getLayoutInflater();
-                    final View dialogView = inflater.inflate(R.layout.layout_no_ball, null);
-                    dialogBuilder.setView(dialogView);
-                    dialogBuilder.setCancelable(true);
-
-                    TextView textViewByes = dialogView.findViewById(R.id.textViewByesNoBall);
-
-                    TextView textViewLegByes = dialogView.findViewById(R.id.textViewLegByesNoBall);
-
-                    TextView textViewNone = dialogView.findViewById(R.id.textViewNoneNoBall);
-
-                    textViewByes.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (radioButtonFirstPlayer.isChecked())
-                            {
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 3));
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                                firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                                //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                                stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                                firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                                //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 2));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "2nb");
-
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 3));
-
-                                reusableFunctionBowler();
-
-                                radioButtonFirstPlayer.setChecked(true);
-                                radioButtonSecondPlayer.setChecked(false);
-                            }
-
-                            else {
-
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 3));
-
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                                secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                                //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                                stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                                secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                                //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 2));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "2nb");
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 3));
-                                reusableFunctionBowler();
-                                radioButtonFirstPlayer.setChecked(false);
-                                radioButtonSecondPlayer.setChecked(true);
-                            }
-
-                            dialog.dismiss();
-                        }
-                    });
-
-
-
-                    textViewLegByes.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (radioButtonFirstPlayer.isChecked())
-                            {
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 3));
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                                firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                                //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                                stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                                firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                                //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 2));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "2nb");
-
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 3));
-
-                                reusableFunctionBowler();
-
-                                radioButtonFirstPlayer.setChecked(true);
-                                radioButtonSecondPlayer.setChecked(false);
-                            }
-
-                            else {
-
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 3));
-
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                                secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                                //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                                stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                                secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                                //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 2));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "2nb");
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 2));
-                                reusableFunctionBowler();
-                                radioButtonFirstPlayer.setChecked(false);
-                                radioButtonSecondPlayer.setChecked(true);
-                            }
-                            dialog.dismiss();
-                        }
-                    });
-
-                    textViewNone.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (radioButtonFirstPlayer.isChecked())
-                            {
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 3));
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                                firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                                textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 2));
-
-
-                                stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                                firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                                textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 2));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "2nb");
-
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 3));
-
-                                reusableFunctionBowler();
-
-                                radioButtonFirstPlayer.setChecked(true);
-                                radioButtonSecondPlayer.setChecked(false);
-                            }
-
-                            else {
-
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 3));
-
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                                secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                                textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 2));
-
-
-                                stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                                secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                                textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 2));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "2nb");
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 3));
-                                reusableFunctionBowler();
-                                radioButtonFirstPlayer.setChecked(false);
-                                radioButtonSecondPlayer.setChecked(true);
-                            }
-                            dialog.dismiss();
-
-                        }
-                    });
-
-                    dialog = dialogBuilder.create();
-                    dialog.show();
-                }
-
-                if (item.getTitle().equals("3nb"))
-                {
-                    final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MatchPlayActivity.this);
-                    LayoutInflater inflater = MatchPlayActivity.this.getLayoutInflater();
-                    final View dialogView = inflater.inflate(R.layout.layout_no_ball, null);
-                    dialogBuilder.setView(dialogView);
-                    dialogBuilder.setCancelable(true);
-
-                    TextView textViewByes = dialogView.findViewById(R.id.textViewByesNoBall);
-
-                    TextView textViewLegByes = dialogView.findViewById(R.id.textViewLegByesNoBall);
-
-                    TextView textViewNone = dialogView.findViewById(R.id.textViewNoneNoBall);
-
-                    textViewByes.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (radioButtonFirstPlayer.isChecked())
-                            {
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 4));
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                                firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                                //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                                stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                                firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                                //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 3));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "3nb");
-
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 4));
-
-                                reusableFunctionBowler();
-
-                                radioButtonFirstPlayer.setChecked(false);
-                                radioButtonSecondPlayer.setChecked(true);
-                            }
-
-                            else {
-
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 4));
-
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                                secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                                //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                                stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                                secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                                //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 3));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "3nb");
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 4));
-                                reusableFunctionBowler();
-                                radioButtonFirstPlayer.setChecked(true);
-                                radioButtonSecondPlayer.setChecked(false);
-                            }
-
-                            dialog.dismiss();
-                        }
-                    });
-
-
-
-                    textViewLegByes.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (radioButtonFirstPlayer.isChecked())
-                            {
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 4));
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                                firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                                //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                                stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                                firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                                //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 3));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "3nb");
-
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 4));
-
-                                reusableFunctionBowler();
-
-                                radioButtonFirstPlayer.setChecked(false);
-                                radioButtonSecondPlayer.setChecked(true);
-                            }
-
-                            else {
-
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 4));
-
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                                secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                                //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                                stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                                secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                                //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 3));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "3nb");
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 4));
-                                reusableFunctionBowler();
-                                radioButtonFirstPlayer.setChecked(true);
-                                radioButtonSecondPlayer.setChecked(false);
-                            }
-                            dialog.dismiss();
-                        }
-                    });
-
-                    textViewNone.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (radioButtonFirstPlayer.isChecked())
-                            {
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 4));
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                                firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                                textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 3));
-
-
-                                stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                                firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                                textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 3));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "3nb");
-
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 4));
-
-                                reusableFunctionBowler();
-
-                                radioButtonFirstPlayer.setChecked(false);
-                                radioButtonSecondPlayer.setChecked(true);
-                            }
-
-                            else {
-
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 4));
-
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                                secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                                textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 3));
-
-
-                                stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                                secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                                textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 3));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "3nb");
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 4));
-                                reusableFunctionBowler();
-                                radioButtonFirstPlayer.setChecked(true);
-                                radioButtonSecondPlayer.setChecked(false);
-                            }
-                            dialog.dismiss();
-
-                        }
-                    });
-
-                    dialog = dialogBuilder.create();
-                    dialog.show();
-                }
-
-                if (item.getTitle().equals("4nb"))
-                {
-                    final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MatchPlayActivity.this);
-                    LayoutInflater inflater = MatchPlayActivity.this.getLayoutInflater();
-                    final View dialogView = inflater.inflate(R.layout.layout_no_ball, null);
-                    dialogBuilder.setView(dialogView);
-                    dialogBuilder.setCancelable(true);
-
-                    TextView textViewByes = dialogView.findViewById(R.id.textViewByesNoBall);
-
-                    TextView textViewLegByes = dialogView.findViewById(R.id.textViewLegByesNoBall);
-
-                    TextView textViewNone = dialogView.findViewById(R.id.textViewNoneNoBall);
-
-                    textViewByes.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (radioButtonFirstPlayer.isChecked())
-                            {
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 5));
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                                firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                                //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                                stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                                firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                                //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 4));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "4nb");
-
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 5));
-
-                                reusableFunctionBowler();
-
-                                radioButtonFirstPlayer.setChecked(true);
-                                radioButtonSecondPlayer.setChecked(false);
-                            }
-
-                            else {
-
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 5));
-
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                                secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                                //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                                stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                                secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                                //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 4));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "4nb");
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 5));
-                                reusableFunctionBowler();
-                                radioButtonFirstPlayer.setChecked(false);
-                                radioButtonSecondPlayer.setChecked(true);
-                            }
-
-                            dialog.dismiss();
-                        }
-                    });
-
-
-
-                    textViewLegByes.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (radioButtonFirstPlayer.isChecked())
-                            {
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 5));
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                                firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                                //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                                stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                                firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                                //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 4));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "4nb");
-
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 5));
-
-                                reusableFunctionBowler();
-
-                                radioButtonFirstPlayer.setChecked(true);
-                                radioButtonSecondPlayer.setChecked(false);
-                            }
-
-                            else {
-
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 5));
-
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                                secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                                //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                                stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                                secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                                //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 4));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "4nb");
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 5));
-                                reusableFunctionBowler();
-                                radioButtonFirstPlayer.setChecked(false);
-                                radioButtonSecondPlayer.setChecked(true);
-                            }
-                            dialog.dismiss();
-                        }
-                    });
-
-                    textViewNone.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (radioButtonFirstPlayer.isChecked())
-                            {
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 5));
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                                firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                                textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 4));
-
-
-                                stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                                firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                                textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 4));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "4nb");
-
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 5));
-
-                                reusableFunctionBowler();
-
-                                radioButtonFirstPlayer.setChecked(true);
-                                radioButtonSecondPlayer.setChecked(false);
-                            }
-
-                            else {
-
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 5));
-
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                                secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                                textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 4));
-
-
-                                stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                                secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                                textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 4));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "4nb");
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 5));
-                                reusableFunctionBowler();
-                                radioButtonFirstPlayer.setChecked(true);
-                                radioButtonSecondPlayer.setChecked(false);
-                            }
-                            dialog.dismiss();
-
-                        }
-                    });
-
-                    dialog = dialogBuilder.create();
-                    dialog.show();
-                }
-
-                if (item.getTitle().equals("5nb"))
-                {
-                    final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MatchPlayActivity.this);
-                    LayoutInflater inflater = MatchPlayActivity.this.getLayoutInflater();
-                    final View dialogView = inflater.inflate(R.layout.layout_no_ball, null);
-                    dialogBuilder.setView(dialogView);
-                    dialogBuilder.setCancelable(true);
-
-                    TextView textViewByes = dialogView.findViewById(R.id.textViewByesNoBall);
-
-                    TextView textViewLegByes = dialogView.findViewById(R.id.textViewLegByesNoBall);
-
-                    TextView textViewNone = dialogView.findViewById(R.id.textViewNoneNoBall);
-
-                    textViewByes.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (radioButtonFirstPlayer.isChecked())
-                            {
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 6));
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                                firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                                //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                                stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                                firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                                //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 5));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "5nb");
-
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 6));
-
-                                reusableFunctionBowler();
-
-                                radioButtonFirstPlayer.setChecked(false);
-                                radioButtonSecondPlayer.setChecked(true);
-                            }
-
-                            else {
-
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 6));
-
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                                secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                                //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                                stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                                secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                                //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 5));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "5nb");
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 6));
-                                reusableFunctionBowler();
-                                radioButtonFirstPlayer.setChecked(true);
-                                radioButtonSecondPlayer.setChecked(false);
-                            }
-
-                            dialog.dismiss();
-                        }
-                    });
-
-
-
-                    textViewLegByes.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (radioButtonFirstPlayer.isChecked())
-                            {
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 6));
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                                firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                                //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                                stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                                firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                                //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 5));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "5nb");
-
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 6));
-
-                                reusableFunctionBowler();
-
-                                radioButtonFirstPlayer.setChecked(false);
-                                radioButtonSecondPlayer.setChecked(true);
-                            }
-
-                            else {
-
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 6));
-
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                                secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                                //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                                stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                                secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                                //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 5));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "5nb");
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 6));
-                                reusableFunctionBowler();
-                                radioButtonFirstPlayer.setChecked(true);
-                                radioButtonSecondPlayer.setChecked(false);
-                            }
-                            dialog.dismiss();
-                        }
-                    });
-
-                    textViewNone.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (radioButtonFirstPlayer.isChecked())
-                            {
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 6));
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                                firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                                textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 5));
-
-
-                                stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                                firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                                textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 5));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "5nb");
-
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 6));
-
-                                reusableFunctionBowler();
-
-                                radioButtonFirstPlayer.setChecked(false);
-                                radioButtonSecondPlayer.setChecked(true);
-                            }
-
-                            else {
-
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 6));
-
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                                secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                                textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 5));
-
-
-                                stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                                secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                                textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 5));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "5nb");
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 6));
-                                reusableFunctionBowler();
-                                radioButtonFirstPlayer.setChecked(false);
-                                radioButtonSecondPlayer.setChecked(true);
-                            }
-                            dialog.dismiss();
-
-                        }
-                    });
-
-                    dialog = dialogBuilder.create();
-                    dialog.show();
-                }
-
-                if (item.getTitle().equals("6nb"))
-                {
-                    final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MatchPlayActivity.this);
-                    LayoutInflater inflater = MatchPlayActivity.this.getLayoutInflater();
-                    final View dialogView = inflater.inflate(R.layout.layout_no_ball, null);
-                    dialogBuilder.setView(dialogView);
-                    dialogBuilder.setCancelable(true);
-
-                    TextView textViewByes = dialogView.findViewById(R.id.textViewByesNoBall);
-
-                    TextView textViewLegByes = dialogView.findViewById(R.id.textViewLegByesNoBall);
-
-                    TextView textViewNone = dialogView.findViewById(R.id.textViewNoneNoBall);
-
-                    textViewByes.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (radioButtonFirstPlayer.isChecked())
-                            {
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 7));
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                                firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                                //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                                stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                                firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                                //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 6));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "6nb");
-
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 7));
-
-                                reusableFunctionBowler();
-
-                                radioButtonFirstPlayer.setChecked(true);
-                                radioButtonSecondPlayer.setChecked(false);
-                            }
-
-                            else {
-
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 7));
-
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                                secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                                //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                                stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                                secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                                //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 6));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "6nb");
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 7));
-                                reusableFunctionBowler();
-                                radioButtonFirstPlayer.setChecked(false);
-                                radioButtonSecondPlayer.setChecked(true);
-                            }
-
-                            dialog.dismiss();
-                        }
-                    });
-
-
-
-                    textViewLegByes.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (radioButtonFirstPlayer.isChecked())
-                            {
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 7));
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                                firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                                //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                                stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                                firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                                //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 6));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "6nb");
-
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 7));
-
-                                reusableFunctionBowler();
-
-                                radioButtonFirstPlayer.setChecked(true);
-                                radioButtonSecondPlayer.setChecked(false);
-                            }
-
-                            else {
-
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 7));
-
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                                secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                                //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                                stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                                secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                                //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 6));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "6nb");
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 7));
-                                reusableFunctionBowler();
-                                radioButtonFirstPlayer.setChecked(false);
-                                radioButtonSecondPlayer.setChecked(true);
-                            }
-                            dialog.dismiss();
-                        }
-                    });
-
-                    textViewNone.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (radioButtonFirstPlayer.isChecked())
-                            {
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 7));
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                                firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                                textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 6));
-
-
-                                stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                                firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                                textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 6));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "6nb");
-
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 7));
-
-                                reusableFunctionBowler();
-
-                                radioButtonFirstPlayer.setChecked(true);
-                                radioButtonSecondPlayer.setChecked(false);
-                            }
-
-                            else {
-
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 7));
-
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                                secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                                textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 6));
-
-
-                                stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                                secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                                textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 6));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "6nb");
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 7));
-                                reusableFunctionBowler();
-                                radioButtonFirstPlayer.setChecked(false);
-                                radioButtonSecondPlayer.setChecked(true);
-                            }
-                            dialog.dismiss();
-
-                        }
-                    });
-
-                    dialog = dialogBuilder.create();
-                    dialog.show();
-                }
-
-                if (item.getTitle().equals("7nb"))
-                {
-                    final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MatchPlayActivity.this);
-                    LayoutInflater inflater = MatchPlayActivity.this.getLayoutInflater();
-                    final View dialogView = inflater.inflate(R.layout.layout_no_ball, null);
-                    dialogBuilder.setView(dialogView);
-                    dialogBuilder.setCancelable(true);
-
-                    TextView textViewByes = dialogView.findViewById(R.id.textViewByesNoBall);
-
-                    TextView textViewLegByes = dialogView.findViewById(R.id.textViewLegByesNoBall);
-
-                    TextView textViewNone = dialogView.findViewById(R.id.textViewNoneNoBall);
-
-                    textViewByes.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (radioButtonFirstPlayer.isChecked())
-                            {
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 8));
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                                firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                                //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                                stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                                firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                                //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 7));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "7nb");
-
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 8));
-
-                                reusableFunctionBowler();
-
-                                radioButtonFirstPlayer.setChecked(false);
-                                radioButtonSecondPlayer.setChecked(true);
-                            }
-
-                            else {
-
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 8));
-
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                                secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                                //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                                stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                                secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                                //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 7));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "7nb");
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 8));
-                                reusableFunctionBowler();
-                                radioButtonFirstPlayer.setChecked(true);
-                                radioButtonSecondPlayer.setChecked(false);
-                            }
-
-                            dialog.dismiss();
-                        }
-                    });
-
-
-
-                    textViewLegByes.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (radioButtonFirstPlayer.isChecked())
-                            {
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 8));
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                                firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                                //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-                                stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                                firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                                //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 7));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "7nb");
-
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 8));
-
-                                reusableFunctionBowler();
-
-                                radioButtonFirstPlayer.setChecked(false);
-                                radioButtonSecondPlayer.setChecked(true);
-                            }
-
-                            else {
-
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 8));
-
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                                secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                                //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-                                stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                                secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                                //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 7));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "7nb");
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 8));
-                                reusableFunctionBowler();
-                                radioButtonFirstPlayer.setChecked(true);
-                                radioButtonSecondPlayer.setChecked(false);
-                            }
-                            dialog.dismiss();
-                        }
-                    });
-
-                    textViewNone.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            if (radioButtonFirstPlayer.isChecked())
-                            {
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 8));
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                                firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                                textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 7));
-
-
-                                stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                                firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                                textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 7));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "7nb");
-
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 8));
-
-                                reusableFunctionBowler();
-
-                                radioButtonFirstPlayer.setChecked(false);
-                                radioButtonSecondPlayer.setChecked(true);
-                            }
-
-                            else {
-
-                                stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                                playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                                textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 8));
-
-
-                                stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                                playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                                //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-                                reusableFunctionPlayer();
-                                stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                                secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                                textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 7));
-
-
-                                stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                                secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                                textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-                                stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                                bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                                textViewBowlerRun.setText(String.valueOf(bowlerRun + 7));
-
-
-                                stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                                bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                                //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-                                textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "7nb");
-                                stringExtraRun = textViewExtraRun.getText().toString();
-
-                                extraRun = Integer.parseInt(stringExtraRun);
-
-                                textViewExtraRun.setText(String.valueOf(extraRun + 8));
-                                reusableFunctionBowler();
-                                radioButtonFirstPlayer.setChecked(true);
-                                radioButtonSecondPlayer.setChecked(false);
-                            }
-                            dialog.dismiss();
-
-                        }
-                    });
-
-                    dialog = dialogBuilder.create();
-                    dialog.show();
-                }
-
-                if (item.getTitle().equals("nb + wkt"))
-                {
+                if (item.getTitle().equals("nb + wkt")) {
                     Toast.makeText(MatchPlayActivity.this, "No Ball And Wicket", Toast.LENGTH_SHORT).show();
                 }
                 return true;
@@ -5619,8 +1844,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-    void wicketPopUp()
-    {
+    void wicketPopUp() {
         popupMenuWicket = new PopupMenu(MatchPlayActivity.this, textViewWicket);
 
         popupMenuWicket.getMenuInflater().inflate(R.menu.wicket_layout, popupMenuWicket.getMenu());
@@ -5631,114 +1855,104 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
 //                if (item.getTitle().equals("Bowled"))
 //                {
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MatchPlayActivity.this);
-                    alertDialogBuilder.setMessage("Are you sure, You wanted to make decision");
-                            alertDialogBuilder.setPositiveButton("yes",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface arg0, int arg1) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MatchPlayActivity.this);
+                alertDialogBuilder.setMessage("Are you sure, You wanted to make decision");
+                alertDialogBuilder.setPositiveButton("yes",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
 
-                                            if (item.getTitle().equals("Bowled")){
+                                if (item.getTitle().equals("Bowled")) {
 
-                                                DialogFragment firstDialog = new FirstDialog();
-                                                firstDialog.show(getFragmentManager(),"fgggggggg");
-                                                getBatsmanDetails();
+                                    DialogFragment firstDialog = new FirstDialog();
+                                    firstDialog.show(getFragmentManager(), "fgggggggg");
+                                    getBatsmanDetails();
 
-                                            }
+                                }
 
-                                            if (item.getTitle().equals("LBW"))
-                                            {
-                                                DialogFragment firstDialog = new FirstDialog();
-                                                firstDialog.show(getFragmentManager(),"fgggggggg");
-                                                getBatsmanDetails();
-                                            }
+                                if (item.getTitle().equals("LBW")) {
+                                    DialogFragment firstDialog = new FirstDialog();
+                                    firstDialog.show(getFragmentManager(), "fgggggggg");
+                                    getBatsmanDetails();
+                                }
 
-                                            if (item.getTitle().equals("Caught & Bowled"))
-                                            {
-                                                DialogFragment firstDialog = new FirstDialog();
-                                                firstDialog.show(getFragmentManager(),"fgggggggg");
-                                                getBatsmanDetails();
-                                            }
+                                if (item.getTitle().equals("Caught & Bowled")) {
+                                    DialogFragment firstDialog = new FirstDialog();
+                                    firstDialog.show(getFragmentManager(), "fgggggggg");
+                                    getBatsmanDetails();
+                                }
 
 
-                                            if (item.getTitle().equals("Retired"))
-                                            {
-                                                DialogFragment firstDialog = new FirstDialog();
-                                                firstDialog.show(getFragmentManager(),"fgggggggg");
-                                                getBatsmanDetails();
-                                            }
+                                if (item.getTitle().equals("Retired")) {
+                                    DialogFragment firstDialog = new FirstDialog();
+                                    firstDialog.show(getFragmentManager(), "fgggggggg");
+                                    getBatsmanDetails();
+                                }
 
-                                            if (item.getTitle().equals("Obstructing The Field"))
-                                            {
-                                                DialogFragment firstDialog = new FirstDialog();
-                                                firstDialog.show(getFragmentManager(),"fgggggggg");
-                                                getBatsmanDetails();
-                                            }
+                                if (item.getTitle().equals("Obstructing The Field")) {
+                                    DialogFragment firstDialog = new FirstDialog();
+                                    firstDialog.show(getFragmentManager(), "fgggggggg");
+                                    getBatsmanDetails();
+                                }
 
-                                            if (item.getTitle().equals("Handling The Ball"))
-                                            {
-                                                DialogFragment firstDialog = new FirstDialog();
-                                                firstDialog.show(getFragmentManager(),"fgggggggg");
-                                                getBatsmanDetails();
-                                            }
+                                if (item.getTitle().equals("Handling The Ball")) {
+                                    DialogFragment firstDialog = new FirstDialog();
+                                    firstDialog.show(getFragmentManager(), "fgggggggg");
+                                    getBatsmanDetails();
+                                }
 
-                                            if (item.getTitle().equals("Caught"))
-                                            {
-                                                Toast.makeText(MatchPlayActivity.this, "Caught", Toast.LENGTH_SHORT).show();
-                                                DialogFragment firstDialogCaught = new FirstDialogCaught();
-                                                firstDialogCaught.show(getFragmentManager(),"fgggggggg");
-                                                getBatsmanDetails();
+                                if (item.getTitle().equals("Caught")) {
+                                    Toast.makeText(MatchPlayActivity.this, "Caught", Toast.LENGTH_SHORT).show();
+                                    DialogFragment firstDialogCaught = new FirstDialogCaught();
+                                    firstDialogCaught.show(getFragmentManager(), "fgggggggg");
+                                    getBatsmanDetails();
 
-                                            }
+                                }
 
-                                            if (item.getTitle().equals("Stumped"))
-                                            {
-                                                Toast.makeText(MatchPlayActivity.this, "Stumped", Toast.LENGTH_SHORT).show();
-                                                DialogFragment firstDialogStumped = new FirstDialogStumped();
-                                                firstDialogStumped.show(getFragmentManager(),"fgggggggg");
+                                if (item.getTitle().equals("Stumped")) {
+                                    Toast.makeText(MatchPlayActivity.this, "Stumped", Toast.LENGTH_SHORT).show();
+                                    DialogFragment firstDialogStumped = new FirstDialogStumped();
+                                    firstDialogStumped.show(getFragmentManager(), "fgggggggg");
 
-                                                getBatsmanDetails();
-                                            }
+                                    getBatsmanDetails();
+                                }
 
-                                            if (item.getTitle().equals("Hit Wicket"))
-                                            {
-                                                Toast.makeText(MatchPlayActivity.this, "Hit Wicket", Toast.LENGTH_SHORT).show();
-                                                DialogFragment firstDialogStumped = new FirstDialogStumped();
-                                                firstDialogStumped.show(getFragmentManager(),"fgggggggg");
+                                if (item.getTitle().equals("Hit Wicket")) {
+                                    Toast.makeText(MatchPlayActivity.this, "Hit Wicket", Toast.LENGTH_SHORT).show();
+                                    DialogFragment firstDialogStumped = new FirstDialogStumped();
+                                    firstDialogStumped.show(getFragmentManager(), "fgggggggg");
 
-                                                getBatsmanDetails();
-                                            }
+                                    getBatsmanDetails();
+                                }
 
-                                            if (item.getTitle().equals("Run Out"))
-                                            {
-                                                Toast.makeText(MatchPlayActivity.this, "Run Out", Toast.LENGTH_SHORT).show();
+                                if (item.getTitle().equals("Run Out")) {
+                                    Toast.makeText(MatchPlayActivity.this, "Run Out", Toast.LENGTH_SHORT).show();
 
-                                                try {
+                                    try {
 
 
-                                                DialogFragment firstDialogRunOut = new FirstDialogRunOut();
-                                                firstDialogRunOut.show(getFragmentManager(),"fgggggggg");
+                                        DialogFragment firstDialogRunOut = new FirstDialogRunOut();
+                                        firstDialogRunOut.show(getFragmentManager(), "fgggggggg");
 
-                                                getBatsmanDetails();
-                                                }catch (Exception e)
-                                                {
-                                                    e.printStackTrace();
-                                                }
-                                            }
+                                        getBatsmanDetails();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
 
-                                        }
-                                    });
+                            }
+                        });
 
-                            alertDialogBuilder.setNegativeButton("No",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
+                alertDialogBuilder.setNegativeButton("No",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                                        }
-                                    });
+                            }
+                        });
 
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    alertDialog.show();
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
 
 
                 return true;
@@ -5747,8 +1961,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         popupMenuWicket.show();
     }
 
-    void undoPopUp()
-    {
+    void undoPopUp() {
         popupMenuUndo = new PopupMenu(MatchPlayActivity.this, textViewUndo);
 
         popupMenuUndo.getMenuInflater().inflate(R.menu.undo_layout, popupMenuUndo.getMenu());
@@ -5757,7 +1970,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                Toast.makeText(MatchPlayActivity.this,"You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MatchPlayActivity.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
@@ -5765,8 +1978,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         popupMenuUndo.show();
     }
 
-    void dotPopUp()
-    {
+    void dotPopUp() {
         popupMenuDot = new PopupMenu(MatchPlayActivity.this, textViewDot);
 
         popupMenuDot.getMenuInflater().inflate(R.menu.dot_layout, popupMenuDot.getMenu());
@@ -5775,7 +1987,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                Toast.makeText(MatchPlayActivity.this,"You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MatchPlayActivity.this, "You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
@@ -5784,858 +1996,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
     }
 
 
-    void zeroButtonOperation(){
-
-
-        if (radioButtonFirstPlayer.isChecked())
-        {
-            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 0));
-
-            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-            playingTeamOversDouble = Double.parseDouble(stringPlayingTeamOvers);
-
-            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversDouble + 0.1));
-            reusableFunctionPlayer();
-
-            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-            textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 0));
-            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-            textViewBowlerRun.setText(String.valueOf(bowlerRun + 0));
-
-
-            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "0");
-            reusableFunctionBowler();
-
-            //zeroToSevenRunsServerCall();
-            radioButtonFirstPlayer.setChecked(true);
-            radioButtonSecondPlayer.setChecked(false);
-
-        }
-
-        else {
-
-            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 0));
-
-            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
-
-            reusableFunctionPlayer();
-
-            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-            textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 0));
-
-
-            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-
-            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-            textViewBowlerRun.setText(String.valueOf(bowlerRun + 0));
-
-
-            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "0");
-            reusableFunctionBowler();
-
-            //zeroToSevenRunsServerCall();
-            radioButtonFirstPlayer.setChecked(false);
-            radioButtonSecondPlayer.setChecked(true);
-
-
-        }
-
-    }
-
-    void oneButtonOperation(){
-
-        if (radioButtonFirstPlayer.isChecked())
-        {
-            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 1));
-
-            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-            reusableFunctionPlayer();
-            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-            textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 1));
-
-
-            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-            textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "1");
-            reusableFunctionBowler();
-
-            //zeroToSevenRunsServerCall();
-
-            radioButtonFirstPlayer.setChecked(false);
-            radioButtonSecondPlayer.setChecked(true);
-
-        }
-
-
-
-        else {
-
-            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 1));
-
-
-            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-            reusableFunctionPlayer();
-            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-            textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 1));
-
-
-            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-            textViewBowlerRun.setText(String.valueOf(bowlerRun + 1));
-
-
-            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "1");
-            reusableFunctionBowler();
-
-            //zeroToSevenRunsServerCall();
-            radioButtonFirstPlayer.setChecked(true);
-            radioButtonSecondPlayer.setChecked(false);
-
-
-        }
-
-    }
-
-    void twoButtonOperation(){
-
-
-        if (radioButtonFirstPlayer.isChecked())
-        {
-            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 2));
-
-            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-            reusableFunctionPlayer();
-            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-            textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 2));
-
-
-            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-            textViewBowlerRun.setText(String.valueOf(bowlerRun + 2));
-
-
-            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-
-            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "2");
-            reusableFunctionBowler();
-            //zeroToSevenRunsServerCall();
-            radioButtonFirstPlayer.setChecked(true);
-            radioButtonSecondPlayer.setChecked(false);
-
-
-        }
-
-        else {
-
-            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 2));
-
-            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-            reusableFunctionPlayer();
-
-            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-            textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 2));
-
-
-            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-
-            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-            textViewBowlerRun.setText(String.valueOf(bowlerRun + 2));
-
-
-            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "2");
-            reusableFunctionBowler();
-            //zeroToSevenRunsServerCall();
-            radioButtonFirstPlayer.setChecked(false);
-            radioButtonSecondPlayer.setChecked(true);
-
-
-        }
-
-
-    }
-
-    void threeButtonOperation(){
-
-        if (radioButtonFirstPlayer.isChecked())
-        {
-            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 3));
-
-
-            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-            reusableFunctionPlayer();
-            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-            textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 3));
-
-
-            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-            textViewBowlerRun.setText(String.valueOf(bowlerRun + 3));
-
-
-            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "3");
-            reusableFunctionBowler();
-            //zeroToSevenRunsServerCall();
-            radioButtonFirstPlayer.setChecked(false);
-            radioButtonSecondPlayer.setChecked(true);
-
-
-        }
-
-        else {
-
-            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 3));
-
-
-            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-            reusableFunctionPlayer();
-            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-            textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 3));
-
-
-            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-            textViewBowlerRun.setText(String.valueOf(bowlerRun + 3));
-
-
-            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "3");
-            reusableFunctionBowler();
-            //zeroToSevenRunsServerCall();
-            radioButtonFirstPlayer.setChecked(true);
-            radioButtonSecondPlayer.setChecked(false);
-
-
-        }
-
-    }
-
-    void fourButtonOperation(){
-
-        if (radioButtonFirstPlayer.isChecked())
-        {
-            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 4));
-
-            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-            reusableFunctionPlayer();
-            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-            textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 4));
-
-
-            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-            textViewBowlerRun.setText(String.valueOf(bowlerRun + 4));
-
-
-            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "4");
-            reusableFunctionBowler();
-            //zeroToSevenRunsServerCall();
-            radioButtonFirstPlayer.setChecked(true);
-            radioButtonSecondPlayer.setChecked(false);
-
-
-        }
-
-        else {
-
-            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 4));
-
-            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-            reusableFunctionPlayer();
-
-            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-            textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 4));
-
-
-            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-
-            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-            textViewBowlerRun.setText(String.valueOf(bowlerRun + 4));
-
-
-            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "4");
-            reusableFunctionBowler();
-            //zeroToSevenRunsServerCall();
-            radioButtonFirstPlayer.setChecked(false);
-            radioButtonSecondPlayer.setChecked(true);
-
-
-        }
-
-    }
-
-    void fiveButtonOperation(){
-
-        if (radioButtonFirstPlayer.isChecked())
-        {
-            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 5));
-
-
-            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-            reusableFunctionPlayer();
-
-            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-            textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 5));
-
-
-            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-            textViewBowlerRun.setText(String.valueOf(bowlerRun + 5));
-
-
-            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "5");
-            reusableFunctionBowler();
-            //zeroToSevenRunsServerCall();
-            radioButtonFirstPlayer.setChecked(false);
-            radioButtonSecondPlayer.setChecked(true);
-
-
-        }
-
-        else {
-
-            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 5));
-
-
-            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-            reusableFunctionPlayer();
-
-            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-            textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 5));
-
-
-            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-            textViewBowlerRun.setText(String.valueOf(bowlerRun + 5));
-
-
-            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "5");
-            reusableFunctionBowler();
-            //zeroToSevenRunsServerCall();
-            radioButtonFirstPlayer.setChecked(true);
-            radioButtonSecondPlayer.setChecked(false);
-
-
-        }
-
-    }
-
-    void sixButtonOperation(){
-
-        if (radioButtonFirstPlayer.isChecked())
-        {
-            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 6));
-
-            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-
-            reusableFunctionPlayer();
-            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-            textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 6));
-
-
-            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-            textViewBowlerRun.setText(String.valueOf(bowlerRun + 6));
-
-
-            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "6");
-            reusableFunctionBowler();
-
-            //zeroToSevenRunsServerCall();
-            radioButtonFirstPlayer.setChecked(true);
-            radioButtonSecondPlayer.setChecked(false);
-
-
-        }
-
-        else {
-
-            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 6));
-
-            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-            reusableFunctionPlayer();
-
-            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-            textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 6));
-
-
-            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-
-            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-            textViewBowlerRun.setText(String.valueOf(bowlerRun + 6));
-
-
-            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "6");
-            reusableFunctionBowler();
-            //zeroToSevenRunsServerCall();
-            radioButtonFirstPlayer.setChecked(false);
-            radioButtonSecondPlayer.setChecked(true);
-
-
-        }
-
-    }
-
-    void sevenButtonOperation(){
-
-        if (radioButtonFirstPlayer.isChecked())
-        {
-            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 7));
-
-
-            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-            reusableFunctionPlayer();
-
-            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-            textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 7));
-
-
-            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-            textViewBowlerRun.setText(String.valueOf(bowlerRun + 7));
-
-
-            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "7");
-            reusableFunctionBowler();
-            //zeroToSevenRunsServerCall();
-            radioButtonFirstPlayer.setChecked(false);
-            radioButtonSecondPlayer.setChecked(true);
-
-
-        }
-
-        else {
-
-            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 7));
-
-
-            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format((playingTeamOversFloat + 0.1)));
-            reusableFunctionPlayer();
-
-            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-            textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 7));
-
-
-            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-            stringBowlerRun = textViewBowlerRun.getText().toString();
-
-            bowlerRun = Integer.parseInt(stringBowlerRun);
-
-            textViewBowlerRun.setText(String.valueOf(bowlerRun + 7));
-
-
-            stringBowlerBall = textViewBowlerBall.getText().toString();
-
-            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-            textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
-            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "7");
-            reusableFunctionBowler();
-            //zeroToSevenRunsServerCall();
-
-            radioButtonFirstPlayer.setChecked(true);
-            radioButtonSecondPlayer.setChecked(false);
-
-
-        }
-
-    }
-
-
-    void reusableFunctionBowler()
-    {
+    void reusableFunctionBowler() {
         String stringBowler = textViewBowlerBall.getText().toString();
 
         double testBowler = Double.parseDouble(stringBowler);
@@ -6643,11 +2004,10 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         String[] tokBowler = stringBowler.split("\\.");
 
         String aBowler = tokBowler[0];
-        String bBowler = tokBowler[1];
+        bBowler = tokBowler[1];
 
 
-        if (bBowler.equals("6"))
-        {
+        if (bBowler.equals("6")) {
 
             textViewBowlerBall.setText(new DecimalFormat("##.#").format(testBowler + 0.4));
 
@@ -6658,21 +2018,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-    private void selectOtherBowler()
-    {
-        LayoutInflater inflater = LayoutInflater
-                .from(this);
-        View view = inflater.inflate(R.layout.layout_bowler_select, layoutToAdd,false);
-
-        Toast.makeText(this, "Hi", Toast.LENGTH_SHORT).show();
-        //layoutToAdd.addView(view);
-
-        //return view;
-
-    }
-
-    void reusableFunctionPlayer()
-    {
+    void reusableFunctionPlayer() {
         String stringPlayer = textViewPlayingTeamOvers.getText().toString();
 
         double testPlayer = Double.parseDouble(stringPlayer);
@@ -6683,149 +2029,126 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         String bZeroPlayer = tokPlayer[1];
 
 
-        if (bZeroPlayer.equals("6"))
-        {
+        if (bZeroPlayer.equals("6")) {
             textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(testPlayer + 0.4));
         }
     }
 
+    public void setAddress() {
 
-    void recyclerViewInit() {
-        bowlerDetailsArrayList = new ArrayList<>();
-        newBowlerAdapter = new NewBowlerAdapter(bowlerDetailsArrayList, this);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(newBowlerAdapter);
-    }
 
-    private void setAddress() {
-
-        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.layout_bowler_select, null);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MatchPlayActivity.this);
+        LayoutInflater inflater = MatchPlayActivity.this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.layout_bowler_select, null);
+        dialogBuilder.setTitle("Select New Bowler");
         dialogBuilder.setView(dialogView);
         dialogBuilder.setCancelable(false);
-        //final Spinner spinner;
-        //spinnerNewBowler = new ArrayList<>();
-        spinner = dialogView.findViewById(R.id.spinnerNewBowler);
 
+        spinner = (Spinner) dialogView.findViewById(R.id.spinnerNewBowler);
+        getBowlerDetails();
         Button buttonSelect = dialogView.findViewById(R.id.buttonNewBowlerSelect);
 
         Button buttonReset = dialogView.findViewById(R.id.buttonNewBowlerReset);
 
-
-        //spinnerNewBowler.add(stringNewBowlerName);
-        //spinner.setAdapter(new ArrayAdapter<String>(MatchPlayActivity.this, R.layout.spinner_layout, spinnerNewBowler));
-        buttonSelect.setOnClickListener(new View.OnClickListener() {
+        dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(DialogInterface dialog, int which) {
+                stringBowlerName1 = spinner.getSelectedItem().toString();
+                String str1 = spinner.getSelectedItem().toString();
 
+                Log.d("spinner", stringBowlerName1);
 
-                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        Spinner spinner = (Spinner) parent;
-
-                        switch (view.getId())
-                        {
-                            case R.id.spinnerNewBowler:
-
-                                stringBowlerName1 = spinner.getAdapter().getItem(position).toString();
-
-                                try {
-                                    //JSONObject jsonObject = new JSONObject(response);
-
-                                    if (jsonObject.getString("success").equals("1"))
-                                    {
-                                        JSONArray jsonArray = jsonObject.getJSONArray("player_list");
-
-                                        for (int i=0;i<jsonArray.length();i++)
-                                        {
-                                            JSONObject object = jsonArray.getJSONObject(i);
-
-                                            stringNewTeamName = object.getString("team_name");
-
-                                            stringSpaceRemove = stringBowlingTeam.replaceAll(" ", "");
-
-                                            System.out.println(stringSpaceRemove);
-
-                                            Log.d("TeamName111",stringNewTeamName);
-
-                                            Log.d("TeamName222",stringSpaceRemove);
-
-
-                                            if (stringSpaceRemove.equals(stringNewTeamName)) {
-                                                JSONArray array = object.getJSONArray("players");
-
-                                                for (int j = 0; j < array.length(); j++) {
-                                                    JSONObject obj = array.getJSONObject(j);
-
-                                                    stringNewBowlerName = obj.getString("fullname");
-                                                    stringNewBowlerId = obj.getString("player_id");
-
-                                                    //spinnerNewBowler.add(stringNewBowlerName);
-
-                                                    if (stringBowlerName1.equals(stringNewBowlerName)) {
-                                                        stringBowlerId1 = stringNewBowlerId;
-                                                        //textViewBowlerName.setText(stringBowlerName1);
-                                                        System.out.println("stringSpinnerPlayerIdStrk" + stringBowlerId1);
-                                                    }
-
-                                                }
-
-                                                //spinner.setAdapter(new ArrayAdapter<String>(MatchPlayActivity.this, R.layout.spinner_layout, spinnerNewBowler));
-
-                                            }
-                                        }
-                                    }
-
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                                break;
-
-                        }
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
-
-                String str = spinner.getSelectedItem().toString();
-
-                Log.d("spinner",str);
-
-                textViewBowlerName.setText(str);
+                //if ()
+                textViewBowlerName.setText(stringBowlerName1);
                 textViewBowlerBall.setText("0.0");
                 textViewBowlerRun.setText("0");
                 textViewCurrentOver.setText("");
+
+                try {
+
+                    if (jsonObject.getString("success").equals("1")) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("player_list");
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            stringNewTeamName = object.getString("team_name");
+
+                            stringSpaceRemove = stringBowlingTeam.replaceAll(" ", "");
+
+                            if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                JSONArray array = object.getJSONArray("players");
+
+                                for (int j = 0; j < array.length(); j++) {
+                                    JSONObject obj = array.getJSONObject(j);
+
+                                    stringNewBowlerName = obj.getString("fullname");
+                                    stringNewBowlerId = obj.getString("player_id");
+
+                                    if (stringBowlerName1.equals(stringNewBowlerName)) {
+                                        stringBowlerId1 = stringNewBowlerId;
+                                        System.out.println("stringSpinnerPlayerIdStrk" + stringBowlerId1);
+                                    }
+
+                                }
+
+                            }
+                        }
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+//                if (i%2==0)
+//                {
+//                    if (radioButtonFirstPlayer.isChecked())
+//                    {
+//                        radioButtonFirstPlayer.setChecked(true);
+//                        radioButtonSecondPlayer.setChecked(false);
+//
+//                    }
+//                    else
+//                    {
+//                        radioButtonFirstPlayer.setChecked(false);
+//                        radioButtonSecondPlayer.setChecked(true);
+//                    }
+//                }
+//
+//                else {
+//
+//                    if (radioButtonFirstPlayer.isChecked())
+//                    {
+//                        radioButtonFirstPlayer.setChecked(false);
+//                        radioButtonSecondPlayer.setChecked(true);
+//
+//                    }
+//                    else
+//                    {
+//                        radioButtonFirstPlayer.setChecked(true);
+//                        radioButtonSecondPlayer.setChecked(false);
+//                    }
+//                }
                 dialog.dismiss();
             }
         });
 
-        buttonReset.setOnClickListener(new View.OnClickListener() {
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
+            public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-
             }
         });
-        getBowlerDetails();
+
         dialog = dialogBuilder.create();
         dialog.show();
         //getBowlerDetails();
 
 
-
     }
 
-    void getBowlerDetails(){
+    void getBowlerDetails() {
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.PLAYER_DETAILS_URL,
@@ -6836,12 +2159,10 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                         try {
                             jsonObject = new JSONObject(response);
 
-                            if (jsonObject.getString("success").equals("1"))
-                            {
+                            if (jsonObject.getString("success").equals("1")) {
                                 JSONArray jsonArray = jsonObject.getJSONArray("player_list");
 
-                                for (int i=0;i<jsonArray.length();i++)
-                                {
+                                for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
                                     stringNewTeamName = object.getString("team_name");
@@ -6850,9 +2171,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                     System.out.println(stringSpaceRemove);
 
-                                    Log.d("TeamName111",stringNewTeamName);
+                                    Log.d("TeamName111", stringNewTeamName);
 
-                                    Log.d("TeamName222",stringSpaceRemove);
+                                    Log.d("TeamName222", stringSpaceRemove);
 
 
                                     if (stringSpaceRemove.equals(stringNewTeamName)) {
@@ -6868,7 +2189,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                         }
 
-                                            spinner.setAdapter(new ArrayAdapter<String>(MatchPlayActivity.this, R.layout.spinner_layout, spinnerNewBowler));
+                                        spinner.setAdapter(new ArrayAdapter<String>(MatchPlayActivity.this, R.layout.spinner_layout, spinnerNewBowler));
 
                                     }
                                 }
@@ -6887,12 +2208,12 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                 error.printStackTrace();
 
             }
-        }){
+        }) {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("match_key",stringMatchKey);
+                params.put("match_key", stringMatchKey);
 
                 return params;
             }
@@ -6901,7 +2222,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
-    void getBatsmanDetails(){
+    void getBatsmanDetails() {
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.PLAYER_DETAILS_URL,
@@ -6912,12 +2233,10 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                         try {
                             jsonObjectBatsman = new JSONObject(response);
 
-                            if (jsonObjectBatsman.getString("success").equals("1"))
-                            {
+                            if (jsonObjectBatsman.getString("success").equals("1")) {
                                 JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
 
-                                for (int i=0;i<jsonArray.length();i++)
-                                {
+                                for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
                                     stringNewTeamName = object.getString("team_name");
@@ -6926,9 +2245,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                     System.out.println(stringSpaceRemove);
 
-                                    Log.d("TeamName111",stringNewTeamName);
+                                    Log.d("TeamName111", stringNewTeamName);
 
-                                    Log.d("TeamName222",stringSpaceRemove);
+                                    Log.d("TeamName222", stringSpaceRemove);
 
 
                                     if (stringSpaceRemove.equals(stringNewTeamName)) {
@@ -6946,9 +2265,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                         spinnerBatsman.setAdapter(new ArrayAdapter<String>(MatchPlayActivity.this, R.layout.spinner_layout, spinnerNewBatsman));
 
-                                    }
-
-                                    else {
+                                    } else {
                                         JSONArray array = object.getJSONArray("players");
 
                                         for (int j = 0; j < array.length(); j++) {
@@ -6980,12 +2297,12 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                 error.printStackTrace();
 
             }
-        }){
+        }) {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("match_key",stringMatchKey);
+                params.put("match_key", stringMatchKey);
 
                 return params;
             }
@@ -6998,92 +2315,24 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Spinner spinner = (Spinner) parent;
 
-        switch (view.getId())
-        {
-//            case R.id.spinnerNewBowler:
-//
-//                stringBowlerName1 = spinner.getAdapter().getItem(position).toString();
-//
-//                try {
-//                    //JSONObject jsonObject = new JSONObject(response);
-//
-//                    if (jsonObject.getString("success").equals("1"))
-//                    {
-//                        JSONArray jsonArray = jsonObject.getJSONArray("player_list");
-//
-//                        for (int i=0;i<jsonArray.length();i++)
-//                        {
-//                            JSONObject object = jsonArray.getJSONObject(i);
-//
-//                            stringNewTeamName = object.getString("team_name");
-//
-//                            stringSpaceRemove = stringBowlingTeam.replaceAll(" ", "");
-//
-//                            System.out.println(stringSpaceRemove);
-//
-//                            Log.d("TeamName111",stringNewTeamName);
-//
-//                            Log.d("TeamName222",stringSpaceRemove);
-//
-//
-//                            if (stringSpaceRemove.equals(stringNewTeamName)) {
-//                                JSONArray array = object.getJSONArray("players");
-//
-//                                for (int j = 0; j < array.length(); j++) {
-//                                    JSONObject obj = array.getJSONObject(j);
-//
-//                                    stringNewBowlerName = obj.getString("fullname");
-//                                    stringNewBowlerId = obj.getString("player_id");
-//
-//                                    //spinnerNewBowler.add(stringNewBowlerName);
-//
-//                                    if (stringBowlerName1.equals(stringNewBowlerName)) {
-//                                        stringBowlerId1 = stringNewBowlerId;
-//                                        //textViewBowlerName.setText(stringBowlerName1);
-//                                        System.out.println("stringSpinnerPlayerIdStrk" + stringBowlerId1);
-//                                    }
-//
-//                                }
-//
-//                                //spinner.setAdapter(new ArrayAdapter<String>(MatchPlayActivity.this, R.layout.spinner_layout, spinnerNewBowler));
-//
-//                            }
-//                        }
-//                    }
-//
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                break;
-
+        switch (view.getId()) {
             case R.id.spinnerNewBatsman:
 
 
                 stringBatsmanName1 = spinner.getAdapter().getItem(position).toString();
 
                 try {
-                    //JSONObject jsonObject = new JSONObject(response);
 
-                    if (jsonObjectBatsman.getString("success").equals("1"))
-                    {
+
+                    if (jsonObjectBatsman.getString("success").equals("1")) {
                         JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
 
-                        for (int i=0;i<jsonArray.length();i++)
-                        {
+                        for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
 
                             stringNewTeamName = object.getString("team_name");
 
                             stringSpaceRemove = stringBowlingTeam.replaceAll(" ", "");
-
-                            System.out.println(stringSpaceRemove);
-
-                            Log.d("TeamName111",stringNewTeamName);
-
-                            Log.d("TeamName222",stringSpaceRemove);
-
 
                             if (stringSpaceRemove.equals(stringNewTeamName)) {
                                 JSONArray array = object.getJSONArray("players");
@@ -7094,17 +2343,13 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                                     stringNewBatsmanName = obj.getString("fullname");
                                     stringNewBatsmanId = obj.getString("player_id");
 
-                                    //spinnerNewBowler.add(stringNewBowlerName);
-
                                     if (stringBatsmanName1.equals(stringNewBatsmanName)) {
                                         stringBatsmanId1 = stringNewBatsmanId;
-                                        //textViewBowlerName.setText(stringBowlerName1);
-                                        System.out.println("stringSpinnerPlayerIdStrk" + stringBatsmanId1);
+                                        //System.out.println("stringSpinnerPlayerIdStrk" + stringBatsmanId1);
                                     }
 
                                 }
 
-                                //spinner.setAdapter(new ArrayAdapter<String>(MatchPlayActivity.this, R.layout.spinner_layout, spinnerNewBowler));
 
                             }
                         }
@@ -7118,61 +2363,48 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.spinnerCatcherName:
 
-            stringCatcherName1 = spinner.getAdapter().getItem(position).toString();
+                stringCatcherName1 = spinner.getAdapter().getItem(position).toString();
 
-            try {
-                //JSONObject jsonObject = new JSONObject(response);
+                try {
 
-                if (jsonObjectBatsman.getString("success").equals("1"))
-                {
-                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+                    if (jsonObjectBatsman.getString("success").equals("1")) {
+                        JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
 
-                    for (int i=0;i<jsonArray.length();i++)
-                    {
-                        JSONObject object = jsonArray.getJSONObject(i);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
 
-                        stringNewTeamName = object.getString("team_name");
+                            stringNewTeamName = object.getString("team_name");
 
-                        stringSpaceRemove = stringBowlingTeam.replaceAll(" ", "");
+                            stringSpaceRemove = stringBowlingTeam.replaceAll(" ", "");
 
-                        System.out.println(stringSpaceRemove);
+                            if (!stringSpaceRemove.equals(stringNewTeamName)) {
+                                JSONArray array = object.getJSONArray("players");
 
-                        Log.d("TeamName111",stringNewTeamName);
+                                for (int j = 0; j < array.length(); j++) {
+                                    JSONObject obj = array.getJSONObject(j);
 
-                        Log.d("TeamName222",stringSpaceRemove);
+                                    stringCatcherName = obj.getString("fullname");
+                                    stringCatcherId = obj.getString("player_id");
 
 
-                        if (!stringSpaceRemove.equals(stringNewTeamName)) {
-                            JSONArray array = object.getJSONArray("players");
+                                    if (stringCatcherName1.equals(stringCatcherName)) {
+                                        stringCatcherId1 = stringCatcherId;
+                                        //System.out.println("stringSpinnerPlayerIdStrk" + stringBatsmanId1);
+                                    }
 
-                            for (int j = 0; j < array.length(); j++) {
-                                JSONObject obj = array.getJSONObject(j);
-
-                                stringCatcherName = obj.getString("fullname");
-                                stringCatcherId = obj.getString("player_id");
-
-                                //spinnerNewBowler.add(stringNewBowlerName);
-
-                                if (stringCatcherName1.equals(stringCatcherName)) {
-                                    stringCatcherId1 = stringCatcherId;
-                                    //textViewBowlerName.setText(stringBowlerName1);
-                                    System.out.println("stringSpinnerPlayerIdStrk" + stringBatsmanId1);
                                 }
 
+
                             }
-
-                            //spinner.setAdapter(new ArrayAdapter<String>(MatchPlayActivity.this, R.layout.spinner_layout, spinnerNewBowler));
-
                         }
                     }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            break;
+                break;
         }
 
     }
@@ -7182,190 +2414,13 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-    void wicketTest()
-    {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MatchPlayActivity.this);
-        LayoutInflater inflater = MatchPlayActivity.this.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.layout_bowler_select, null);
-        dialogBuilder.setView(dialogView);
-        //dialog.setContentView(R.layout.layout_bowler_select);
-        dialogBuilder.setCancelable(false);
-
-        //spinnerNewBowler = new ArrayList<>();
-        Button buttonReset =(Button) dialogView.findViewById(R.id.buttonNewBatsmanReset);
-        spinnerBatsman = (Spinner) dialogView.findViewById(R.id.spinnerNewBatsman);
-        Button buttonSelect = (Button) dialogView.findViewById(R.id.buttonNewBatsmanSelect);
-        spinnerBatsman.setOnItemSelectedListener(MatchPlayActivity.this);
-
-        buttonSelect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (radioButtonFirstPlayer.isChecked())
-                {
-                    String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
-
-                    Log.d("spinner",strFirstPlayer);
-
-                    radioButtonFirstPlayer.setText(strFirstPlayer);
-                    textViewFirstPlayerBall.setText("0");
-                    textViewFirstPlayerRun.setText("0");
-                    //textViewCurrentOver.setText("");
-                    //dialog.dismiss();
-
-                    stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                    playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                    //textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 0));
-
-                    stringPlayingTeamWicket = textViewPlayingTeamWicket.getText().toString();
-
-                    playingTeamWicket = Integer.parseInt(stringPlayingTeamWicket);
-
-                    textViewPlayingTeamWicket.setText(String.valueOf(playingTeamWicket + 1));
-
-                    stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                    playingTeamOversDouble = Double.parseDouble(stringPlayingTeamOvers);
-
-                    textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversDouble + 0.1));
-
-                    reusableFunctionPlayer();
-
-                    stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
-
-                    firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
-
-                    //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 0));
-                    stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
-
-                    firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
-
-                    //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
-
-
-                    stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                    bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                    //textViewBowlerRun.setText(String.valueOf(bowlerRun + 0));
-
-                    stringBowlerWicket = textViewBowlerWicket.getText().toString();
-
-                    bowlerWicket = Integer.parseInt(stringBowlerWicket);
-
-                    textViewBowlerWicket.setText(String.valueOf(bowlerWicket + 1));
-
-                    stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                    bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                    textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                    textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "W");
-                    reusableFunctionBowler();
-
-                    radioButtonFirstPlayer.setChecked(true);
-                    radioButtonSecondPlayer.setChecked(false);
-                }
-
-                else {
-
-                    String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
-
-                    Log.d("spinner",strSecondPlayer);
-
-                    radioButtonSecondPlayer.setText(strSecondPlayer);
-                    textViewSecondPlayerBall.setText("0");
-                    textViewSecondPlayerRun.setText("0");
-
-                    stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
-
-                    playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
-
-                    //textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 0));
-
-                    stringPlayingTeamWicket = textViewPlayingTeamWicket.getText().toString();
-
-                    playingTeamWicket = Integer.parseInt(stringPlayingTeamWicket);
-
-                    textViewPlayingTeamWicket.setText(String.valueOf(playingTeamWicket + 1));
-
-                    stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
-
-                    playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
-
-                    textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
-
-                    reusableFunctionPlayer();
-
-                    stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
-
-                    secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
-
-                    //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 0));
-
-
-                    stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
-
-                    secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
-
-                    //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
-
-
-                    stringBowlerRun = textViewBowlerRun.getText().toString();
-
-                    bowlerRun = Integer.parseInt(stringBowlerRun);
-
-                    //textViewBowlerRun.setText(String.valueOf(bowlerRun + 0));
-
-                    stringBowlerWicket = textViewBowlerWicket.getText().toString();
-
-                    bowlerWicket = Integer.parseInt(stringBowlerWicket);
-
-                    textViewBowlerWicket.setText(String.valueOf(bowlerWicket + 1));
-
-                    stringBowlerBall = textViewBowlerBall.getText().toString();
-
-                    bowlerOversFloat = Float.parseFloat(stringBowlerBall);
-
-                    textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-
-                    textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "W");
-                    reusableFunctionBowler();
-
-                    radioButtonFirstPlayer.setChecked(false);
-                    radioButtonSecondPlayer.setChecked(true);
-                }
-
-
-
-            }
-        });
-
-        dialog.dismiss();
-
-        buttonReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        getBatsmanDetails();
-        dialog = dialogBuilder.create();
-        dialog.show();
-
-    }
-
 
     @SuppressLint("ValidFragment")
-    public class FirstDialog extends DialogFragment
-    {
+    public class FirstDialog extends DialogFragment {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.layout_new_batsman, container, true);
-            Button buttonReset =(Button) view.findViewById(R.id.buttonNewBatsmanReset);
+            Button buttonReset = (Button) view.findViewById(R.id.buttonNewBatsmanReset);
             spinnerBatsman = (Spinner) view.findViewById(R.id.spinnerNewBatsman);
             spinnerCatcherName = (Spinner) view.findViewById(R.id.spinnerCatcherName);
             Button buttonSelect = (Button) view.findViewById(R.id.buttonNewBatsmanSelect);
@@ -7375,11 +2430,10 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                 @Override
                 public void onClick(View v) {
 
-                    if (radioButtonFirstPlayer.isChecked())
-                    {
+                    if (radioButtonFirstPlayer.isChecked()) {
                         String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
 
-                        Log.d("spinner",strFirstPlayer);
+                        Log.d("spinner", strFirstPlayer);
 
                         radioButtonFirstPlayer.setText(strFirstPlayer);
                         textViewFirstPlayerBall.setText("0");
@@ -7437,18 +2491,16 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                        textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "W");
+                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
                         reusableFunctionBowler();
 
                         radioButtonFirstPlayer.setChecked(true);
                         radioButtonSecondPlayer.setChecked(false);
-                    }
-
-                    else {
+                    } else {
 
                         String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
 
-                        Log.d("spinner",strSecondPlayer);
+                        Log.d("spinner", strSecondPlayer);
 
                         radioButtonSecondPlayer.setText(strSecondPlayer);
                         textViewSecondPlayerBall.setText("0");
@@ -7506,7 +2558,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                        textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "W");
+                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
                         reusableFunctionBowler();
 
                         radioButtonFirstPlayer.setChecked(false);
@@ -7532,12 +2584,11 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
 
     @SuppressLint("ValidFragment")
-    public class FirstDialogCaught extends DialogFragment
-    {
+    public class FirstDialogCaught extends DialogFragment {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.layout_new_batsman_caught, container, true);
-            Button buttonReset =(Button) view.findViewById(R.id.buttonNewBatsmanReset);
+            Button buttonReset = (Button) view.findViewById(R.id.buttonNewBatsmanReset);
             spinnerBatsman = (Spinner) view.findViewById(R.id.spinnerNewBatsman);
             spinnerCatcherName = (Spinner) view.findViewById(R.id.spinnerCatcherName);
             Button buttonSelect = (Button) view.findViewById(R.id.buttonNewBatsmanSelect);
@@ -7547,11 +2598,10 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                 @Override
                 public void onClick(View v) {
 
-                    if (radioButtonFirstPlayer.isChecked())
-                    {
+                    if (radioButtonFirstPlayer.isChecked()) {
                         String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
 
-                        Log.d("spinner",strFirstPlayer);
+                        Log.d("spinner", strFirstPlayer);
 
                         radioButtonFirstPlayer.setText(strFirstPlayer);
                         textViewFirstPlayerBall.setText("0");
@@ -7609,18 +2659,16 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                        textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "W");
+                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
                         reusableFunctionBowler();
 
                         radioButtonFirstPlayer.setChecked(true);
                         radioButtonSecondPlayer.setChecked(false);
-                    }
-
-                    else {
+                    } else {
 
                         String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
 
-                        Log.d("spinner",strSecondPlayer);
+                        Log.d("spinner", strSecondPlayer);
 
                         radioButtonSecondPlayer.setText(strSecondPlayer);
                         textViewSecondPlayerBall.setText("0");
@@ -7678,7 +2726,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                        textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "W");
+                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
                         reusableFunctionBowler();
 
                         radioButtonFirstPlayer.setChecked(false);
@@ -7704,12 +2752,11 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
 
     @SuppressLint("ValidFragment")
-    public class FirstDialogStumped extends DialogFragment
-    {
+    public class FirstDialogStumped extends DialogFragment {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.layout_new_batsman_stumped, container, true);
-            Button buttonReset =(Button) view.findViewById(R.id.buttonNewBatsmanReset);
+            Button buttonReset = (Button) view.findViewById(R.id.buttonNewBatsmanReset);
             spinnerBatsman = (Spinner) view.findViewById(R.id.spinnerNewBatsman);
             spinnerCatcherName = (Spinner) view.findViewById(R.id.spinnerCatcherName);
             Button buttonSelect = (Button) view.findViewById(R.id.buttonNewBatsmanSelect);
@@ -7722,13 +2769,11 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                 @Override
                 public void onClick(View v) {
 
-                    if (radioButtonWide.isChecked())
-                    {
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
+                    if (radioButtonWide.isChecked()) {
+                        if (radioButtonFirstPlayer.isChecked()) {
                             String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
 
-                            Log.d("spinner",strFirstPlayer);
+                            Log.d("spinner", strFirstPlayer);
 
                             radioButtonFirstPlayer.setText(strFirstPlayer);
                             textViewFirstPlayerBall.setText("0");
@@ -7786,18 +2831,16 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "Wd+W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "Wd+W");
                             reusableFunctionBowler();
 
                             radioButtonFirstPlayer.setChecked(true);
                             radioButtonSecondPlayer.setChecked(false);
-                        }
-
-                        else {
+                        } else {
 
                             String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
 
-                            Log.d("spinner",strSecondPlayer);
+                            Log.d("spinner", strSecondPlayer);
 
                             radioButtonSecondPlayer.setText(strSecondPlayer);
                             textViewSecondPlayerBall.setText("0");
@@ -7855,7 +2898,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "Wd+W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "Wd+W");
                             reusableFunctionBowler();
 
                             radioButtonFirstPlayer.setChecked(false);
@@ -7866,13 +2909,11 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                     }
 
-                    if (radioButtonNo.isChecked())
-                    {
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
+                    if (radioButtonNo.isChecked()) {
+                        if (radioButtonFirstPlayer.isChecked()) {
                             String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
 
-                            Log.d("spinner",strFirstPlayer);
+                            Log.d("spinner", strFirstPlayer);
 
                             radioButtonFirstPlayer.setText(strFirstPlayer);
                             textViewFirstPlayerBall.setText("0");
@@ -7930,18 +2971,16 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "Wd+W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "Wd+W");
                             reusableFunctionBowler();
 
                             radioButtonFirstPlayer.setChecked(true);
                             radioButtonSecondPlayer.setChecked(false);
-                        }
-
-                        else {
+                        } else {
 
                             String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
 
-                            Log.d("spinner",strSecondPlayer);
+                            Log.d("spinner", strSecondPlayer);
 
                             radioButtonSecondPlayer.setText(strSecondPlayer);
                             textViewSecondPlayerBall.setText("0");
@@ -7999,7 +3038,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "Wd+W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "Wd+W");
                             reusableFunctionBowler();
 
                             radioButtonFirstPlayer.setChecked(false);
@@ -8079,9 +3118,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             radioButtonFirstPlayer.setChecked(true);
                             radioButtonSecondPlayer.setChecked(false);
 
-                        }
-                        else
-                            {
+                        } else {
 
                             String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
 
@@ -8171,20 +3208,19 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         public void onResume() {
             super.onResume();
 
-            getDialog().getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+            getDialog().getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         }
     }
 
     @SuppressLint("ValidFragment")
-    public class FirstDialogRunOut extends DialogFragment
-    {
+    public class FirstDialogRunOut extends DialogFragment {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.layout_new_batsman_runout, container, true);
             getDialog().setTitle("Run Out");
 
             ///view.setBackgroundColor(getResources().getColor(android.R.color.holo_purple));
-            Button buttonReset =(Button) view.findViewById(R.id.buttonNewBatsmanReset);
+            Button buttonReset = (Button) view.findViewById(R.id.buttonNewBatsmanReset);
             spinnerBatsman = (Spinner) view.findViewById(R.id.spinnerNewBatsman);
             spinnerCatcherName = (Spinner) view.findViewById(R.id.spinnerCatcherName);
             Button buttonSelect = (Button) view.findViewById(R.id.buttonNewBatsmanSelect);
@@ -8212,22 +3248,20 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 //                linearLayout.setVisibility(View.GONE);
 //
 //            }
-                buttonSelect.setOnClickListener(new View.OnClickListener() {
+            buttonSelect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
 
                     editTextRuns1 = Integer.parseInt(editTextRuns.getText().toString());
-                    if (radioButtonWide.isChecked())
-                    {
+                    if (radioButtonWide.isChecked()) {
 
 
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
+                        if (radioButtonFirstPlayer.isChecked()) {
 
                             String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
 
-                            Log.d("spinner",strFirstPlayer);
+                            Log.d("spinner", strFirstPlayer);
 
                             radioButtonFirstPlayer.setText(strFirstPlayer);
                             textViewFirstPlayerBall.setText("0");
@@ -8285,24 +3319,22 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "Wd+W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "Wd+W");
 
                             stringExtraRun = textViewExtraRun.getText().toString();
 
                             extraRun = Integer.parseInt(stringExtraRun);
 
-                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 +1));
+                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 + 1));
                             reusableFunctionBowler();
 
                             radioButtonFirstPlayer.setChecked(true);
                             radioButtonSecondPlayer.setChecked(false);
-                        }
-
-                        else {
+                        } else {
 
                             String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
 
-                            Log.d("spinner",strSecondPlayer);
+                            Log.d("spinner", strSecondPlayer);
 
                             radioButtonSecondPlayer.setText(strSecondPlayer);
                             textViewSecondPlayerBall.setText("0");
@@ -8360,13 +3392,13 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "Wd+W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "Wd+W");
 
                             stringExtraRun = textViewExtraRun.getText().toString();
 
                             extraRun = Integer.parseInt(stringExtraRun);
 
-                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 +1));
+                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 + 1));
 
                             reusableFunctionBowler();
 
@@ -8378,13 +3410,11 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                     }
 
-                    if (radioButtonNo.isChecked())
-                    {
-                        if (radioButtonFirstPlayer.isChecked())
-                        {
+                    if (radioButtonNo.isChecked()) {
+                        if (radioButtonFirstPlayer.isChecked()) {
                             String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
 
-                            Log.d("spinner",strFirstPlayer);
+                            Log.d("spinner", strFirstPlayer);
 
                             radioButtonFirstPlayer.setText(strFirstPlayer);
                             textViewFirstPlayerBall.setText("0");
@@ -8442,25 +3472,23 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "W+nb");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W+nb");
 
                             stringExtraRun = textViewExtraRun.getText().toString();
 
                             extraRun = Integer.parseInt(stringExtraRun);
 
-                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 +1));
+                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 + 1));
 
                             reusableFunctionBowler();
 
                             radioButtonFirstPlayer.setChecked(true);
                             radioButtonSecondPlayer.setChecked(false);
-                        }
-
-                        else {
+                        } else {
 
                             String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
 
-                            Log.d("spinner",strSecondPlayer);
+                            Log.d("spinner", strSecondPlayer);
 
                             radioButtonSecondPlayer.setText(strSecondPlayer);
                             textViewSecondPlayerBall.setText("0");
@@ -8518,12 +3546,12 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + "W+nb");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W+nb");
                             stringExtraRun = textViewExtraRun.getText().toString();
 
                             extraRun = Integer.parseInt(stringExtraRun);
 
-                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 +1));
+                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 + 1));
                             reusableFunctionBowler();
 
                             radioButtonFirstPlayer.setChecked(false);
@@ -8603,9 +3631,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             radioButtonFirstPlayer.setChecked(true);
                             radioButtonSecondPlayer.setChecked(false);
 
-                        }
-                        else
-                        {
+                        } else {
 
                             String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
 
@@ -8751,9 +3777,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             radioButtonFirstPlayer.setChecked(true);
                             radioButtonSecondPlayer.setChecked(false);
 
-                        }
-                        else
-                        {
+                        } else {
 
                             String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
 
@@ -8904,9 +3928,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             radioButtonFirstPlayer.setChecked(true);
                             radioButtonSecondPlayer.setChecked(false);
 
-                        }
-                        else
-                        {
+                        } else {
 
                             String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
 
@@ -9057,9 +4079,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             radioButtonFirstPlayer.setChecked(true);
                             radioButtonSecondPlayer.setChecked(false);
 
-                        }
-                        else
-                        {
+                        } else {
 
                             String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
 
@@ -9136,7 +4156,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                         dismiss();
                     }
 
-                    if (radioButtonNo.isChecked() && radioButtonByes.isChecked()){
+                    if (radioButtonNo.isChecked() && radioButtonByes.isChecked()) {
 
                         if (radioButtonFirstPlayer.isChecked()) {
                             String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
@@ -9204,15 +4224,13 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             extraRun = Integer.parseInt(stringExtraRun);
 
-                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 +1));
+                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 + 1));
                             reusableFunctionBowler();
 
                             radioButtonFirstPlayer.setChecked(true);
                             radioButtonSecondPlayer.setChecked(false);
 
-                        }
-                        else
-                        {
+                        } else {
 
                             String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
 
@@ -9279,7 +4297,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             extraRun = Integer.parseInt(stringExtraRun);
 
-                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 +1));
+                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 + 1));
                             reusableFunctionBowler();
 
                             radioButtonFirstPlayer.setChecked(false);
@@ -9289,7 +4307,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                         dismiss();
                     }
 
-                    if (radioButtonNo.isChecked() && radioButtonLegByes.isChecked()){
+                    if (radioButtonNo.isChecked() && radioButtonLegByes.isChecked()) {
 
                         if (radioButtonFirstPlayer.isChecked()) {
                             String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
@@ -9357,15 +4375,13 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             extraRun = Integer.parseInt(stringExtraRun);
 
-                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 +1));
+                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 + 1));
                             reusableFunctionBowler();
 
                             radioButtonFirstPlayer.setChecked(true);
                             radioButtonSecondPlayer.setChecked(false);
 
-                        }
-                        else
-                        {
+                        } else {
 
                             String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
 
@@ -9432,7 +4448,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             extraRun = Integer.parseInt(stringExtraRun);
 
-                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 +1));
+                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 + 1));
                             reusableFunctionBowler();
 
                             radioButtonFirstPlayer.setChecked(false);
@@ -9442,7 +4458,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                         dismiss();
                     }
 
-                    if (radioButtonNo.isChecked() && radioButtonNone.isChecked()){
+                    if (radioButtonNo.isChecked() && radioButtonNone.isChecked()) {
 
                         if (radioButtonFirstPlayer.isChecked()) {
                             String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
@@ -9510,15 +4526,13 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             extraRun = Integer.parseInt(stringExtraRun);
 
-                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 +1));
+                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 + 1));
                             reusableFunctionBowler();
 
                             radioButtonFirstPlayer.setChecked(true);
                             radioButtonSecondPlayer.setChecked(false);
 
-                        }
-                        else
-                        {
+                        } else {
 
                             String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
 
@@ -9585,7 +4599,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             extraRun = Integer.parseInt(stringExtraRun);
 
-                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 +1));
+                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 + 1));
                             reusableFunctionBowler();
 
                             radioButtonFirstPlayer.setChecked(false);
@@ -9595,7 +4609,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                         dismiss();
                     }
 
-                    if (radioButtonNor.isChecked() && radioButtonByes.isChecked()){
+                    if (radioButtonNor.isChecked() && radioButtonByes.isChecked()) {
 
                         if (radioButtonFirstPlayer.isChecked()) {
                             String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
@@ -9663,15 +4677,13 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             extraRun = Integer.parseInt(stringExtraRun);
 
-                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 ));
+                            textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1));
                             reusableFunctionBowler();
 
                             radioButtonFirstPlayer.setChecked(true);
                             radioButtonSecondPlayer.setChecked(false);
 
-                        }
-                        else
-                        {
+                        } else {
 
                             String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
 
@@ -9748,7 +4760,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                         dismiss();
                     }
 
-                    if (radioButtonNor.isChecked() && radioButtonLegByes.isChecked()){
+                    if (radioButtonNor.isChecked() && radioButtonLegByes.isChecked()) {
 
                         if (radioButtonFirstPlayer.isChecked()) {
                             String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
@@ -9797,7 +4809,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             bowlerRun = Integer.parseInt(stringBowlerRun);
 
-                            textViewBowlerRun.setText(String.valueOf(bowlerRun + editTextRuns1 ));
+                            textViewBowlerRun.setText(String.valueOf(bowlerRun + editTextRuns1));
 
                             stringBowlerWicket = textViewBowlerWicket.getText().toString();
 
@@ -9822,9 +4834,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             radioButtonFirstPlayer.setChecked(true);
                             radioButtonSecondPlayer.setChecked(false);
 
-                        }
-                        else
-                        {
+                        } else {
 
                             String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
 
@@ -9901,7 +4911,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                         dismiss();
                     }
 
-                    if (radioButtonNor.isChecked() && radioButtonNone.isChecked()){
+                    if (radioButtonNor.isChecked() && radioButtonNone.isChecked()) {
 
                         if (radioButtonFirstPlayer.isChecked()) {
                             String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
@@ -9950,7 +4960,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             bowlerRun = Integer.parseInt(stringBowlerRun);
 
-                            textViewBowlerRun.setText(String.valueOf(bowlerRun + editTextRuns1 ));
+                            textViewBowlerRun.setText(String.valueOf(bowlerRun + editTextRuns1));
 
                             stringBowlerWicket = textViewBowlerWicket.getText().toString();
 
@@ -9975,9 +4985,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             radioButtonFirstPlayer.setChecked(true);
                             radioButtonSecondPlayer.setChecked(false);
 
-                        }
-                        else
-                        {
+                        } else {
 
                             String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
 
@@ -10072,37 +5080,12 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         public void onResume() {
             super.onResume();
 
-            getDialog().getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+            getDialog().getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         }
     }
 
-    // onBack pressed
-    boolean doubleBackToExitPressedOnce = false;
-
-    @Override
-    public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
-        }
-
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click back again to exit", Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce=false;
-            }
-        }, 2000);
-    }
-
-
-    void zeroToSevenRunsServerCall(final int i)
-    {
-        if (radioButtonFirstPlayer.isChecked())
-        {
+    void zeroToSevenRunsServerCall(final int i) {
+        if (radioButtonFirstPlayer.isChecked()) {
             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
             playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
@@ -10142,13 +5125,11 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
             textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + i);
+            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + i);
 
             reusableFunctionBowler();
 
-        }
-
-        else {
+        } else {
 
             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -10191,7 +5172,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
             textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-            textViewCurrentOver.setText(textViewCurrentOver.getText()+ " " + i);
+            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + i);
 
             reusableFunctionBowler();
 
@@ -10206,35 +5187,50 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                         try {
                             JSONObject jsonObject = new JSONObject(response);
 
-                            if (jsonObject.getString("success").equals("1"))
-                            {
-                                if (i%2==0)
-                                {
-                                    if (radioButtonFirstPlayer.isChecked())
-                                    {
-                                        radioButtonFirstPlayer.setChecked(true);
-                                        radioButtonSecondPlayer.setChecked(false);
+                            if (jsonObject.getString("success").equals("1")) {
+                                if (i % 2 == 0) {
+                                    if (bBowler.equals("6")) {
+                                        if (radioButtonFirstPlayer.isChecked()) {
+                                            radioButtonFirstPlayer.setChecked(false);
+                                            radioButtonSecondPlayer.setChecked(true);
 
+                                        } else {
+                                            radioButtonFirstPlayer.setChecked(true);
+                                            radioButtonSecondPlayer.setChecked(false);
+                                        }
+                                    } else {
+
+                                        if (radioButtonFirstPlayer.isChecked()) {
+                                            radioButtonFirstPlayer.setChecked(true);
+                                            radioButtonSecondPlayer.setChecked(false);
+
+                                        } else {
+                                            radioButtonFirstPlayer.setChecked(false);
+                                            radioButtonSecondPlayer.setChecked(true);
+                                        }
                                     }
-                                    else
-                                    {
-                                        radioButtonFirstPlayer.setChecked(false);
-                                        radioButtonSecondPlayer.setChecked(true);
-                                    }
-                                }
 
-                                else {
+                                } else {
 
-                                    if (radioButtonFirstPlayer.isChecked())
-                                    {
-                                        radioButtonFirstPlayer.setChecked(false);
-                                        radioButtonSecondPlayer.setChecked(true);
+                                    if (bBowler.equals("6")) {
+                                        if (radioButtonFirstPlayer.isChecked()) {
+                                            radioButtonFirstPlayer.setChecked(true);
+                                            radioButtonSecondPlayer.setChecked(false);
 
-                                    }
-                                    else
-                                    {
-                                        radioButtonFirstPlayer.setChecked(true);
-                                        radioButtonSecondPlayer.setChecked(false);
+                                        } else {
+                                            radioButtonFirstPlayer.setChecked(false);
+                                            radioButtonSecondPlayer.setChecked(true);
+                                        }
+                                    } else {
+
+                                        if (radioButtonFirstPlayer.isChecked()) {
+                                            radioButtonFirstPlayer.setChecked(false);
+                                            radioButtonSecondPlayer.setChecked(true);
+
+                                        } else {
+                                            radioButtonFirstPlayer.setChecked(true);
+                                            radioButtonSecondPlayer.setChecked(false);
+                                        }
                                     }
                                 }
 
@@ -10254,60 +5250,51 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                 error.printStackTrace();
 
             }
-        })
-        {
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
                 Map<String, String> params = new HashMap<>();
 
-                if (radioButtonFirstPlayer.isChecked())
-                {
-                    params.put("total_runs",String.valueOf(playingTeamRum + i));
-                    params.put("total_overs",new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
-                    params.put("player_run",String.valueOf(firstPlayerRun + i));
-                    params.put("player_ball",String.valueOf(firstPlayerBall + 1));
-                    params.put("bowler_ball",new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-                    params.put("bowler_runs",String.valueOf(bowlerRun + i));
-                    params.put("match_key",stringMatchKey);
-                    params.put("player_id",stringFristPlayerId);
-                    if (TextUtils.isEmpty(stringBowlerName1))
-                    {
-                        params.put("bowler_id",stringBowlerId);
+                if (radioButtonFirstPlayer.isChecked()) {
+                    params.put("total_runs", String.valueOf(playingTeamRum + i));
+                    params.put("total_overs", new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
+                    params.put("player_run", String.valueOf(firstPlayerRun + i));
+                    params.put("player_ball", String.valueOf(firstPlayerBall + 1));
+                    params.put("bowler_ball", new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+                    params.put("bowler_runs", String.valueOf(bowlerRun + i));
+                    params.put("match_key", stringMatchKey);
+                    params.put("player_id", stringFristPlayerId);
+                    if (TextUtils.isEmpty(stringBowlerName1)) {
+                        params.put("bowler_id", stringBowlerId);
+                    } else {
+                        params.put("bowler_id", stringBowlerId1);
                     }
 
-                    else {
-                        params.put("bowler_id",stringBowlerId1);
-                    }
-
-                    params.put("ball_type",String.valueOf(i));
-                    params.put("extra_run","0");
-                    params.put("wicket_type","0");
-                    params.put("total_wickets","0");
+                    params.put("ball_type", String.valueOf(i));
+                    params.put("extra_run", "0");
+                    params.put("wicket_type", "0");
+                    params.put("total_wickets", "0");
                 }
 
-                if (radioButtonSecondPlayer.isChecked())
-                {
-                    params.put("total_runs",String.valueOf(playingTeamRum + i));
-                    params.put("total_overs",new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
-                    params.put("player_run",String.valueOf(secondPlayerRun + i));
-                    params.put("player_ball",String.valueOf(secondPlayerBall + 1));
-                    params.put("bowler_ball",new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
-                    params.put("bowler_runs",String.valueOf(bowlerRun + i));
-                    params.put("match_key",stringMatchKey);
-                    params.put("player_id",stringSecondPlayerId);
-                    if (TextUtils.isEmpty(stringBowlerName1))
-                    {
-                        params.put("bowler_id",stringBowlerId);
+                if (radioButtonSecondPlayer.isChecked()) {
+                    params.put("total_runs", String.valueOf(playingTeamRum + i));
+                    params.put("total_overs", new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
+                    params.put("player_run", String.valueOf(secondPlayerRun + i));
+                    params.put("player_ball", String.valueOf(secondPlayerBall + 1));
+                    params.put("bowler_ball", new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+                    params.put("bowler_runs", String.valueOf(bowlerRun + i));
+                    params.put("match_key", stringMatchKey);
+                    params.put("player_id", stringSecondPlayerId);
+                    if (TextUtils.isEmpty(stringBowlerName1)) {
+                        params.put("bowler_id", stringBowlerId);
+                    } else {
+                        params.put("bowler_id", stringBowlerId1);
                     }
-
-                    else {
-                        params.put("bowler_id",stringBowlerId1);
-                    }
-                    params.put("ball_type",String.valueOf(i));
-                    params.put("extra_run","0");
-                    params.put("wicket_type","0");
-                    params.put("total_wickets","0");
+                    params.put("ball_type", String.valueOf(i));
+                    params.put("extra_run", "0");
+                    params.put("wicket_type", "0");
+                    params.put("total_wickets", "0");
                 }
 
 
@@ -10316,6 +5303,266 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         };
 
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+
+    void test(int i) {
+
+        zeroToSevenRunsServerCall(i);
+    }
+
+    void dataGetter() {
+
+        stringTeamRuns = textViewPlayingTeamRun.getText().toString();
+        stringTeamOvers = textViewPlayingTeamOvers.getText().toString();
+        stringFirstPlayerRuns = textViewFirstPlayerRun.getText().toString();
+        stringFirstPlayerBalls = textViewFirstPlayerBall.getText().toString();
+        stringSecondPlayerRuns = textViewSecondPlayerRun.getText().toString();
+        stringSecondPlayerBalls = textViewSecondPlayerBall.getText().toString();
+        stringBowlerBalls = textViewBowlerBall.getText().toString();
+        stringBowlerRuns = textViewBowlerRun.getText().toString();
+        stringExtraRuns = textViewExtraRun.getText().toString();
+        stringTeamWickets = textViewPlayingTeamWicket.getText().toString();
+        stringBowlerWickets = textViewBowlerWicket.getText().toString();
+    }
+
+    void wideRunsServerCall(final int number) {
+
+        dataGetter();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.RUN_DETAILS_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            if (jsonObject.getString("success").equals("1")) {
+
+                                if (number % 2 == 0) {
+
+                                    if (radioButtonFirstPlayer.isChecked()) {
+                                        radioButtonFirstPlayer.setChecked(true);
+                                        radioButtonSecondPlayer.setChecked(false);
+
+                                    } else {
+                                        radioButtonFirstPlayer.setChecked(false);
+                                        radioButtonSecondPlayer.setChecked(true);
+                                    }
+
+                                } else {
+
+
+                                    if (radioButtonFirstPlayer.isChecked()) {
+                                        radioButtonFirstPlayer.setChecked(false);
+                                        radioButtonSecondPlayer.setChecked(true);
+
+                                    } else {
+                                        radioButtonFirstPlayer.setChecked(true);
+                                        radioButtonSecondPlayer.setChecked(false);
+                                    }
+
+                                }
+
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                error.printStackTrace();
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+
+                if (radioButtonFirstPlayer.isChecked()) {
+                    params.put("total_runs", stringTeamRuns);
+                    params.put("total_overs", stringTeamOvers);
+                    params.put("player_run", stringFirstPlayerRuns);
+                    params.put("player_ball", stringFirstPlayerBalls);
+                    params.put("bowler_ball", stringBowlerBalls);
+                    params.put("bowler_runs", stringBowlerRuns);
+                    params.put("match_key", stringMatchKey);
+                    params.put("player_id", stringFristPlayerId);
+                    params.put("ball_type", stringBallType);
+                    params.put("extra_run", stringExtraRuns);
+                    params.put("wicket_type", "0");
+                    params.put("total_wickets", "0");
+                    if (TextUtils.isEmpty(stringBowlerName1)) {
+                        params.put("bowler_id", stringBowlerId);
+                    } else {
+                        params.put("bowler_id", stringBowlerId1);
+                    }
+
+
+                }
+
+                if (radioButtonSecondPlayer.isChecked()) {
+                    params.put("total_runs", stringTeamRuns);
+                    params.put("total_overs", stringTeamOvers);
+                    params.put("player_run", stringFirstPlayerRuns);
+                    params.put("player_ball", stringFirstPlayerBalls);
+                    params.put("bowler_ball", stringBowlerBalls);
+                    params.put("bowler_runs", stringBowlerRuns);
+                    params.put("match_key", stringMatchKey);
+                    params.put("player_id", stringSecondPlayerId);
+                    params.put("ball_type", stringBallType);
+                    params.put("extra_run", stringExtraRuns);
+                    params.put("wicket_type", "0");
+                    params.put("total_wickets", "0");
+                    if (TextUtils.isEmpty(stringBowlerName1)) {
+                        params.put("bowler_id", stringBowlerId);
+                    } else {
+                        params.put("bowler_id", stringBowlerId1);
+                    }
+
+                }
+
+
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+    void wicketServerCall(final int number) {
+
+        dataGetter();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.RUN_DETAILS_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            if (jsonObject.getString("success").equals("1")) {
+
+                                if (number % 2 == 0) {
+
+                                    if (radioButtonFirstPlayer.isChecked()) {
+                                        radioButtonFirstPlayer.setChecked(true);
+                                        radioButtonSecondPlayer.setChecked(false);
+
+                                    } else {
+                                        radioButtonFirstPlayer.setChecked(false);
+                                        radioButtonSecondPlayer.setChecked(true);
+                                    }
+
+                                } else {
+
+
+                                    if (radioButtonFirstPlayer.isChecked()) {
+                                        radioButtonFirstPlayer.setChecked(false);
+                                        radioButtonSecondPlayer.setChecked(true);
+
+                                    } else {
+                                        radioButtonFirstPlayer.setChecked(true);
+                                        radioButtonSecondPlayer.setChecked(false);
+                                    }
+
+                                }
+
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                error.printStackTrace();
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+
+                if (radioButtonFirstPlayer.isChecked()) {
+                    params.put("total_runs", stringTeamRuns);
+                    params.put("total_overs", stringTeamOvers);
+                    params.put("player_run", stringFirstPlayerRuns);
+                    params.put("player_ball", stringFirstPlayerBalls);
+                    params.put("bowler_ball", stringBowlerBalls);
+                    params.put("bowler_runs", stringBowlerRuns);
+                    params.put("match_key", stringMatchKey);
+                    params.put("player_id", stringFristPlayerId);
+                    params.put("ball_type", stringBallType);
+                    params.put("extra_run", stringExtraRuns);
+                    params.put("wicket_type", "0");
+                    params.put("total_wickets", stringTeamWickets);
+                    if (TextUtils.isEmpty(stringBowlerName1)) {
+                        params.put("bowler_id", stringBowlerId);
+                    } else {
+                        params.put("bowler_id", stringBowlerId1);
+                    }
+
+                }
+
+                if (radioButtonSecondPlayer.isChecked()) {
+                    params.put("total_runs", stringTeamRuns);
+                    params.put("total_overs", stringTeamOvers);
+                    params.put("player_run", stringFirstPlayerRuns);
+                    params.put("player_ball", stringFirstPlayerBalls);
+                    params.put("bowler_ball", stringBowlerBalls);
+                    params.put("bowler_runs", stringBowlerRuns);
+                    params.put("match_key", stringMatchKey);
+                    params.put("player_id", stringSecondPlayerId);
+                    params.put("ball_type", stringBallType);
+                    params.put("extra_run", stringExtraRuns);
+                    params.put("wicket_type", "0");
+                    params.put("total_wickets", stringTeamWickets);
+                    if (TextUtils.isEmpty(stringBowlerName1)) {
+                        params.put("bowler_id", stringBowlerId);
+                    } else {
+                        params.put("bowler_id", stringBowlerId1);
+                    }
+
+                }
+
+
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+    void extraRuns(String name) {
+        if (name.equals("Wide")) {
+            //Toast.makeText(this, "Wide", Toast.LENGTH_SHORT).show();
+            wideBallPopUp();
+        } else if (name.equals("NoBall")) {
+            //Toast.makeText(this, "NoBall", Toast.LENGTH_SHORT).show();
+            noBallPopUp();
+        } else if (name.equals("Byes")) {
+            //Toast.makeText(this, "Byes", Toast.LENGTH_SHORT).show();
+            byesPopUp();
+        } else if (name.equals("LegByes")) {
+            //Toast.makeText(this, "LegByes", Toast.LENGTH_SHORT).show();
+            legByPopUp();
+        }
     }
 
     @Override
@@ -10375,12 +5622,29 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+    // onBack pressed
+    boolean doubleBackToExitPressedOnce = false;
 
-    void test(int i)
-    {
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to exit?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        MatchPlayActivity.this.finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
 
-        zeroToSevenRunsServerCall(i);
     }
+
 }
 
 
