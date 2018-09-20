@@ -63,19 +63,14 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             textViewSix, textViewSeven, textViewWicket, textViewNoBall, textViewUndo, textViewWide,
             textViewLegBy, textViewBy, textViewDot;
 
-    ArrayList<String> spinnerNewBowler;
+    ArrayList<String> spinnerNewBowler,spinnerNewBatsman,spinnerCatcher;
 
-    ArrayList<String> spinnerNewBatsman;
-
-    ArrayList<String> spinnerCatcher;
-
-    private Spinner spinner;
 
     private Button yes, no;
 
-    private Spinner spinnerBatsman, spinnerCatcherName;
+    private Spinner spinner,spinnerBatsman, spinnerCatcherName;
     // Playing Players
-    private RadioGroup radioGroupPlayers;
+    //private RadioGroup radioGroupPlayers;
 
     private String bBowler;
 
@@ -105,6 +100,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             stringBowlerBall, stringCurrentOver, stringExtraRun,
             stringCurrentRunRate, stringRequiredRunRate;
 
+    // int Values for players details
     private int playingTeamRum, playingTeamWicket, playingTeamOvers, firstPlayerRun,
             firstPlayerBall, secondPlayerRun, secondPlayerBall, bowlerRun, bowlerWicket,
             bowlerBall, currentOver, extraRun, currentRunRate, requiredRunRate, editTextRuns1;
@@ -113,33 +109,15 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
     CustomDialogClass customDialogClass;
 
-    private double playingTeamOversDouble, bowlerOversDouble, test;
-
-    private double doubleValue = 0.1;
-
-    private float floatValue = (float) 0.1;
-
-    private int beforeDecimal, afterDecimal, decimalPoint;
-
-    private LinearLayout layoutToAdd;
-
-    private RecyclerView recyclerView;
+    private double playingTeamOversDouble;
 
     Dialog dialog;
 
     private EditText editTextRuns;
 
-    private ArrayList<BowlerDetails> bowlerDetailsArrayList;
-
     private String stringNewBowlerName, stringNewBowlerId, stringSpaceRemove, stringBowlerName1, stringBowlerId1,
             stringNewTeamName, stringNewBatsmanName, stringNewBatsmanId, stringBatsmanName1, stringBatsmanId1,
             stringCatcherName, stringCatcherId, stringCatcherName1, stringCatcherId1;
-
-    private NewBowlerAdapter newBowlerAdapter;
-
-    private LinearLayoutManager layoutManager;
-
-    SpinnerAdapter adapter;
 
     private JSONObject jsonObject, jsonObjectBatsman;
 
@@ -162,8 +140,6 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         spinnerCatcher = new ArrayList<>();
         spinnerNewBatsman = new ArrayList<>();
         customDialogClass = new CustomDialogClass(MatchPlayActivity.this);
-        //getBatsmanDetails();
-
 
     }
 
@@ -188,7 +164,6 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         radioButtonFirstPlayer = findViewById(R.id.radioButtonFirstPlayer);
         radioButtonSecondPlayer = findViewById(R.id.radioButtonSecondPlayer);
 
-        layoutToAdd = findViewById(R.id.existedlayout);
         onClickListener();
 
     }
@@ -261,51 +236,42 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
         switch (v.getId()) {
             case R.id.textViewZero:
-                //zeroButtonOperation();
                 test(0);
                 break;
 
             case R.id.textViewOne:
-                //oneButtonOperation();
                 test(1);
                 break;
 
             case R.id.textViewTwo:
-                //twoButtonOperation();
                 test(2);
                 break;
 
             case R.id.textViewThree:
-                //threeButtonOperation();
                 test(3);
                 break;
 
             case R.id.textViewFour:
-                //fourButtonOperation();
                 test(4);
                 break;
 
             case R.id.textViewFive:
-                //fiveButtonOperation();
                 test(5);
                 break;
 
             case R.id.textViewSix:
-                //sixButtonOperation();
                 test(6);
                 break;
 
             case R.id.textViewSeven:
-                //sevenButtonOperation();
                 test(7);
                 break;
 
             case R.id.textViewW:
-                wicketPopUp();
+                extraRuns("Wicket");
                 break;
 
             case R.id.textViewNB:
-                //noBallPopUp();
                 extraRuns("NoBall");
                 break;
 
@@ -314,17 +280,14 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                 break;
 
             case R.id.textViewWD:
-                //wideBallPopUp();
                 extraRuns("Wide");
                 break;
 
             case R.id.textViewLB:
-                //legByPopUp();
                 extraRuns("LegByes");
                 break;
 
             case R.id.textViewB:
-                //byesPopUp();
                 extraRuns("Byes");
                 break;
 
@@ -1138,7 +1101,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                     playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
 
-                                    textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberNoBall +1));
+                                    textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberNoBall + 1));
 
                                     stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
@@ -1174,7 +1137,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                     //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " "+ str1 + "nb");
+                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "nb");
 
                                     stringExtraRun = textViewExtraRun.getText().toString();
 
@@ -1227,7 +1190,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                     //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
 
-                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " "+ str1 + "nb");
+                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "nb");
                                     stringExtraRun = textViewExtraRun.getText().toString();
 
                                     extraRun = Integer.parseInt(stringExtraRun);
@@ -1341,7 +1304,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                     //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
 
-                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " "+ str1 + "nb");
+                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "nb");
                                     stringExtraRun = textViewExtraRun.getText().toString();
 
                                     extraRun = Integer.parseInt(stringExtraRun);
@@ -1453,7 +1416,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                     //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
 
-                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 +"nb");
+                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "nb");
                                     stringExtraRun = textViewExtraRun.getText().toString();
 
                                     extraRun = Integer.parseInt(stringExtraRun);
@@ -1496,7 +1459,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                     playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
 
-                                    textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberNoBall +1));
+                                    textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + numberNoBall + 1));
 
                                     stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
@@ -1532,7 +1495,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                     //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " "+ str1 + "nb");
+                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "nb");
 
                                     stringExtraRun = textViewExtraRun.getText().toString();
 
@@ -1585,7 +1548,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                     //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
 
-                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " "+ str1 + "nb");
+                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "nb");
                                     stringExtraRun = textViewExtraRun.getText().toString();
 
                                     extraRun = Integer.parseInt(stringExtraRun);
@@ -1699,7 +1662,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                     //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
 
-                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " "+ str1 + "nb");
+                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "nb");
                                     stringExtraRun = textViewExtraRun.getText().toString();
 
                                     extraRun = Integer.parseInt(stringExtraRun);
@@ -1811,7 +1774,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                     //textViewBowlerBall.setText(new DecimalFormat("##.#").format((bowlerOversFloat + 0.1)));
 
-                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 +"nb");
+                                    textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + str1 + "nb");
                                     stringExtraRun = textViewExtraRun.getText().toString();
 
                                     extraRun = Integer.parseInt(stringExtraRun);
@@ -1853,8 +1816,6 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             @Override
             public boolean onMenuItemClick(final MenuItem item) {
 
-//                if (item.getTitle().equals("Bowled"))
-//                {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MatchPlayActivity.this);
                 alertDialogBuilder.setMessage("Are you sure, You wanted to make decision");
                 alertDialogBuilder.setPositiveButton("yes",
@@ -1929,8 +1890,6 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                                     Toast.makeText(MatchPlayActivity.this, "Run Out", Toast.LENGTH_SHORT).show();
 
                                     try {
-
-
                                         DialogFragment firstDialogRunOut = new FirstDialogRunOut();
                                         firstDialogRunOut.show(getFragmentManager(), "fgggggggg");
 
@@ -2046,9 +2005,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
         spinner = (Spinner) dialogView.findViewById(R.id.spinnerNewBowler);
         getBowlerDetails();
-        Button buttonSelect = dialogView.findViewById(R.id.buttonNewBowlerSelect);
+        //Button buttonSelect = dialogView.findViewById(R.id.buttonNewBowlerSelect);
 
-        Button buttonReset = dialogView.findViewById(R.id.buttonNewBowlerReset);
+        //Button buttonReset = dialogView.findViewById(R.id.buttonNewBowlerReset);
 
         dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -2101,35 +2060,6 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     e.printStackTrace();
                 }
 
-//                if (i%2==0)
-//                {
-//                    if (radioButtonFirstPlayer.isChecked())
-//                    {
-//                        radioButtonFirstPlayer.setChecked(true);
-//                        radioButtonSecondPlayer.setChecked(false);
-//
-//                    }
-//                    else
-//                    {
-//                        radioButtonFirstPlayer.setChecked(false);
-//                        radioButtonSecondPlayer.setChecked(true);
-//                    }
-//                }
-//
-//                else {
-//
-//                    if (radioButtonFirstPlayer.isChecked())
-//                    {
-//                        radioButtonFirstPlayer.setChecked(false);
-//                        radioButtonSecondPlayer.setChecked(true);
-//
-//                    }
-//                    else
-//                    {
-//                        radioButtonFirstPlayer.setChecked(true);
-//                        radioButtonSecondPlayer.setChecked(false);
-//                    }
-//                }
                 dialog.dismiss();
             }
         });
@@ -2143,9 +2073,6 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
         dialog = dialogBuilder.create();
         dialog.show();
-        //getBowlerDetails();
-
-
     }
 
     void getBowlerDetails() {
@@ -2345,7 +2272,6 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                     if (stringBatsmanName1.equals(stringNewBatsmanName)) {
                                         stringBatsmanId1 = stringNewBatsmanId;
-                                        //System.out.println("stringSpinnerPlayerIdStrk" + stringBatsmanId1);
                                     }
 
                                 }
@@ -2389,7 +2315,6 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                     if (stringCatcherName1.equals(stringCatcherName)) {
                                         stringCatcherId1 = stringCatcherId;
-                                        //System.out.println("stringSpinnerPlayerIdStrk" + stringBatsmanId1);
                                     }
 
                                 }
@@ -5562,6 +5487,8 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         } else if (name.equals("LegByes")) {
             //Toast.makeText(this, "LegByes", Toast.LENGTH_SHORT).show();
             legByPopUp();
+        } else if (name.equals("Wicket")) {
+            wicketPopUp();
         }
     }
 
