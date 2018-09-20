@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (SessionManager.getInstance(this).isLoggedIn())
         {
             startActivity(new Intent(this,MainActivity.class));
+            finish();
         }
     }
 
@@ -102,7 +103,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 Toast.makeText(LoginActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
 
                                 startActivity(new Intent(LoginActivity.this,MainActivity.class));
-
                                 finish();
                             }
                             else {

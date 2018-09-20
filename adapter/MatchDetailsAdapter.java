@@ -50,7 +50,7 @@ public class MatchDetailsAdapter
             @Override
             public void onClick(View v) {
                 openTossActivity(position);
-
+                ((Activity)context).finish();
             }
         });
     }
