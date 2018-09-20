@@ -75,7 +75,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
     private String bBowler;
 
     // Playing Players
-    private RadioButton radioButtonFirstPlayer, radioButtonSecondPlayer;
+    private RadioButton radioButtonFirstPlayer, radioButtonSecondPlayer,radioButtonFirst,radioButtonSecond;
 
     // Pop up option for other than number
     private PopupMenu popupMenuWide, popupMenuNoBall, popupMenuByes, popupMenuLegBy,
@@ -123,8 +123,6 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             stringSecondPlayerRuns, stringSecondPlayerBalls, stringBowlerBalls,
             stringBowlerRuns, stringExtraRuns, stringTeamWickets, stringBowlerWickets, stringBallType,
             stringBallType1;
-
-    private MenuItem itemWicket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -276,10 +274,6 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                 extraRuns("NoBall");
                 break;
 
-            case R.id.textViewUndo:
-                undoPopUp();
-                break;
-
             case R.id.textViewWD:
                 extraRuns("Wide");
                 break;
@@ -294,6 +288,10 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
             case R.id.textViewDot:
                 dotPopUp();
+                break;
+
+            case R.id.textViewUndo:
+                undoPopUp();
                 break;
 
 
@@ -1870,7 +1868,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                 if (item.getTitle().equals("Caught")) {
                                     stringWicketType = item.getTitle().toString();
-                                    Toast.makeText(MatchPlayActivity.this, "Caught", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(MatchPlayActivity.this, "Caught", Toast.LENGTH_SHORT).show();
                                     DialogFragment firstDialogCaught = new FirstDialogCaught();
                                     firstDialogCaught.show(getFragmentManager(), "fgggggggg");
                                     getBatsmanDetails();
@@ -1879,7 +1877,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                 if (item.getTitle().equals("Stumped")) {
                                     stringWicketType = item.getTitle().toString();
-                                    Toast.makeText(MatchPlayActivity.this, "Stumped", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(MatchPlayActivity.this, "Stumped", Toast.LENGTH_SHORT).show();
                                     DialogFragment firstDialogStumped = new FirstDialogStumped();
                                     firstDialogStumped.show(getFragmentManager(), "fgggggggg");
 
@@ -1888,16 +1886,15 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                 if (item.getTitle().equals("Hit Wicket")) {
                                     stringWicketType = item.getTitle().toString();
-                                    Toast.makeText(MatchPlayActivity.this, "Hit Wicket", Toast.LENGTH_SHORT).show();
-                                    DialogFragment firstDialogStumped = new FirstDialogStumped();
+                                    //Toast.makeText(MatchPlayActivity.this, "Hit Wicket", Toast.LENGTH_SHORT).show();
+                                    DialogFragment firstDialogStumped = new FirstDialogHitWicket();
                                     firstDialogStumped.show(getFragmentManager(), "fgggggggg");
-
                                     getBatsmanDetails();
                                 }
 
                                 if (item.getTitle().equals("Run Out")) {
                                     stringWicketType = item.getTitle().toString();
-                                    Toast.makeText(MatchPlayActivity.this, "Run Out", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(MatchPlayActivity.this, "Run Out", Toast.LENGTH_SHORT).show();
                                     DialogFragment firstDialogRunOut = new FirstDialogRunOut();
                                     firstDialogRunOut.show(getFragmentManager(), "fgggggggg");
                                     getBatsmanDetails();
@@ -2320,6 +2317,8 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                     if (stringCatcherName1.equals(stringCatcherName)) {
                                         stringCatcherId1 = stringCatcherId;
+
+
                                     }
 
                                 }
@@ -2449,8 +2448,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
+                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w");
                         reusableFunctionBowler();
+
                         wicketServerCall();
 
 
@@ -2548,7 +2548,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
+                        textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w");
                         reusableFunctionBowler();
 
                         wicketServerCall();
@@ -2570,6 +2570,13 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
             return view;
         }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+
+            getDialog().getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        }
     }
 
 
@@ -2588,15 +2595,65 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                 public void onClick(View v) {
 
                     if (radioButtonFirstPlayer.isChecked()) {
-                        String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
 
-                        Log.d("spinner", strFirstPlayer);
+                        stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                        stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                        radioButtonFirstPlayer.setText(strFirstPlayer);
-                        textViewFirstPlayerBall.setText("0");
-                        textViewFirstPlayerRun.setText("0");
-                        //textViewCurrentOver.setText("");
-                        //dialog.dismiss();
+
+                        try {
+
+                            if (jsonObjectBatsman.getString("success").equals("1")) {
+                                JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    stringNewTeamName = object.getString("team_name");
+
+                                    stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                    if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                        JSONArray array = object.getJSONArray("players");
+
+                                        for (int j = 0; j < array.length(); j++) {
+                                            JSONObject obj = array.getJSONObject(j);
+
+                                            stringNewBatsmanName = obj.getString("fullname");
+                                            stringNewBatsmanId = obj.getString("player_id");
+
+                                            if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                stringBatsmanId1 = stringNewBatsmanId;
+                                            }
+
+                                        }
+
+
+                                    }
+                                    else {
+                                        JSONArray array = object.getJSONArray("players");
+
+                                        for (int j = 0; j < array.length(); j++) {
+                                            JSONObject obj = array.getJSONObject(j);
+
+                                            stringCatcherName = obj.getString("fullname");
+                                            stringCatcherId = obj.getString("player_id");
+
+
+                                            if (stringCatcherName1.equals(stringCatcherName)) {
+                                                stringCatcherId1 = stringCatcherId;
+
+                                                Log.d("catcherName",stringCatcherId1);
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
                         stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -2627,7 +2684,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
 
-                        //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
+                        textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
 
 
                         stringBowlerRun = textViewBowlerRun.getText().toString();
@@ -2651,17 +2708,68 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                         textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
                         reusableFunctionBowler();
 
-                        radioButtonFirstPlayer.setChecked(true);
-                        radioButtonSecondPlayer.setChecked(false);
+                        wicketServerCall();
                     } else {
 
-                        String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
+                        stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                        stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                        Log.d("spinner", strSecondPlayer);
 
-                        radioButtonSecondPlayer.setText(strSecondPlayer);
-                        textViewSecondPlayerBall.setText("0");
-                        textViewSecondPlayerRun.setText("0");
+                        try {
+
+                            if (jsonObjectBatsman.getString("success").equals("1")) {
+                                JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    stringNewTeamName = object.getString("team_name");
+
+                                    stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                    if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                        JSONArray array = object.getJSONArray("players");
+
+                                        for (int j = 0; j < array.length(); j++) {
+                                            JSONObject obj = array.getJSONObject(j);
+
+                                            stringNewBatsmanName = obj.getString("fullname");
+                                            stringNewBatsmanId = obj.getString("player_id");
+
+                                            if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                stringBatsmanId1 = stringNewBatsmanId;
+                                            }
+
+                                        }
+
+
+                                    }
+                                    else {
+                                        JSONArray array = object.getJSONArray("players");
+
+                                        for (int j = 0; j < array.length(); j++) {
+                                            JSONObject obj = array.getJSONObject(j);
+
+                                            stringCatcherName = obj.getString("fullname");
+                                            stringCatcherId = obj.getString("player_id");
+
+
+                                            if (stringCatcherName1.equals(stringCatcherName)) {
+                                                stringCatcherId1 = stringCatcherId;
+
+                                                Log.d("catcherName",stringCatcherId1);
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
 
                         stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -2694,7 +2802,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
 
-                        //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
+                        textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
 
 
                         stringBowlerRun = textViewBowlerRun.getText().toString();
@@ -2717,9 +2825,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
                         reusableFunctionBowler();
-
-                        radioButtonFirstPlayer.setChecked(false);
-                        radioButtonSecondPlayer.setChecked(true);
+                        wicketServerCall();
                     }
 
                     dismiss();
@@ -2737,6 +2843,13 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
             return view;
         }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+
+            getDialog().getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        }
     }
 
 
@@ -2747,34 +2860,84 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             View view = inflater.inflate(R.layout.layout_new_batsman_stumped, container, true);
             Button buttonReset = (Button) view.findViewById(R.id.buttonNewBatsmanReset);
             spinnerBatsman = (Spinner) view.findViewById(R.id.spinnerNewBatsman);
-            spinnerCatcherName = (Spinner) view.findViewById(R.id.spinnerCatcherName);
+            spinnerCatcherName = (Spinner) view.findViewById(R.id.spinnerCatcherNameStumped);
             Button buttonSelect = (Button) view.findViewById(R.id.buttonNewBatsmanSelect);
             final RadioButton radioButtonWide = view.findViewById(R.id.radioButtonWide);
             final RadioButton radioButtonNo = view.findViewById(R.id.radioButtonNo);
             final RadioButton radioButtonNor = view.findViewById(R.id.radioButtonNor);
-            //spinnerBatsman.setOnItemSelectedListener(MatchPlayActivity.this);
-            //spinnerCatcherName.setOnItemSelectedListener(MatchPlayActivity.this);
+
             buttonSelect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                     if (radioButtonWide.isChecked()) {
+
                         if (radioButtonFirstPlayer.isChecked()) {
-                            String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
 
-                            Log.d("spinner", strFirstPlayer);
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            radioButtonFirstPlayer.setText(strFirstPlayer);
-                            textViewFirstPlayerBall.setText("0");
-                            textViewFirstPlayerRun.setText("0");
-                            //textViewCurrentOver.setText("");
-                            //dialog.dismiss();
+
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
                             playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
 
-                            //textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 0));
+                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 1));
 
                             stringPlayingTeamWicket = textViewPlayingTeamWicket.getText().toString();
 
@@ -2820,26 +2983,81 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "Wd+W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "wd+w");
+                            stringExtraRun = textViewExtraRun.getText().toString();
+
+                            extraRun = Integer.parseInt(stringExtraRun);
+
+                            textViewExtraRun.setText(String.valueOf(extraRun + 1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
+
                         } else {
 
-                            String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strSecondPlayer);
 
-                            radioButtonSecondPlayer.setText(strSecondPlayer);
-                            textViewSecondPlayerBall.setText("0");
-                            textViewSecondPlayerRun.setText("0");
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
                             playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
 
-                            //textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 0));
+                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 1));
 
                             stringPlayingTeamWicket = textViewPlayingTeamWicket.getText().toString();
 
@@ -2859,7 +3077,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
 
-                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 0));
+                            textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 0));
 
 
                             stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
@@ -2887,34 +3105,86 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "Wd+W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "wd+w");
+                            stringExtraRun = textViewExtraRun.getText().toString();
+
+                            extraRun = Integer.parseInt(stringExtraRun);
+
+                            textViewExtraRun.setText(String.valueOf(extraRun + 1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
                         }
-
+                        wicketServerCall();
                         dismiss();
 
                     }
 
                     if (radioButtonNo.isChecked()) {
                         if (radioButtonFirstPlayer.isChecked()) {
-                            String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strFirstPlayer);
 
-                            radioButtonFirstPlayer.setText(strFirstPlayer);
-                            textViewFirstPlayerBall.setText("0");
-                            textViewFirstPlayerRun.setText("0");
-                            //textViewCurrentOver.setText("");
-                            //dialog.dismiss();
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
                             playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
 
-                            //textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 0));
+                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 1));
 
                             stringPlayingTeamWicket = textViewPlayingTeamWicket.getText().toString();
 
@@ -2934,7 +3204,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
 
-                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 0));
+                            textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 0));
                             stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
 
                             firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
@@ -2960,26 +3230,83 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "Wd+W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "wd+w");
+
+                            stringExtraRun = textViewExtraRun.getText().toString();
+
+                            extraRun = Integer.parseInt(stringExtraRun);
+
+                            textViewExtraRun.setText(String.valueOf(extraRun + 1));
+
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
+
                         } else {
 
-                            String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strSecondPlayer);
 
-                            radioButtonSecondPlayer.setText(strSecondPlayer);
-                            textViewSecondPlayerBall.setText("0");
-                            textViewSecondPlayerRun.setText("0");
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
                             playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
 
-                            //textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 0));
+                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 1));
 
                             stringPlayingTeamWicket = textViewPlayingTeamWicket.getText().toString();
 
@@ -3027,29 +3354,83 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "Wd+W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "wd+w");
+
+                            stringExtraRun = textViewExtraRun.getText().toString();
+
+                            extraRun = Integer.parseInt(stringExtraRun);
+
+                            textViewExtraRun.setText(String.valueOf(extraRun + 1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
                         }
-
+                        wicketServerCall();
                         dismiss();
 
                     }
 
 
+
                     if (radioButtonNor.isChecked()) {
                         if (radioButtonFirstPlayer.isChecked()) {
-                            String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strFirstPlayer);
 
-                            radioButtonFirstPlayer.setText(strFirstPlayer);
-                            textViewFirstPlayerBall.setText("0");
-                            textViewFirstPlayerRun.setText("0");
-                            //textViewCurrentOver.setText("");
-                            //dialog.dismiss();
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -3068,6 +3449,276 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
                             textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
+
+                            reusableFunctionPlayer();
+
+                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
+
+                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
+
+                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 0));
+                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
+
+                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
+
+                            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
+
+
+                            stringBowlerRun = textViewBowlerRun.getText().toString();
+
+                            bowlerRun = Integer.parseInt(stringBowlerRun);
+
+                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 0));
+
+                            stringBowlerWicket = textViewBowlerWicket.getText().toString();
+
+                            bowlerWicket = Integer.parseInt(stringBowlerWicket);
+
+                            textViewBowlerWicket.setText(String.valueOf(bowlerWicket + 1));
+
+                            stringBowlerBall = textViewBowlerBall.getText().toString();
+
+                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+                            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w");
+
+                            stringExtraRun = textViewExtraRun.getText().toString();
+
+                            extraRun = Integer.parseInt(stringExtraRun);
+
+                            //textViewExtraRun.setText(String.valueOf(extraRun + numberByes + 1));
+                            reusableFunctionBowler();
+
+
+                        } else {
+
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
+
+
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+
+                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+
+                            //textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 0));
+
+                            stringPlayingTeamWicket = textViewPlayingTeamWicket.getText().toString();
+
+                            playingTeamWicket = Integer.parseInt(stringPlayingTeamWicket);
+
+                            textViewPlayingTeamWicket.setText(String.valueOf(playingTeamWicket + 1));
+
+                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+
+                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+
+                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
+
+                            reusableFunctionPlayer();
+
+                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
+
+                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
+
+                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 0));
+
+
+                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
+
+                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
+
+                            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
+
+
+                            stringBowlerRun = textViewBowlerRun.getText().toString();
+
+                            bowlerRun = Integer.parseInt(stringBowlerRun);
+
+                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 0));
+
+                            stringBowlerWicket = textViewBowlerWicket.getText().toString();
+
+                            bowlerWicket = Integer.parseInt(stringBowlerWicket);
+
+                            textViewBowlerWicket.setText(String.valueOf(bowlerWicket + 1));
+
+                            stringBowlerBall = textViewBowlerBall.getText().toString();
+
+                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+                            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w");
+                            stringExtraRun = textViewExtraRun.getText().toString();
+
+                            extraRun = Integer.parseInt(stringExtraRun);
+
+                            //textViewExtraRun.setText(String.valueOf(extraRun + numberByes + 1));
+                            reusableFunctionBowler();
+
+                        }
+                        wicketServerCall();
+                        dismiss();
+                    }
+
+                }
+            });
+
+            buttonReset.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                }
+            });
+
+
+            return view;
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+
+            getDialog().getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        }
+    }
+
+    @SuppressLint("ValidFragment")
+    public class FirstDialogHitWicket extends DialogFragment {
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.layout_new_batsman_hit_wicket, container, true);
+            Button buttonReset = (Button) view.findViewById(R.id.buttonNewBatsmanReset);
+            spinnerBatsman = (Spinner) view.findViewById(R.id.spinnerNewBatsman);
+            spinnerCatcherName = (Spinner) view.findViewById(R.id.spinnerCatcherNameStumped);
+            Button buttonSelect = (Button) view.findViewById(R.id.buttonNewBatsmanSelect);
+            final RadioButton radioButtonWide = view.findViewById(R.id.radioButtonWide);
+            final RadioButton radioButtonNo = view.findViewById(R.id.radioButtonNo);
+            final RadioButton radioButtonNor = view.findViewById(R.id.radioButtonNor);
+
+            buttonSelect.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (radioButtonWide.isChecked()) {
+
+                        if (radioButtonFirstPlayer.isChecked()) {
+
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            //stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
+
+
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+
+                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+
+                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 1));
+
+                            stringPlayingTeamWicket = textViewPlayingTeamWicket.getText().toString();
+
+                            playingTeamWicket = Integer.parseInt(stringPlayingTeamWicket);
+
+                            textViewPlayingTeamWicket.setText(String.valueOf(playingTeamWicket + 1));
+
+                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+
+                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+
+                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
 
                             reusableFunctionPlayer();
 
@@ -3099,29 +3750,65 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             bowlerOversFloat = Float.parseFloat(stringBowlerBall);
 
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+                            //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "wd+w");
+                            stringExtraRun = textViewExtraRun.getText().toString();
+
+                            extraRun = Integer.parseInt(stringExtraRun);
+
+                            textViewExtraRun.setText(String.valueOf(extraRun + 1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
 
                         } else {
 
-                            String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            //stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strSecondPlayer);
 
-                            radioButtonSecondPlayer.setText(strSecondPlayer);
-                            textViewSecondPlayerBall.setText("0");
-                            textViewSecondPlayerRun.setText("0");
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
                             playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
 
-                            //textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 0));
+                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 1));
 
                             stringPlayingTeamWicket = textViewPlayingTeamWicket.getText().toString();
 
@@ -3133,7 +3820,256 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
+                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
+
+                            reusableFunctionPlayer();
+
+                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
+
+                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
+
+                            textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 0));
+
+
+                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
+
+                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
+
+                            //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
+
+
+                            stringBowlerRun = textViewBowlerRun.getText().toString();
+
+                            bowlerRun = Integer.parseInt(stringBowlerRun);
+
+                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 0));
+
+                            stringBowlerWicket = textViewBowlerWicket.getText().toString();
+
+                            bowlerWicket = Integer.parseInt(stringBowlerWicket);
+
+                            textViewBowlerWicket.setText(String.valueOf(bowlerWicket + 1));
+
+                            stringBowlerBall = textViewBowlerBall.getText().toString();
+
+                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+                            //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "wd+w");
+                            stringExtraRun = textViewExtraRun.getText().toString();
+
+                            extraRun = Integer.parseInt(stringExtraRun);
+
+                            textViewExtraRun.setText(String.valueOf(extraRun + 1));
+                            reusableFunctionBowler();
+
+                        }
+                        wicketServerCall();
+                        dismiss();
+
+                    }
+
+                    if (radioButtonNo.isChecked()) {
+                        if (radioButtonFirstPlayer.isChecked()) {
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
+
+
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+
+                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+
+                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 1));
+
+                            stringPlayingTeamWicket = textViewPlayingTeamWicket.getText().toString();
+
+                            playingTeamWicket = Integer.parseInt(stringPlayingTeamWicket);
+
+                            textViewPlayingTeamWicket.setText(String.valueOf(playingTeamWicket + 1));
+
+                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+
+                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+
+                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
+
+                            reusableFunctionPlayer();
+
+                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
+
+                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
+
+                            textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 0));
+                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
+
+                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
+
+                            //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
+
+
+                            stringBowlerRun = textViewBowlerRun.getText().toString();
+
+                            bowlerRun = Integer.parseInt(stringBowlerRun);
+
+                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 0));
+
+                            stringBowlerWicket = textViewBowlerWicket.getText().toString();
+
+                            bowlerWicket = Integer.parseInt(stringBowlerWicket);
+
+                            textViewBowlerWicket.setText(String.valueOf(bowlerWicket + 1));
+
+                            stringBowlerBall = textViewBowlerBall.getText().toString();
+
+                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+                            //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "wd+w");
+
+                            stringExtraRun = textViewExtraRun.getText().toString();
+
+                            extraRun = Integer.parseInt(stringExtraRun);
+
+                            textViewExtraRun.setText(String.valueOf(extraRun + 1));
+
+                            reusableFunctionBowler();
+
+
+                        } else {
+
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
+
+
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+
+                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+
+                            textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 1));
+
+                            stringPlayingTeamWicket = textViewPlayingTeamWicket.getText().toString();
+
+                            playingTeamWicket = Integer.parseInt(stringPlayingTeamWicket);
+
+                            textViewPlayingTeamWicket.setText(String.valueOf(playingTeamWicket + 1));
+
+                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+
+                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+
+                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
 
                             reusableFunctionPlayer();
 
@@ -3167,15 +4103,269 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             bowlerOversFloat = Float.parseFloat(stringBowlerBall);
 
-                            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+                            //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "wd+w");
+
+                            stringExtraRun = textViewExtraRun.getText().toString();
+
+                            extraRun = Integer.parseInt(stringExtraRun);
+
+                            textViewExtraRun.setText(String.valueOf(extraRun + 1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
                         }
+                        wicketServerCall();
+                        dismiss();
 
+                    }
+
+
+
+                    if (radioButtonNor.isChecked()) {
+                        if (radioButtonFirstPlayer.isChecked()) {
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
+
+
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+
+                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+
+                            //textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 0));
+
+                            stringPlayingTeamWicket = textViewPlayingTeamWicket.getText().toString();
+
+                            playingTeamWicket = Integer.parseInt(stringPlayingTeamWicket);
+
+                            textViewPlayingTeamWicket.setText(String.valueOf(playingTeamWicket + 1));
+
+                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+
+                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+
+                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
+
+                            reusableFunctionPlayer();
+
+                            stringFirstPlayerRun = textViewFirstPlayerRun.getText().toString();
+
+                            firstPlayerRun = Integer.parseInt(stringFirstPlayerRun);
+
+                            //textViewFirstPlayerRun.setText(String.valueOf(firstPlayerRun + 0));
+                            stringFirstPlayerBall = textViewFirstPlayerBall.getText().toString();
+
+                            firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
+
+                            textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
+
+
+                            stringBowlerRun = textViewBowlerRun.getText().toString();
+
+                            bowlerRun = Integer.parseInt(stringBowlerRun);
+
+                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 0));
+
+                            stringBowlerWicket = textViewBowlerWicket.getText().toString();
+
+                            bowlerWicket = Integer.parseInt(stringBowlerWicket);
+
+                            textViewBowlerWicket.setText(String.valueOf(bowlerWicket + 1));
+
+                            stringBowlerBall = textViewBowlerBall.getText().toString();
+
+                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+                            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w");
+
+                            stringExtraRun = textViewExtraRun.getText().toString();
+
+                            extraRun = Integer.parseInt(stringExtraRun);
+
+                            //textViewExtraRun.setText(String.valueOf(extraRun + numberByes + 1));
+                            reusableFunctionBowler();
+
+
+                        } else {
+
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
+
+
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
+
+                            playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
+
+                            //textViewPlayingTeamRun.setText(String.valueOf(playingTeamRum + 0));
+
+                            stringPlayingTeamWicket = textViewPlayingTeamWicket.getText().toString();
+
+                            playingTeamWicket = Integer.parseInt(stringPlayingTeamWicket);
+
+                            textViewPlayingTeamWicket.setText(String.valueOf(playingTeamWicket + 1));
+
+                            stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
+
+                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
+
+                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
+
+                            reusableFunctionPlayer();
+
+                            stringSecondPlayerRun = textViewSecondPlayerRun.getText().toString();
+
+                            secondPlayerRun = Integer.parseInt(stringSecondPlayerRun);
+
+                            //textViewSecondPlayerRun.setText(String.valueOf(secondPlayerRun + 0));
+
+
+                            stringSecondPlayerBall = textViewSecondPlayerBall.getText().toString();
+
+                            secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
+
+                            textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
+
+
+                            stringBowlerRun = textViewBowlerRun.getText().toString();
+
+                            bowlerRun = Integer.parseInt(stringBowlerRun);
+
+                            //textViewBowlerRun.setText(String.valueOf(bowlerRun + 0));
+
+                            stringBowlerWicket = textViewBowlerWicket.getText().toString();
+
+                            bowlerWicket = Integer.parseInt(stringBowlerWicket);
+
+                            textViewBowlerWicket.setText(String.valueOf(bowlerWicket + 1));
+
+                            stringBowlerBall = textViewBowlerBall.getText().toString();
+
+                            bowlerOversFloat = Float.parseFloat(stringBowlerBall);
+
+                            textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
+
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w");
+                            stringExtraRun = textViewExtraRun.getText().toString();
+
+                            extraRun = Integer.parseInt(stringExtraRun);
+
+                            //textViewExtraRun.setText(String.valueOf(extraRun + numberByes + 1));
+                            reusableFunctionBowler();
+
+                        }
+                        wicketServerCall();
                         dismiss();
                     }
 
@@ -3222,8 +4412,8 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             final RadioButton radioButtonLegByes = view.findViewById(R.id.radioButtonLegByes);
             final RadioButton radioButtonNone = view.findViewById(R.id.radioButtonNone);
 
-            final RadioButton radioButtonFirst = view.findViewById(R.id.radioButtonFirst);
-            final RadioButton radioButtonSecond = view.findViewById(R.id.radioButtonSecond);
+            radioButtonFirst = view.findViewById(R.id.radioButtonFirst);
+            radioButtonSecond = view.findViewById(R.id.radioButtonSecond);
 
             editTextRuns = view.findViewById(R.id.editTextRunOutRuns);
             radioButtonFirst.setText(radioButtonFirstPlayer.getText());
@@ -3244,15 +4434,64 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         if (radioButtonFirstPlayer.isChecked()) {
 
-                            String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strFirstPlayer);
 
-                            radioButtonFirstPlayer.setText(strFirstPlayer);
-                            textViewFirstPlayerBall.setText("0");
-                            textViewFirstPlayerRun.setText("0");
-                            //textViewCurrentOver.setText("");
-                            //dialog.dismiss();
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -3304,7 +4543,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "Wd+W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "wd+w");
 
                             stringExtraRun = textViewExtraRun.getText().toString();
 
@@ -3313,18 +4552,66 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 + 1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
                         } else {
 
-                            String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strSecondPlayer);
 
-                            radioButtonSecondPlayer.setText(strSecondPlayer);
-                            textViewSecondPlayerBall.setText("0");
-                            textViewSecondPlayerRun.setText("0");
+                            try {
 
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
                             playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
@@ -3377,7 +4664,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "Wd+W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "wd+w");
 
                             stringExtraRun = textViewExtraRun.getText().toString();
 
@@ -3387,25 +4674,72 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
                         }
-
+                        wicketServerCall();
                         dismiss();
 
                     }
 
                     if (radioButtonNo.isChecked()) {
                         if (radioButtonFirstPlayer.isChecked()) {
-                            String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strFirstPlayer);
 
-                            radioButtonFirstPlayer.setText(strFirstPlayer);
-                            textViewFirstPlayerBall.setText("0");
-                            textViewFirstPlayerRun.setText("0");
-                            //textViewCurrentOver.setText("");
-                            //dialog.dismiss();
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -3457,7 +4791,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W+nb");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w+nb");
 
                             stringExtraRun = textViewExtraRun.getText().toString();
 
@@ -3467,17 +4801,66 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
                         } else {
 
-                            String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strSecondPlayer);
 
-                            radioButtonSecondPlayer.setText(strSecondPlayer);
-                            textViewSecondPlayerBall.setText("0");
-                            textViewSecondPlayerRun.setText("0");
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -3531,7 +4914,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W+nb");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w+nb");
                             stringExtraRun = textViewExtraRun.getText().toString();
 
                             extraRun = Integer.parseInt(stringExtraRun);
@@ -3539,10 +4922,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 + 1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
                         }
 
+                        wicketServerCall();
                         dismiss();
 
                     }
@@ -3550,15 +4932,64 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                     if (radioButtonNor.isChecked()) {
                         if (radioButtonFirstPlayer.isChecked()) {
-                            String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strFirstPlayer);
 
-                            radioButtonFirstPlayer.setText(strFirstPlayer);
-                            textViewFirstPlayerBall.setText("0");
-                            textViewFirstPlayerRun.setText("0");
-                            //textViewCurrentOver.setText("");
-                            //dialog.dismiss();
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -3610,22 +5041,71 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w");
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
+
 
                         } else {
 
-                            String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strSecondPlayer);
 
-                            radioButtonSecondPlayer.setText(strSecondPlayer);
-                            textViewSecondPlayerBall.setText("0");
-                            textViewSecondPlayerRun.setText("0");
+                            try {
 
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
                             playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
@@ -3678,27 +5158,74 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w");
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
                         }
-
+                        wicketServerCall();
                         dismiss();
                     }
 
                     if (radioButtonByes.isChecked()) {
                         if (radioButtonFirstPlayer.isChecked()) {
-                            String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strFirstPlayer);
 
-                            radioButtonFirstPlayer.setText(strFirstPlayer);
-                            textViewFirstPlayerBall.setText("0");
-                            textViewFirstPlayerRun.setText("0");
-                            //textViewCurrentOver.setText("");
-                            //dialog.dismiss();
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -3750,7 +5277,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w");
 
                             stringExtraRun = textViewExtraRun.getText().toString();
 
@@ -3759,18 +5286,68 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
+
 
                         } else {
 
-                            String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strSecondPlayer);
 
-                            radioButtonSecondPlayer.setText(strSecondPlayer);
-                            textViewSecondPlayerBall.setText("0");
-                            textViewSecondPlayerRun.setText("0");
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -3824,7 +5401,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w");
                             stringExtraRun = textViewExtraRun.getText().toString();
 
                             extraRun = Integer.parseInt(stringExtraRun);
@@ -3832,24 +5409,71 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
                         }
-
+                        wicketServerCall();
                         dismiss();
                     }
 
                     if (radioButtonLegByes.isChecked()) {
                         if (radioButtonFirstPlayer.isChecked()) {
-                            String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strFirstPlayer);
 
-                            radioButtonFirstPlayer.setText(strFirstPlayer);
-                            textViewFirstPlayerBall.setText("0");
-                            textViewFirstPlayerRun.setText("0");
-                            //textViewCurrentOver.setText("");
-                            //dialog.dismiss();
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -3901,7 +5525,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w");
 
                             stringExtraRun = textViewExtraRun.getText().toString();
 
@@ -3910,18 +5534,67 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             //textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
 
                         } else {
 
-                            String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strSecondPlayer);
 
-                            radioButtonSecondPlayer.setText(strSecondPlayer);
-                            textViewSecondPlayerBall.setText("0");
-                            textViewSecondPlayerRun.setText("0");
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -3975,7 +5648,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w");
                             stringExtraRun = textViewExtraRun.getText().toString();
 
                             extraRun = Integer.parseInt(stringExtraRun);
@@ -3983,24 +5656,71 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             //textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
                         }
-
+                        wicketServerCall();
                         dismiss();
                     }
 
                     if (radioButtonNone.isChecked()) {
                         if (radioButtonFirstPlayer.isChecked()) {
-                            String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strFirstPlayer);
 
-                            radioButtonFirstPlayer.setText(strFirstPlayer);
-                            textViewFirstPlayerBall.setText("0");
-                            textViewFirstPlayerRun.setText("0");
-                            //textViewCurrentOver.setText("");
-                            //dialog.dismiss();
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -4052,7 +5772,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w");
 
                             stringExtraRun = textViewExtraRun.getText().toString();
 
@@ -4061,19 +5781,67 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             //textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
 
                         } else {
 
-                            String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strSecondPlayer);
 
-                            radioButtonSecondPlayer.setText(strSecondPlayer);
-                            textViewSecondPlayerBall.setText("0");
-                            textViewSecondPlayerRun.setText("0");
+                            try {
 
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
                             playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
@@ -4126,7 +5894,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w");
                             stringExtraRun = textViewExtraRun.getText().toString();
 
                             extraRun = Integer.parseInt(stringExtraRun);
@@ -4134,25 +5902,73 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             //textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
-                        }
 
+                        }
+                        wicketServerCall();
                         dismiss();
                     }
 
                     if (radioButtonNo.isChecked() && radioButtonByes.isChecked()) {
 
                         if (radioButtonFirstPlayer.isChecked()) {
-                            String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strFirstPlayer);
 
-                            radioButtonFirstPlayer.setText(strFirstPlayer);
-                            textViewFirstPlayerBall.setText("0");
-                            textViewFirstPlayerRun.setText("0");
-                            //textViewCurrentOver.setText("");
-                            //dialog.dismiss();
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -4204,7 +6020,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W+nb");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w+nb");
                             stringExtraRun = textViewExtraRun.getText().toString();
 
                             extraRun = Integer.parseInt(stringExtraRun);
@@ -4212,18 +6028,67 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 + 1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
 
                         } else {
 
-                            String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strSecondPlayer);
 
-                            radioButtonSecondPlayer.setText(strSecondPlayer);
-                            textViewSecondPlayerBall.setText("0");
-                            textViewSecondPlayerRun.setText("0");
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -4277,7 +6142,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W+nb");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w+nb");
                             stringExtraRun = textViewExtraRun.getText().toString();
 
                             extraRun = Integer.parseInt(stringExtraRun);
@@ -4285,25 +6150,72 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 + 1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
                         }
-
+                        wicketServerCall();
                         dismiss();
                     }
 
                     if (radioButtonNo.isChecked() && radioButtonLegByes.isChecked()) {
 
                         if (radioButtonFirstPlayer.isChecked()) {
-                            String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strFirstPlayer);
 
-                            radioButtonFirstPlayer.setText(strFirstPlayer);
-                            textViewFirstPlayerBall.setText("0");
-                            textViewFirstPlayerRun.setText("0");
-                            //textViewCurrentOver.setText("");
-                            //dialog.dismiss();
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -4355,7 +6267,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W+nb");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w+nb");
                             stringExtraRun = textViewExtraRun.getText().toString();
 
                             extraRun = Integer.parseInt(stringExtraRun);
@@ -4363,18 +6275,66 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 + 1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-
                         } else {
 
-                            String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strSecondPlayer);
 
-                            radioButtonSecondPlayer.setText(strSecondPlayer);
-                            textViewSecondPlayerBall.setText("0");
-                            textViewSecondPlayerRun.setText("0");
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -4428,7 +6388,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W+nb");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w+nb");
                             stringExtraRun = textViewExtraRun.getText().toString();
 
                             extraRun = Integer.parseInt(stringExtraRun);
@@ -4436,25 +6396,73 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 + 1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
-                        }
 
+                        }
+                        wicketServerCall();
                         dismiss();
                     }
 
                     if (radioButtonNo.isChecked() && radioButtonNone.isChecked()) {
 
                         if (radioButtonFirstPlayer.isChecked()) {
-                            String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strFirstPlayer);
 
-                            radioButtonFirstPlayer.setText(strFirstPlayer);
-                            textViewFirstPlayerBall.setText("0");
-                            textViewFirstPlayerRun.setText("0");
-                            //textViewCurrentOver.setText("");
-                            //dialog.dismiss();
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -4506,7 +6514,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W+nb");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w+nb");
                             stringExtraRun = textViewExtraRun.getText().toString();
 
                             extraRun = Integer.parseInt(stringExtraRun);
@@ -4514,19 +6522,67 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 + 1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
 
                         } else {
 
-                            String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strSecondPlayer);
 
-                            radioButtonSecondPlayer.setText(strSecondPlayer);
-                            textViewSecondPlayerBall.setText("0");
-                            textViewSecondPlayerRun.setText("0");
+                            try {
 
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
                             playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
@@ -4579,7 +6635,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             //textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W+nb");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w+nb");
                             stringExtraRun = textViewExtraRun.getText().toString();
 
                             extraRun = Integer.parseInt(stringExtraRun);
@@ -4587,26 +6643,72 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 + 1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
                         }
-
+                        wicketServerCall();
                         dismiss();
                     }
 
                     if (radioButtonNor.isChecked() && radioButtonByes.isChecked()) {
 
                         if (radioButtonFirstPlayer.isChecked()) {
-                            String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strFirstPlayer);
 
-                            radioButtonFirstPlayer.setText(strFirstPlayer);
-                            textViewFirstPlayerBall.setText("0");
-                            textViewFirstPlayerRun.setText("0");
-                            //textViewCurrentOver.setText("");
-                            //dialog.dismiss();
+                            try {
 
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
                             playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
@@ -4657,7 +6759,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w");
                             stringExtraRun = textViewExtraRun.getText().toString();
 
                             extraRun = Integer.parseInt(stringExtraRun);
@@ -4665,18 +6767,66 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-
                         } else {
 
-                            String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strSecondPlayer);
 
-                            radioButtonSecondPlayer.setText(strSecondPlayer);
-                            textViewSecondPlayerBall.setText("0");
-                            textViewSecondPlayerRun.setText("0");
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -4730,7 +6880,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w");
                             stringExtraRun = textViewExtraRun.getText().toString();
 
                             extraRun = Integer.parseInt(stringExtraRun);
@@ -4738,25 +6888,72 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
                         }
-
+                        wicketServerCall();
                         dismiss();
                     }
 
                     if (radioButtonNor.isChecked() && radioButtonLegByes.isChecked()) {
 
                         if (radioButtonFirstPlayer.isChecked()) {
-                            String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strFirstPlayer);
 
-                            radioButtonFirstPlayer.setText(strFirstPlayer);
-                            textViewFirstPlayerBall.setText("0");
-                            textViewFirstPlayerRun.setText("0");
-                            //textViewCurrentOver.setText("");
-                            //dialog.dismiss();
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -4808,7 +7005,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w");
                             stringExtraRun = textViewExtraRun.getText().toString();
 
                             extraRun = Integer.parseInt(stringExtraRun);
@@ -4821,14 +7018,64 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         } else {
 
-                            String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strSecondPlayer);
 
-                            radioButtonSecondPlayer.setText(strSecondPlayer);
-                            textViewSecondPlayerBall.setText("0");
-                            textViewSecondPlayerRun.setText("0");
+                            try {
 
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
                             playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
@@ -4881,7 +7128,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w");
                             stringExtraRun = textViewExtraRun.getText().toString();
 
                             extraRun = Integer.parseInt(stringExtraRun);
@@ -4889,25 +7136,72 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             //textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
                         }
-
+                        wicketServerCall();
                         dismiss();
                     }
 
                     if (radioButtonNor.isChecked() && radioButtonNone.isChecked()) {
 
                         if (radioButtonFirstPlayer.isChecked()) {
-                            String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strFirstPlayer);
 
-                            radioButtonFirstPlayer.setText(strFirstPlayer);
-                            textViewFirstPlayerBall.setText("0");
-                            textViewFirstPlayerRun.setText("0");
-                            //textViewCurrentOver.setText("");
-                            //dialog.dismiss();
+                            try {
+
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -4959,7 +7253,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w");
                             stringExtraRun = textViewExtraRun.getText().toString();
 
                             extraRun = Integer.parseInt(stringExtraRun);
@@ -4967,19 +7261,66 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             //textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1 ));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(true);
-                            radioButtonSecondPlayer.setChecked(false);
-
                         } else {
 
-                            String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
+                            stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
+                            stringCatcherName1 = spinnerCatcherName.getSelectedItem().toString();
 
-                            Log.d("spinner", strSecondPlayer);
 
-                            radioButtonSecondPlayer.setText(strSecondPlayer);
-                            textViewSecondPlayerBall.setText("0");
-                            textViewSecondPlayerRun.setText("0");
+                            try {
 
+                                if (jsonObjectBatsman.getString("success").equals("1")) {
+                                    JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        stringNewTeamName = object.getString("team_name");
+
+                                        stringSpaceRemove = stringBattingTeam.replaceAll(" ", "");
+
+                                        if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringNewBatsmanName = obj.getString("fullname");
+                                                stringNewBatsmanId = obj.getString("player_id");
+
+                                                if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                    stringBatsmanId1 = stringNewBatsmanId;
+                                                }
+
+                                            }
+
+
+                                        }
+                                        else {
+                                            JSONArray array = object.getJSONArray("players");
+
+                                            for (int j = 0; j < array.length(); j++) {
+                                                JSONObject obj = array.getJSONObject(j);
+
+                                                stringCatcherName = obj.getString("fullname");
+                                                stringCatcherId = obj.getString("player_id");
+
+
+                                                if (stringCatcherName1.equals(stringCatcherName)) {
+                                                    stringCatcherId1 = stringCatcherId;
+
+                                                    Log.d("catcherName",stringCatcherId1);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
                             playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
@@ -5032,7 +7373,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             textViewBowlerBall.setText(new DecimalFormat("##.#").format(bowlerOversFloat + 0.1));
 
-                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "W");
+                            textViewCurrentOver.setText(textViewCurrentOver.getText() + " " + "w");
                             stringExtraRun = textViewExtraRun.getText().toString();
 
                             extraRun = Integer.parseInt(stringExtraRun);
@@ -5040,10 +7381,8 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             //textViewExtraRun.setText(String.valueOf(extraRun + editTextRuns1));
                             reusableFunctionBowler();
 
-                            radioButtonFirstPlayer.setChecked(false);
-                            radioButtonSecondPlayer.setChecked(true);
                         }
-
+                        wicketServerCall();
                         dismiss();
                     }
 
@@ -5260,6 +7599,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     params.put("extra_run", "0");
                     params.put("wicket_type", "0");
                     params.put("total_wickets", "0");
+                    params.put("wicket_id", "0");
                 }
 
                 if (radioButtonSecondPlayer.isChecked()) {
@@ -5280,6 +7620,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     params.put("extra_run", "0");
                     params.put("wicket_type", "0");
                     params.put("total_wickets", "0");
+                    params.put("wicket_id", "0");
                 }
 
 
@@ -5384,6 +7725,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     params.put("ball_type", stringBallType1);
                     params.put("extra_run", stringExtraRuns);
                     params.put("wicket_type", "0");
+                    params.put("wicket_id", "0");
                     params.put("total_wickets", "0");
                     if (TextUtils.isEmpty(stringBowlerName1)) {
                         params.put("bowler_id", stringBowlerId);
@@ -5407,6 +7749,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     params.put("extra_run", stringExtraRuns);
                     params.put("wicket_type", "0");
                     params.put("total_wickets", "0");
+                    params.put("wicket_id", "0");
                     if (TextUtils.isEmpty(stringBowlerName1)) {
                         params.put("bowler_id", stringBowlerId);
                     } else {
@@ -5448,6 +7791,17 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                                     textViewSecondPlayerRun.setText("0");
                                 }
 
+                                if (radioButtonFirst.isChecked())
+                                {
+                                    radioButtonFirstPlayer.setText(stringBatsmanName1);
+                                    textViewFirstPlayerBall.setText("0");
+                                    textViewFirstPlayerRun.setText("0");
+                                }else {
+                                    radioButtonSecondPlayer.setText(stringBatsmanName1);
+                                    textViewSecondPlayerBall.setText("0");
+                                    textViewSecondPlayerRun.setText("0");
+                                }
+
 
                             }
 
@@ -5479,10 +7833,15 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     params.put("bowler_ball", stringBowlerBalls);
                     params.put("bowler_runs", stringBowlerRuns);
                     params.put("match_key", stringMatchKey);
-                    params.put("ball_type", "W");
+                    params.put("ball_type", "w");
                     params.put("extra_run", stringExtraRuns);
                     params.put("wicket_type", stringWicketType);
                     params.put("total_wickets", stringTeamWickets);
+                    if (TextUtils.isEmpty(stringCatcherName1)) {
+                        params.put("wicket_id", "0");
+                    } else {
+                        params.put("wicket_id", stringCatcherId1);
+                    }
                     if (!TextUtils.isEmpty(stringBatsmanName1)) {
                         params.put("player_id", stringFristPlayerId);
                     } else {
@@ -5505,10 +7864,15 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     params.put("bowler_ball", stringBowlerBalls);
                     params.put("bowler_runs", stringBowlerRuns);
                     params.put("match_key", stringMatchKey);
-                    params.put("ball_type", "W");
+                    params.put("ball_type", "w");
                     params.put("extra_run", stringExtraRuns);
                     params.put("wicket_type", stringWicketType);
                     params.put("total_wickets", stringTeamWickets);
+                    if (TextUtils.isEmpty(stringCatcherName1)) {
+                        params.put("wicket_id", "0");
+                    } else {
+                        params.put("wicket_id", stringCatcherId1);
+                    }
                     if (!TextUtils.isEmpty(stringBatsmanName1)) {
                         params.put("player_id", stringSecondPlayerId);
                     } else {
