@@ -63,12 +63,12 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             textViewSix, textViewSeven, textViewWicket, textViewNoBall, textViewUndo, textViewWide,
             textViewLegBy, textViewBy, textViewDot;
 
-    ArrayList<String> spinnerNewBowler,spinnerNewBatsman,spinnerCatcher;
+    ArrayList<String> spinnerNewBowler, spinnerNewBatsman, spinnerCatcher;
 
-
+    private String stringWicketType;
     private Button yes, no;
 
-    private Spinner spinner,spinnerBatsman, spinnerCatcherName;
+    private Spinner spinner, spinnerBatsman, spinnerCatcherName;
     // Playing Players
     //private RadioGroup radioGroupPlayers;
 
@@ -121,8 +121,10 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
     private String stringTeamRuns, stringTeamOvers, stringFirstPlayerRuns, stringFirstPlayerBalls,
             stringSecondPlayerRuns, stringSecondPlayerBalls, stringBowlerBalls,
-            stringBowlerRuns, stringExtraRuns, stringTeamWickets, stringBowlerWickets, stringBallType;
+            stringBowlerRuns, stringExtraRuns, stringTeamWickets, stringBowlerWickets, stringBallType,
+            stringBallType1;
 
+    private MenuItem itemWicket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,6 +188,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
     }
 
     void getIntentData() {
+
         Intent intent = this.getIntent();
 
         stringFristPlayerId = intent.getExtras().getString("BATTING_FIRST_ID_KEY");
@@ -234,35 +237,35 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
         switch (v.getId()) {
             case R.id.textViewZero:
-                test(0);
+                zeroToSevenMethod(0);
                 break;
 
             case R.id.textViewOne:
-                test(1);
+                zeroToSevenMethod(1);
                 break;
 
             case R.id.textViewTwo:
-                test(2);
+                zeroToSevenMethod(2);
                 break;
 
             case R.id.textViewThree:
-                test(3);
+                zeroToSevenMethod(3);
                 break;
 
             case R.id.textViewFour:
-                test(4);
+                zeroToSevenMethod(4);
                 break;
 
             case R.id.textViewFive:
-                test(5);
+                zeroToSevenMethod(5);
                 break;
 
             case R.id.textViewSix:
-                test(6);
+                zeroToSevenMethod(6);
                 break;
 
             case R.id.textViewSeven:
-                test(7);
+                zeroToSevenMethod(7);
                 break;
 
             case R.id.textViewW:
@@ -308,10 +311,10 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             public boolean onMenuItemClick(MenuItem item) {
                 stringBallType = item.getTitle().toString();
                 final String str1 = String.valueOf(stringBallType.charAt(0));
-                String substring = stringBallType.toString().substring(Math.max(stringBallType.length() - 2, 0));
+                stringBallType1 = stringBallType.toString().substring(Math.max(stringBallType.length() - 2, 0));
 
                 int numberWide = Integer.parseInt(str1);
-                Log.d("strfdwide", str1 + " " + substring);
+                Log.d("strfdwide", str1 + " " + stringBallType1);
 
                 if (numberWide % 2 == 0) {
 
@@ -511,8 +514,8 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                 stringBallType = item.getTitle().toString();
                 final String str1 = String.valueOf(stringBallType.charAt(0));
-                String substring = stringBallType.toString().substring(Math.max(stringBallType.length() - 1, 0));
-                Log.d("strfdwide", str1 + " " + substring);
+                stringBallType1 = stringBallType.toString().substring(Math.max(stringBallType.length() - 1, 0));
+                Log.d("strfdwide", str1 + " " + stringBallType1);
                 int numberByes = Integer.parseInt(str1);
                 if (numberByes % 2 == 0) {
                     if (radioButtonFirstPlayer.isChecked()) {
@@ -728,8 +731,8 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                 stringBallType = item.getTitle().toString();
                 final String str1 = String.valueOf(stringBallType.charAt(0));
-                String substring = stringBallType.toString().substring(Math.max(stringBallType.length() - 2, 0));
-                Log.d("strfdwide", str1 + " " + substring);
+                stringBallType1 = stringBallType.toString().substring(Math.max(stringBallType.length() - 2, 0));
+                Log.d("strfdwide", str1 + " " + stringBallType1);
                 int numberLegByes = Integer.parseInt(str1);
 
                 if (numberLegByes % 2 == 0) {
@@ -963,8 +966,8 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                 stringBallType = item.getTitle().toString();
                 final String str1 = String.valueOf(stringBallType.charAt(0));
-                String substring = stringBallType.toString().substring(Math.max(stringBallType.length() - 2, 0));
-                Log.d("strfdwide", str1 + " " + substring);
+                stringBallType1 = stringBallType.toString().substring(Math.max(stringBallType.length() - 2, 0));
+                Log.d("strfdwide", str1 + " " + stringBallType1);
                 final int numberNoBall = Integer.parseInt(str1);
 
 
@@ -1822,7 +1825,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             public void onClick(DialogInterface arg0, int arg1) {
 
                                 if (item.getTitle().equals("Bowled")) {
-
+                                    stringWicketType = item.getTitle().toString();
                                     DialogFragment firstDialog = new FirstDialog();
                                     firstDialog.show(getFragmentManager(), "fgggggggg");
                                     getBatsmanDetails();
@@ -1830,12 +1833,14 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                                 }
 
                                 if (item.getTitle().equals("LBW")) {
+                                    stringWicketType = item.getTitle().toString();
                                     DialogFragment firstDialog = new FirstDialog();
                                     firstDialog.show(getFragmentManager(), "fgggggggg");
                                     getBatsmanDetails();
                                 }
 
                                 if (item.getTitle().equals("Caught & Bowled")) {
+                                    stringWicketType = item.getTitle().toString();
                                     DialogFragment firstDialog = new FirstDialog();
                                     firstDialog.show(getFragmentManager(), "fgggggggg");
                                     getBatsmanDetails();
@@ -1843,24 +1848,28 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
 
                                 if (item.getTitle().equals("Retired")) {
+                                    stringWicketType = item.getTitle().toString();
                                     DialogFragment firstDialog = new FirstDialog();
                                     firstDialog.show(getFragmentManager(), "fgggggggg");
                                     getBatsmanDetails();
                                 }
 
                                 if (item.getTitle().equals("Obstructing The Field")) {
+                                    stringWicketType = item.getTitle().toString();
                                     DialogFragment firstDialog = new FirstDialog();
                                     firstDialog.show(getFragmentManager(), "fgggggggg");
                                     getBatsmanDetails();
                                 }
 
                                 if (item.getTitle().equals("Handling The Ball")) {
+                                    stringWicketType = item.getTitle().toString();
                                     DialogFragment firstDialog = new FirstDialog();
                                     firstDialog.show(getFragmentManager(), "fgggggggg");
                                     getBatsmanDetails();
                                 }
 
                                 if (item.getTitle().equals("Caught")) {
+                                    stringWicketType = item.getTitle().toString();
                                     Toast.makeText(MatchPlayActivity.this, "Caught", Toast.LENGTH_SHORT).show();
                                     DialogFragment firstDialogCaught = new FirstDialogCaught();
                                     firstDialogCaught.show(getFragmentManager(), "fgggggggg");
@@ -1869,6 +1878,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                                 }
 
                                 if (item.getTitle().equals("Stumped")) {
+                                    stringWicketType = item.getTitle().toString();
                                     Toast.makeText(MatchPlayActivity.this, "Stumped", Toast.LENGTH_SHORT).show();
                                     DialogFragment firstDialogStumped = new FirstDialogStumped();
                                     firstDialogStumped.show(getFragmentManager(), "fgggggggg");
@@ -1877,6 +1887,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                                 }
 
                                 if (item.getTitle().equals("Hit Wicket")) {
+                                    stringWicketType = item.getTitle().toString();
                                     Toast.makeText(MatchPlayActivity.this, "Hit Wicket", Toast.LENGTH_SHORT).show();
                                     DialogFragment firstDialogStumped = new FirstDialogStumped();
                                     firstDialogStumped.show(getFragmentManager(), "fgggggggg");
@@ -1885,16 +1896,12 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                                 }
 
                                 if (item.getTitle().equals("Run Out")) {
+                                    stringWicketType = item.getTitle().toString();
                                     Toast.makeText(MatchPlayActivity.this, "Run Out", Toast.LENGTH_SHORT).show();
+                                    DialogFragment firstDialogRunOut = new FirstDialogRunOut();
+                                    firstDialogRunOut.show(getFragmentManager(), "fgggggggg");
+                                    getBatsmanDetails();
 
-                                    try {
-                                        DialogFragment firstDialogRunOut = new FirstDialogRunOut();
-                                        firstDialogRunOut.show(getFragmentManager(), "fgggggggg");
-
-                                        getBatsmanDetails();
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
                                 }
 
                             }
@@ -2347,8 +2354,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             spinnerBatsman = (Spinner) view.findViewById(R.id.spinnerNewBatsman);
             spinnerCatcherName = (Spinner) view.findViewById(R.id.spinnerCatcherName);
             Button buttonSelect = (Button) view.findViewById(R.id.buttonNewBatsmanSelect);
-            //spinnerBatsman.setOnItemSelectedListener(MatchPlayActivity.this);
-            //spinnerCatcherName.setOnItemSelectedListener(MatchPlayActivity.this);
+
             buttonSelect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -2357,9 +2363,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
 
-
                         try {
-
 
                             if (jsonObjectBatsman.getString("success").equals("1")) {
                                 JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
@@ -2424,7 +2428,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         firstPlayerBall = Integer.parseInt(stringFirstPlayerBall);
 
-                        //textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
+                        textViewFirstPlayerBall.setText(String.valueOf(firstPlayerBall + 1));
 
 
                         stringBowlerRun = textViewBowlerRun.getText().toString();
@@ -2449,10 +2453,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                         reusableFunctionBowler();
                         wicketServerCall();
 
-                        Log.d("spinner", stringBatsmanName1);
 
-                        radioButtonFirstPlayer.setChecked(true);
-                        radioButtonSecondPlayer.setChecked(false);
                     } else {
 
                         stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
@@ -2526,7 +2527,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         secondPlayerBall = Integer.parseInt(stringSecondPlayerBall);
 
-                        //textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
+                        textViewSecondPlayerBall.setText(String.valueOf(secondPlayerBall + 1));
 
 
                         stringBowlerRun = textViewBowlerRun.getText().toString();
@@ -2552,10 +2553,6 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         wicketServerCall();
 
-                        Log.d("spinner", stringBatsmanName1);
-
-                        radioButtonFirstPlayer.setChecked(false);
-                        radioButtonSecondPlayer.setChecked(true);
                     }
 
                     dismiss();
@@ -2585,8 +2582,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             spinnerBatsman = (Spinner) view.findViewById(R.id.spinnerNewBatsman);
             spinnerCatcherName = (Spinner) view.findViewById(R.id.spinnerCatcherName);
             Button buttonSelect = (Button) view.findViewById(R.id.buttonNewBatsmanSelect);
-            //spinnerBatsman.setOnItemSelectedListener(MatchPlayActivity.this);
-            //spinnerCatcherName.setOnItemSelectedListener(MatchPlayActivity.this);
+
             buttonSelect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -5295,7 +5291,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
     }
 
 
-    void test(int i) {
+    void zeroToSevenMethod(int i) {
 
         zeroToSevenRunsServerCall(i);
     }
@@ -5385,7 +5381,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     params.put("bowler_runs", stringBowlerRuns);
                     params.put("match_key", stringMatchKey);
                     params.put("player_id", stringFristPlayerId);
-                    params.put("ball_type", stringBallType);
+                    params.put("ball_type", stringBallType1);
                     params.put("extra_run", stringExtraRuns);
                     params.put("wicket_type", "0");
                     params.put("total_wickets", "0");
@@ -5407,7 +5403,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     params.put("bowler_runs", stringBowlerRuns);
                     params.put("match_key", stringMatchKey);
                     params.put("player_id", stringSecondPlayerId);
-                    params.put("ball_type", stringBallType);
+                    params.put("ball_type", stringBallType1);
                     params.put("extra_run", stringExtraRuns);
                     params.put("wicket_type", "0");
                     params.put("total_wickets", "0");
@@ -5441,34 +5437,17 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             if (jsonObject.getString("success").equals("1")) {
 
-//                                if (number % 2 == 0) {
-//
-//                                    if (radioButtonFirstPlayer.isChecked()) {
-//                                        radioButtonFirstPlayer.setChecked(true);
-//                                        radioButtonSecondPlayer.setChecked(false);
-//
-//                                    } else {
-//                                        radioButtonFirstPlayer.setChecked(false);
-//                                        radioButtonSecondPlayer.setChecked(true);
-//                                    }
-//
-//                                } else {
-//
-//
-//                                    if (radioButtonFirstPlayer.isChecked()) {
-//                                        radioButtonFirstPlayer.setChecked(false);
-//                                        radioButtonSecondPlayer.setChecked(true);
-//
-//                                    } else {
-//                                        radioButtonFirstPlayer.setChecked(true);
-//                                        radioButtonSecondPlayer.setChecked(false);
-//                                    }
-//
-//                                }
 
-                                radioButtonFirstPlayer.setText(stringBatsmanName1);
-                                textViewFirstPlayerBall.setText("0");
-                                textViewFirstPlayerRun.setText("0");
+                                if (radioButtonFirstPlayer.isChecked()) {
+                                    radioButtonFirstPlayer.setText(stringBatsmanName1);
+                                    textViewFirstPlayerBall.setText("0");
+                                    textViewFirstPlayerRun.setText("0");
+                                } else {
+                                    radioButtonSecondPlayer.setText(stringBatsmanName1);
+                                    textViewSecondPlayerBall.setText("0");
+                                    textViewSecondPlayerRun.setText("0");
+                                }
+
 
                             }
 
@@ -5500,11 +5479,11 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     params.put("bowler_ball", stringBowlerBalls);
                     params.put("bowler_runs", stringBowlerRuns);
                     params.put("match_key", stringMatchKey);
-                    params.put("ball_type", "0");
+                    params.put("ball_type", "W");
                     params.put("extra_run", stringExtraRuns);
-                    params.put("wicket_type", "0");
+                    params.put("wicket_type", stringWicketType);
                     params.put("total_wickets", stringTeamWickets);
-                    if (TextUtils.isEmpty(stringBatsmanName1)) {
+                    if (!TextUtils.isEmpty(stringBatsmanName1)) {
                         params.put("player_id", stringFristPlayerId);
                     } else {
                         params.put("player_id", stringBatsmanId1);
@@ -5526,11 +5505,11 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     params.put("bowler_ball", stringBowlerBalls);
                     params.put("bowler_runs", stringBowlerRuns);
                     params.put("match_key", stringMatchKey);
-                    params.put("ball_type", "0");
+                    params.put("ball_type", "W");
                     params.put("extra_run", stringExtraRuns);
-                    params.put("wicket_type", "0");
+                    params.put("wicket_type", stringWicketType);
                     params.put("total_wickets", stringTeamWickets);
-                    if (TextUtils.isEmpty(stringBatsmanName1)) {
+                    if (!TextUtils.isEmpty(stringBatsmanName1)) {
                         params.put("player_id", stringSecondPlayerId);
                     } else {
                         params.put("player_id", stringBatsmanId1);
