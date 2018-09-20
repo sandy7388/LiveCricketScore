@@ -109,8 +109,6 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
     CustomDialogClass customDialogClass;
 
-    private double playingTeamOversDouble;
-
     Dialog dialog;
 
     private EditText editTextRuns;
@@ -403,7 +401,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                         reusableFunctionBowler();
                     }
 
-                    wideRunsServerCall(numberWide);
+                    runsServerCall(numberWide);
                 } else {
 
                     if (radioButtonFirstPlayer.isChecked()) {
@@ -493,7 +491,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                     }
 
-                    wideRunsServerCall(numberWide);
+                    runsServerCall(numberWide);
                 }
 
                 return true;
@@ -611,7 +609,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                     }
 
-                    wideRunsServerCall(numberByes);
+                    runsServerCall(numberByes);
                 } else {
 
                     if (radioButtonFirstPlayer.isChecked()) {
@@ -708,7 +706,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                     }
 
-                    wideRunsServerCall(numberByes);
+                    runsServerCall(numberByes);
                 }
 
 
@@ -839,7 +837,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                     }
 
-                    wideRunsServerCall(numberLegByes);
+                    runsServerCall(numberLegByes);
                 } else {
                     if (radioButtonFirstPlayer.isChecked()) {
                         stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
@@ -943,7 +941,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                         reusableFunctionBowler();
                     }
 
-                    wideRunsServerCall(numberLegByes);
+                    runsServerCall(numberLegByes);
                 }
 
 
@@ -1021,7 +1019,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                         textViewExtraRun.setText(String.valueOf(extraRun + 1));
 
                         reusableFunctionBowler();
-                        wideRunsServerCall(numberNoBall);
+                        runsServerCall(numberNoBall);
                     } else {
 
                         stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
@@ -1072,7 +1070,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                         textViewExtraRun.setText(String.valueOf(extraRun + 1));
                         reusableFunctionBowler();
 
-                        wideRunsServerCall(numberNoBall);
+                        runsServerCall(numberNoBall);
 
                     }
 
@@ -1200,7 +1198,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                 }
 
-                                wideRunsServerCall(numberNoBall);
+                                runsServerCall(numberNoBall);
 
                                 dialog.dismiss();
                             }
@@ -1314,7 +1312,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                 }
 
-                                wideRunsServerCall(numberNoBall);
+                                runsServerCall(numberNoBall);
                                 dialog.dismiss();
                             }
                         });
@@ -1426,7 +1424,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                 }
 
-                                wideRunsServerCall(numberNoBall);
+                                runsServerCall(numberNoBall);
                                 dialog.dismiss();
 
                             }
@@ -1558,7 +1556,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                 }
 
-                                wideRunsServerCall(numberNoBall);
+                                runsServerCall(numberNoBall);
 
                                 dialog.dismiss();
                             }
@@ -1672,7 +1670,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                 }
 
-                                wideRunsServerCall(numberNoBall);
+                                runsServerCall(numberNoBall);
                                 dialog.dismiss();
                             }
                         });
@@ -1784,7 +1782,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                 }
 
-                                wideRunsServerCall(numberNoBall);
+                                runsServerCall(numberNoBall);
                                 dialog.dismiss();
 
                             }
@@ -2046,7 +2044,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                                     if (stringBowlerName1.equals(stringNewBowlerName)) {
                                         stringBowlerId1 = stringNewBowlerId;
-                                        System.out.println("stringSpinnerPlayerIdStrk" + stringBowlerId1);
+                                        //System.out.println("stringSpinnerPlayerIdStrk" + stringBowlerId1);
                                     }
 
                                 }
@@ -2349,23 +2347,59 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             spinnerBatsman = (Spinner) view.findViewById(R.id.spinnerNewBatsman);
             spinnerCatcherName = (Spinner) view.findViewById(R.id.spinnerCatcherName);
             Button buttonSelect = (Button) view.findViewById(R.id.buttonNewBatsmanSelect);
-            spinnerBatsman.setOnItemSelectedListener(MatchPlayActivity.this);
-            spinnerCatcherName.setOnItemSelectedListener(MatchPlayActivity.this);
+            //spinnerBatsman.setOnItemSelectedListener(MatchPlayActivity.this);
+            //spinnerCatcherName.setOnItemSelectedListener(MatchPlayActivity.this);
             buttonSelect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                     if (radioButtonFirstPlayer.isChecked()) {
-                        String strFirstPlayer = spinnerBatsman.getSelectedItem().toString();
 
-                        Log.d("spinner", strFirstPlayer);
+                        stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
 
-                        radioButtonFirstPlayer.setText(strFirstPlayer);
+                        Log.d("spinner", stringBatsmanName1);
+
+                        radioButtonFirstPlayer.setText(stringBatsmanName1);
                         textViewFirstPlayerBall.setText("0");
                         textViewFirstPlayerRun.setText("0");
-                        //textViewCurrentOver.setText("");
-                        //dialog.dismiss();
 
+                        try {
+
+
+                            if (jsonObjectBatsman.getString("success").equals("1")) {
+                                JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    stringNewTeamName = object.getString("team_name");
+
+                                    stringSpaceRemove = stringBowlingTeam.replaceAll(" ", "");
+
+                                    if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                        JSONArray array = object.getJSONArray("players");
+
+                                        for (int j = 0; j < array.length(); j++) {
+                                            JSONObject obj = array.getJSONObject(j);
+
+                                            stringNewBatsmanName = obj.getString("fullname");
+                                            stringNewBatsmanId = obj.getString("player_id");
+
+                                            if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                stringBatsmanId1 = stringNewBatsmanId;
+                                            }
+
+                                        }
+
+
+                                    }
+                                }
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
                         playingTeamRum = Integer.parseInt(stringPlayingTeamRun);
@@ -2380,9 +2414,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                        playingTeamOversDouble = Double.parseDouble(stringPlayingTeamOvers);
+                        playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                        textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversDouble + 0.1));
+                        textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
 
                         reusableFunctionPlayer();
 
@@ -2423,13 +2457,51 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                         radioButtonSecondPlayer.setChecked(false);
                     } else {
 
-                        String strSecondPlayer = spinnerBatsman.getSelectedItem().toString();
+                        stringBatsmanName1 = spinnerBatsman.getSelectedItem().toString();
 
-                        Log.d("spinner", strSecondPlayer);
+                        Log.d("spinner", stringBatsmanName1);
 
-                        radioButtonSecondPlayer.setText(strSecondPlayer);
+                        radioButtonSecondPlayer.setText(stringBatsmanName1);
                         textViewSecondPlayerBall.setText("0");
                         textViewSecondPlayerRun.setText("0");
+
+                        try {
+
+
+                            if (jsonObjectBatsman.getString("success").equals("1")) {
+                                JSONArray jsonArray = jsonObjectBatsman.getJSONArray("player_list");
+
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    stringNewTeamName = object.getString("team_name");
+
+                                    stringSpaceRemove = stringBowlingTeam.replaceAll(" ", "");
+
+                                    if (stringSpaceRemove.equals(stringNewTeamName)) {
+                                        JSONArray array = object.getJSONArray("players");
+
+                                        for (int j = 0; j < array.length(); j++) {
+                                            JSONObject obj = array.getJSONObject(j);
+
+                                            stringNewBatsmanName = obj.getString("fullname");
+                                            stringNewBatsmanId = obj.getString("player_id");
+
+                                            if (stringBatsmanName1.equals(stringNewBatsmanName)) {
+                                                stringBatsmanId1 = stringNewBatsmanId;
+                                            }
+
+                                        }
+
+
+                                    }
+                                }
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
                         stringPlayingTeamRun = textViewPlayingTeamRun.getText().toString();
 
@@ -2517,8 +2589,8 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             spinnerBatsman = (Spinner) view.findViewById(R.id.spinnerNewBatsman);
             spinnerCatcherName = (Spinner) view.findViewById(R.id.spinnerCatcherName);
             Button buttonSelect = (Button) view.findViewById(R.id.buttonNewBatsmanSelect);
-            spinnerBatsman.setOnItemSelectedListener(MatchPlayActivity.this);
-            spinnerCatcherName.setOnItemSelectedListener(MatchPlayActivity.this);
+            //spinnerBatsman.setOnItemSelectedListener(MatchPlayActivity.this);
+            //spinnerCatcherName.setOnItemSelectedListener(MatchPlayActivity.this);
             buttonSelect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -2548,9 +2620,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                        playingTeamOversDouble = Double.parseDouble(stringPlayingTeamOvers);
+                        playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                        textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversDouble + 0.1));
+                        textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
 
                         reusableFunctionPlayer();
 
@@ -2688,8 +2760,8 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             final RadioButton radioButtonWide = view.findViewById(R.id.radioButtonWide);
             final RadioButton radioButtonNo = view.findViewById(R.id.radioButtonNo);
             final RadioButton radioButtonNor = view.findViewById(R.id.radioButtonNor);
-            spinnerBatsman.setOnItemSelectedListener(MatchPlayActivity.this);
-            spinnerCatcherName.setOnItemSelectedListener(MatchPlayActivity.this);
+            //spinnerBatsman.setOnItemSelectedListener(MatchPlayActivity.this);
+            //spinnerCatcherName.setOnItemSelectedListener(MatchPlayActivity.this);
             buttonSelect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -2720,9 +2792,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            playingTeamOversDouble = Double.parseDouble(stringPlayingTeamOvers);
+                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversDouble + 0.1));
+                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
 
                             reusableFunctionPlayer();
 
@@ -2860,9 +2932,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            playingTeamOversDouble = Double.parseDouble(stringPlayingTeamOvers);
+                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversDouble + 0.1));
+                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
 
                             reusableFunctionPlayer();
 
@@ -3001,9 +3073,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            playingTeamOversDouble = Double.parseDouble(stringPlayingTeamOvers);
+                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversDouble + 0.1));
+                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
 
                             reusableFunctionPlayer();
 
@@ -3166,13 +3238,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
             radioButtonSecond.setText(radioButtonSecondPlayer.getText());
             final String strRuns = editTextRuns.getText().toString();
 
-            spinnerBatsman.setOnItemSelectedListener(MatchPlayActivity.this);
-            spinnerCatcherName.setOnItemSelectedListener(MatchPlayActivity.this);
+            //spinnerBatsman.setOnItemSelectedListener(MatchPlayActivity.this);
+            //spinnerCatcherName.setOnItemSelectedListener(MatchPlayActivity.this);
 
-//            if (radioButtonWide.isChecked()) {
-//                linearLayout.setVisibility(View.GONE);
-//
-//            }
             buttonSelect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -3208,9 +3276,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            playingTeamOversDouble = Double.parseDouble(stringPlayingTeamOvers);
+                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversDouble + 0.1));
+                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
 
                             reusableFunctionPlayer();
 
@@ -3361,9 +3429,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            playingTeamOversDouble = Double.parseDouble(stringPlayingTeamOvers);
+                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversDouble + 0.1));
+                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
 
                             reusableFunctionPlayer();
 
@@ -3514,9 +3582,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            playingTeamOversDouble = Double.parseDouble(stringPlayingTeamOvers);
+                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversDouble + 0.1));
+                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
 
                             reusableFunctionPlayer();
 
@@ -3654,9 +3722,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            playingTeamOversDouble = Double.parseDouble(stringPlayingTeamOvers);
+                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversDouble + 0.1));
+                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
 
                             reusableFunctionPlayer();
 
@@ -3805,9 +3873,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            playingTeamOversDouble = Double.parseDouble(stringPlayingTeamOvers);
+                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversDouble + 0.1));
+                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
 
                             reusableFunctionPlayer();
 
@@ -3956,9 +4024,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            playingTeamOversDouble = Double.parseDouble(stringPlayingTeamOvers);
+                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversDouble + 0.1));
+                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
 
                             reusableFunctionPlayer();
 
@@ -4108,9 +4176,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            playingTeamOversDouble = Double.parseDouble(stringPlayingTeamOvers);
+                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversDouble + 0.1));
+                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
 
                             reusableFunctionPlayer();
 
@@ -4259,9 +4327,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            playingTeamOversDouble = Double.parseDouble(stringPlayingTeamOvers);
+                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversDouble + 0.1));
+                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
 
                             reusableFunctionPlayer();
 
@@ -4410,9 +4478,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            playingTeamOversDouble = Double.parseDouble(stringPlayingTeamOvers);
+                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversDouble + 0.1));
+                            //textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
 
                             reusableFunctionPlayer();
 
@@ -4561,9 +4629,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            playingTeamOversDouble = Double.parseDouble(stringPlayingTeamOvers);
+                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversDouble + 0.1));
+                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
 
                             reusableFunctionPlayer();
 
@@ -4712,9 +4780,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            playingTeamOversDouble = Double.parseDouble(stringPlayingTeamOvers);
+                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversDouble + 0.1));
+                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
 
                             reusableFunctionPlayer();
 
@@ -4863,9 +4931,9 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                             stringPlayingTeamOvers = textViewPlayingTeamOvers.getText().toString();
 
-                            playingTeamOversDouble = Double.parseDouble(stringPlayingTeamOvers);
+                            playingTeamOversFloat = Float.parseFloat(stringPlayingTeamOvers);
 
-                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversDouble + 0.1));
+                            textViewPlayingTeamOvers.setText(new DecimalFormat("##.#").format(playingTeamOversFloat + 0.1));
 
                             reusableFunctionPlayer();
 
@@ -5251,7 +5319,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         stringBowlerWickets = textViewBowlerWicket.getText().toString();
     }
 
-    void wideRunsServerCall(final int number) {
+    void runsServerCall(final int number) {
 
         dataGetter();
 
@@ -5337,8 +5405,8 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                 if (radioButtonSecondPlayer.isChecked()) {
                     params.put("total_runs", stringTeamRuns);
                     params.put("total_overs", stringTeamOvers);
-                    params.put("player_run", stringFirstPlayerRuns);
-                    params.put("player_ball", stringFirstPlayerBalls);
+                    params.put("player_run", stringSecondPlayerRuns);
+                    params.put("player_ball", stringSecondPlayerBalls);
                     params.put("bowler_ball", stringBowlerBalls);
                     params.put("bowler_runs", stringBowlerRuns);
                     params.put("match_key", stringMatchKey);
@@ -5448,8 +5516,8 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                 if (radioButtonSecondPlayer.isChecked()) {
                     params.put("total_runs", stringTeamRuns);
                     params.put("total_overs", stringTeamOvers);
-                    params.put("player_run", stringFirstPlayerRuns);
-                    params.put("player_ball", stringFirstPlayerBalls);
+                    params.put("player_run", stringSecondPlayerRuns);
+                    params.put("player_ball", stringSecondPlayerBalls);
                     params.put("bowler_ball", stringBowlerBalls);
                     params.put("bowler_runs", stringBowlerRuns);
                     params.put("match_key", stringMatchKey);
