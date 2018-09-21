@@ -2107,6 +2107,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                 textViewBowlerBall.setText("0.0");
                 textViewBowlerRun.setText("0");
                 textViewCurrentOver.setText("");
+                textViewBowlerWicket.setText("0");
 
                 try {
 
@@ -4742,7 +4743,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             reusableFunctionBowler();
 
                         }
-                        wicketServerCall();
+                        wicketRunOutServerCall();
                         dismiss();
 
                     }
@@ -4989,7 +4990,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
                         }
 
-                        wicketServerCall();
+                        wicketRunOutServerCall();
                         dismiss();
 
                     }
@@ -5224,7 +5225,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             reusableFunctionBowler();
 
                         }
-                        wicketServerCall();
+                        wicketRunOutServerCall();
                         dismiss();
                     }
 
@@ -5469,7 +5470,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             reusableFunctionBowler();
 
                         }
-                        wicketServerCall();
+                        wicketRunOutServerCall();
                         dismiss();
                     }
 
@@ -5714,7 +5715,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             reusableFunctionBowler();
 
                         }
-                        wicketServerCall();
+                        wicketRunOutServerCall();
                         dismiss();
                     }
 
@@ -5959,7 +5960,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
 
                         }
-                        wicketServerCall();
+                        wicketRunOutServerCall();
                         dismiss();
                     }
 
@@ -6204,7 +6205,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             reusableFunctionBowler();
 
                         }
-                        wicketServerCall();
+                        wicketRunOutServerCall();
                         dismiss();
                     }
 
@@ -6449,7 +6450,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
 
                         }
-                        wicketServerCall();
+                        wicketRunOutServerCall();
                         dismiss();
                     }
 
@@ -6693,7 +6694,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             reusableFunctionBowler();
 
                         }
-                        wicketServerCall();
+                        wicketRunOutServerCall();
                         dismiss();
                     }
 
@@ -6936,7 +6937,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             reusableFunctionBowler();
 
                         }
-                        wicketServerCall();
+                        wicketRunOutServerCall();
                         dismiss();
                     }
 
@@ -7182,7 +7183,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             reusableFunctionBowler();
 
                         }
-                        wicketServerCall();
+                        wicketRunOutServerCall();
                         dismiss();
                     }
 
@@ -7425,7 +7426,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             reusableFunctionBowler();
 
                         }
-                        wicketServerCall();
+                        wicketRunOutServerCall();
                         dismiss();
                     }
 
@@ -7838,6 +7839,136 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                                     textViewSecondPlayerBall.setText("0");
                                     textViewSecondPlayerRun.setText("0");
                                 }
+
+//                                if (radioButtonFirst.isChecked()) {
+//                                    radioButtonFirstPlayer.setText(stringBatsmanName1);
+//                                    textViewFirstPlayerBall.setText("0");
+//                                    textViewFirstPlayerRun.setText("0");
+//                                } else {
+//                                    radioButtonSecondPlayer.setText(stringBatsmanName1);
+//                                    textViewSecondPlayerBall.setText("0");
+//                                    textViewSecondPlayerRun.setText("0");
+//                                }
+
+
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                error.printStackTrace();
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+
+                if (radioButtonFirstPlayer.isChecked()) {
+                    params.put("total_runs", stringTeamRuns);
+                    params.put("total_overs", stringTeamOvers);
+                    params.put("player_run", stringFirstPlayerRuns);
+                    params.put("player_ball", stringFirstPlayerBalls);
+                    params.put("bowler_ball", stringBowlerBalls);
+                    params.put("bowler_runs", stringBowlerRuns);
+                    params.put("match_key", stringMatchKey);
+                    params.put("ball_type", "w");
+                    params.put("extra_run", stringExtraRuns);
+                    params.put("wicket_type", stringWicketType);
+                    params.put("total_wickets", stringTeamWickets);
+                    params.put("team_name", stringBattingTeam);
+                    if (TextUtils.isEmpty(stringCatcherName1)) {
+                        params.put("wicket_id", "0");
+                    } else {
+                        params.put("wicket_id", stringCatcherId1);
+                    }
+                    if (!TextUtils.isEmpty(stringBatsmanName1)) {
+                        params.put("player_id", stringFristPlayerId);
+                    } else {
+                        params.put("player_id", stringBatsmanId1);
+                    }
+
+                    if (TextUtils.isEmpty(stringBowlerName1)) {
+                        params.put("bowler_id", stringBowlerId);
+                    } else {
+                        params.put("bowler_id", stringBowlerId1);
+                    }
+
+                }
+
+                if (radioButtonSecondPlayer.isChecked()) {
+                    params.put("total_runs", stringTeamRuns);
+                    params.put("total_overs", stringTeamOvers);
+                    params.put("player_run", stringSecondPlayerRuns);
+                    params.put("player_ball", stringSecondPlayerBalls);
+                    params.put("bowler_ball", stringBowlerBalls);
+                    params.put("bowler_runs", stringBowlerRuns);
+                    params.put("match_key", stringMatchKey);
+                    params.put("ball_type", "w");
+                    params.put("extra_run", stringExtraRuns);
+                    params.put("wicket_type", stringWicketType);
+                    params.put("total_wickets", stringTeamWickets);
+                    params.put("team_name", stringBattingTeam);
+                    if (TextUtils.isEmpty(stringCatcherName1)) {
+                        params.put("wicket_id", "0");
+                    } else {
+                        params.put("wicket_id", stringCatcherId1);
+                    }
+                    if (!TextUtils.isEmpty(stringBatsmanName1)) {
+                        params.put("player_id", stringSecondPlayerId);
+                    } else {
+                        params.put("player_id", stringBatsmanId1);
+                    }
+
+                    if (TextUtils.isEmpty(stringBowlerName1)) {
+                        params.put("bowler_id", stringBowlerId);
+                    } else {
+                        params.put("bowler_id", stringBowlerId1);
+                    }
+
+                }
+
+
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+    void wicketRunOutServerCall() {
+
+        dataGetter();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.RUN_DETAILS_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            if (jsonObject.getString("success").equals("1")) {
+
+
+//                                if (radioButtonFirstPlayer.isChecked()) {
+//                                    radioButtonFirstPlayer.setText(stringBatsmanName1);
+//                                    textViewFirstPlayerBall.setText("0");
+//                                    textViewFirstPlayerRun.setText("0");
+//                                } else {
+//                                    radioButtonSecondPlayer.setText(stringBatsmanName1);
+//                                    textViewSecondPlayerBall.setText("0");
+//                                    textViewSecondPlayerRun.setText("0");
+//                                }
 
                                 if (radioButtonFirst.isChecked()) {
                                     radioButtonFirstPlayer.setText(stringBatsmanName1);
