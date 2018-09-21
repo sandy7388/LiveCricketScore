@@ -7632,6 +7632,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     params.put("bowler_runs", String.valueOf(bowlerRun + i));
                     params.put("match_key", stringMatchKey);
                     params.put("player_id", stringFristPlayerId);
+                    params.put("team_name", stringBattingTeam);
                     if (TextUtils.isEmpty(stringBowlerName1)) {
                         params.put("bowler_id", stringBowlerId);
                     } else {
@@ -7643,6 +7644,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     params.put("wicket_type", "0");
                     params.put("total_wickets", "0");
                     params.put("wicket_id", "0");
+
                 }
 
                 if (radioButtonSecondPlayer.isChecked()) {
@@ -7654,6 +7656,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     params.put("bowler_runs", String.valueOf(bowlerRun + i));
                     params.put("match_key", stringMatchKey);
                     params.put("player_id", stringSecondPlayerId);
+                    params.put("team_name", stringBattingTeam);
                     if (TextUtils.isEmpty(stringBowlerName1)) {
                         params.put("bowler_id", stringBowlerId);
                     } else {
@@ -7767,6 +7770,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     params.put("player_id", stringFristPlayerId);
                     params.put("ball_type", stringBallType1);
                     params.put("extra_run", stringExtraRuns);
+                    params.put("team_name", stringBattingTeam);
                     params.put("wicket_type", "0");
                     params.put("wicket_id", "0");
                     params.put("total_wickets", "0");
@@ -7790,6 +7794,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     params.put("player_id", stringSecondPlayerId);
                     params.put("ball_type", stringBallType1);
                     params.put("extra_run", stringExtraRuns);
+                    params.put("team_name", stringBattingTeam);
                     params.put("wicket_type", "0");
                     params.put("total_wickets", "0");
                     params.put("wicket_id", "0");
@@ -7879,6 +7884,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     params.put("extra_run", stringExtraRuns);
                     params.put("wicket_type", stringWicketType);
                     params.put("total_wickets", stringTeamWickets);
+                    params.put("team_name", stringBattingTeam);
                     if (TextUtils.isEmpty(stringCatcherName1)) {
                         params.put("wicket_id", "0");
                     } else {
@@ -7910,6 +7916,7 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                     params.put("extra_run", stringExtraRuns);
                     params.put("wicket_type", stringWicketType);
                     params.put("total_wickets", stringTeamWickets);
+                    params.put("team_name", stringBattingTeam);
                     if (TextUtils.isEmpty(stringCatcherName1)) {
                         params.put("wicket_id", "0");
                     } else {
@@ -8035,9 +8042,6 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         alert.show();
 
     }
-
-
-
 
 }
 
