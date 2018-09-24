@@ -7979,16 +7979,6 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
                             if (jsonObject.getString("success").equals("1")) {
 
 
-//                                if (radioButtonFirstPlayer.isChecked()) {
-//                                    radioButtonFirstPlayer.setText(stringBatsmanName1);
-//                                    textViewFirstPlayerBall.setText("0");
-//                                    textViewFirstPlayerRun.setText("0");
-//                                } else {
-//                                    radioButtonSecondPlayer.setText(stringBatsmanName1);
-//                                    textViewSecondPlayerBall.setText("0");
-//                                    textViewSecondPlayerRun.setText("0");
-//                                }
-
                                 if (radioButtonFirst.isChecked()) {
                                     radioButtonFirstPlayer.setText(stringBatsmanName1);
                                     textViewFirstPlayerBall.setText("0");
