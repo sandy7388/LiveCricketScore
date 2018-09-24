@@ -227,14 +227,12 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-
     void intentDataSetter() {
         textViewPlayingTeamName.setText(stringBattingTeam);
         textViewBowlerName.setText(stringBowlerName);
         radioButtonFirstPlayer.setText(stringFristPlayerName);
         radioButtonSecondPlayer.setText(stringSecondPlayerName);
     }
-
 
     @Override
     public void onClick(View v) {
