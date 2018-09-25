@@ -138,7 +138,6 @@ public class MatchPlayActivity extends AppCompatActivity implements View.OnClick
         playerDetailsInitialization();
         getIntentData();
         intentDataSetter();
-        //getBowlerDetails();
         radioButtonFirstPlayer.setChecked(true);
         spinnerNewBowler = new ArrayList<>();
         spinnerCatcher = new ArrayList<>();
